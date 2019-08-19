@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "axeldelafosse",
+  "alias": ["axeldelafosse.com", "axeldelafosse"],
+  "builds": [{ "src": "package.json", "use": "@now/next" }],
+  "build": {
+    "env": {}
+  },
+  "regions": ["sfo1", "cdg1", "lhr1"]
+}

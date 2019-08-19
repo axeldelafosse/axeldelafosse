@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "alias": ["www.axeldelafosse.com"],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "status": 301,
+      "headers": { "Location": "https://axeldelafosse.com/$1" }
+    }
+  ]
+}
