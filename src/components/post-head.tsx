@@ -34,6 +34,12 @@ function PostHead(props: PostHeadProps) {
     <Head>
       <title>{title} - Axel Delafosse</title>
       <meta key="description" name="description" content={description} />
+      <meta key="twitter:title" name="twitter:title" content={title} />
+      <meta
+        key="twitter:description"
+        name="twitter:description"
+        content={description}
+      />
       <meta key="og:title" property="og:title" content={title} />
       <meta
         key="og:description"
