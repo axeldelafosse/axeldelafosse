@@ -83,6 +83,26 @@ function getGithubUrl(pathname: string) {
   return `https://github.com/axeldelafosse/axeldelafosse/tree/master/pages/blog/${postUid}.mdx`;
 }
 
+function getBackButtonProps(
+  isBlogPost: boolean,
+  isStartupNotebookPost: boolean
+) {
+  let linkUrl = '/';
+  let linkText = 'home';
+
+  if (isBlogPost) {
+    linkUrl = '/blog';
+    linkText = 'blog';
+  }
+
+  if (isStartupNotebookPost) {
+    linkUrl = '/blog/startup-notebook';
+    linkText = 'back';
+  }
+
+  return { linkUrl, linkText };
+}
+
 interface BlogLayoutProps {
   children: ReactNode;
 }
@@ -90,15 +110,19 @@ interface BlogLayoutProps {
 function BlogLayout({ children }: BlogLayoutProps) {
   const router = useRouter();
   const isBlogPost = router.pathname.includes('blog/');
-  const previousPage = isBlogPost ? 'blog' : 'home';
+  const isStartupNotebookPost = router.pathname.includes('startup-notebook/');
+  const { linkUrl, linkText } = getBackButtonProps(
+    isBlogPost,
+    isStartupNotebookPost
+  );
 
   return (
     <Wrapper>
       <Box>
         <Header>
-          <Link href={isBlogPost ? '/blog' : '/'} passHref={true}>
+          <Link href={linkUrl} passHref={true}>
             <BackButton>
-              <PointingIndex>☜</PointingIndex> {previousPage}
+              <PointingIndex>☜</PointingIndex> {linkText}
             </BackButton>
           </Link>
           <Link href={'/'} passHref={true}>

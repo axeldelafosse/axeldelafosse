@@ -9,8 +9,7 @@ interface PostHeadProps {
   dateLastModified: string;
 }
 
-function PostHead(props: PostHeadProps) {
-  const { uid, title, description, date, dateLastModified } = props;
+function PostHead({ uid, title, description, date, dateLastModified }: PostHeadProps) {
   const url = `https://axeldelafosse.com/blog/${uid}`;
   const json = {
     '@context': 'http://www.schema.org',
