@@ -57,13 +57,6 @@ function Home() {
           <MenuItem>blog</MenuItem>
         </Link>
         <MenuItem
-          href="https://drive.google.com/file/d/14icGX2AF2qdFJ9Vw7osJjShY8jUNpXaQ/view"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          resume
-        </MenuItem>
-        <MenuItem
           href="https://github.com/axeldelafosse/axeldelafosse"
           target="_blank"
           rel="noopener noreferrer"
