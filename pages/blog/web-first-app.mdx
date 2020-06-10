@@ -1,0 +1,87 @@
+import PostHead from '../../src/components/post-head';
+
+export const meta = {
+  uid: 'web-first-app',
+  title: 'Web-first app: a React PWA using React Native as the cross-platform foreign function interface to missing web APIs',
+  description: `Techniques and advices to create a universal web-first app.`,
+  date: '2020-02-02',
+  dateLastModified: '2020-02-05'
+};
+
+<PostHead {...meta} />
+
+# Web-first app: a React PWA using React Native as the cross-platform foreign function interface to missing web APIs
+
+## Techniques and advices to create a universal web-first app.
+
+<blockquote className="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Hot take: we will see a lot of mobile app development amount to &quot;Cordova-style React Native&quot; <br /><br />i.e.: apps will consist of HTML+CSS+JS (in stale-while-revalidate mode, aggressively trying to self-hot-upgrade upon boot).<br /><br />RN will act as the cross-platform FFI to missing web APIs</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1223446855482167302?ref_src=twsrc%5Etfw">February 1, 2020</a></blockquote>
+
+After reading this tweet by Guillermo Rauch, I decided to do a write-up about a set of techniques that I use to build my new app, [Pool](https://pool.social). I have to be creative because I don't have many resources. What I came up with is what I call a web-first app.
+
+> Web-first app: a progressive web app (PWA) embedded and deeply integrated within a native app.
+
+Thanks to this approach, I'm able to build the web and mobile apps by myself. The web app is responsive and could well be later embedded in a desktop app.
+
+I get instant updates after deploying the web app. I go fast and iterate quickly.
+
+I won't go deep into _how_ to do this and won't show you code. Instead, I will focus on _what_ to do and _why_.
+
+Here's what you need:
+
+- React PWA
+
+- React Native App
+
+- Turbo / Native Modules
+
+- React Native for Web
+
+- Expo Unimodules
+
+- Monorepo
+
+Let's dig into each point.
+
+### React PWA
+
+You want a fast and performant web app and a service worker. I'm using Next.js and it's amazing! I'm leveraging recent web APIs with service workers by using Workbox. You want to update the service worker when user navigates to keep your app updated (without even rebooting the app).
+
+Look at what Evan Bacon is doing with Expo Web if you want guideance around configuration.
+
+You can communicate with the RN app via the webview by using the `window.postMessage()` API.
+
+### React Native App
+
+You want a RN app with a webview. I'm using Expo (bare workflow) and `react-native-webview`. 
+
+### Turbo / Native Modules
+
+You want to access native APIs. Now you can use C++ in a RN app (thanks to the JSI). Turbo modules are coming soon. There is a large choice of native modules and [libraries](https://www.native.directory). Because it's a core feature of my app, I'm building a module to enable the Share Extensions this way.
+
+### React Native for Web
+
+You need RNW to be able to use React Native components on your web app. For example I'm using `react-native-safe-area-context` to handle safe area on web. Beware, the tree-shaking is very fragile.
+
+### Expo Unimodules
+
+Configuring your React app to use Unimodules will let you access amazing modules maintained by Expo and the community. Same with the React Native app.
+
+### Monorepo
+
+You want to be able to share code and components. I recommend setting up a yarn workspace. It's tricky but powerful. Check [this article](https://engineering.brigad.co/react-native-monorepos-code-sharing-f6c08172b417) by Thibault Malbranche to learn more. For example I'm sharing my `graphql.tsx` file which is the code generated from my GraphQL schema and documents.
+
+And yes, most of the code is in TypeScript :)
+
+Bonus: I also recommend using `styled-components`. It enables more abstraction resulting in better code sharing.
+
+Hope this helps!
+
+Making everything works together can be hard. If you need more details on how to implement something, feel free to reach out.
+
+It's not perfect but we'll get there. It's only a matter of time. And I mean, if it's not working well at scale, I can easily make a proper RN app really fast. I'm not locked in, and worst case scenario I would have spend a little bit too much time optimizing the web app.
+
+> "In business, there is nothing more valuable than a technical advantage your competitors don't understand." — Paul Graham, [Beating the Averages](http://www.paulgraham.com/avg.html)
+
+I think this approach is a way to go fast, really fast. As Viaweb has bet on Lisp, I'm betting on the React and React Native ecosystem.
+
+Shout out to the React and React Native team and community, the Next.js team, Nicolas Gallagher for building React Native for Web, Evan Bacon for his work with Expo Web, the Expo team, Thibault Malbranche for react-native-webview, Henry Fontanier who helped me realize this could work and everyone else involved.
