@@ -57,7 +57,14 @@ function Home() {
           <MenuItem>blog</MenuItem>
         </Link>
         <MenuItem
-          href="https://github.com/axeldelafosse/axeldelafosse"
+          href="https://pool.social"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          pool
+        </MenuItem>
+        <MenuItem
+          href={`https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}`}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -65,7 +72,7 @@ function Home() {
         </MenuItem>
       </Header>
       <Link href="/blog" passHref={true}>
-        <Logo src={require('../images/logo-white.svg')} alt="A" />
+        <Logo src={require('../images/logo-white.svg')} alt={process.env.NEXT_PUBLIC_FULL_NAME} />
       </Link>
       <Footer color="#FFF" />
     </Wrapper>

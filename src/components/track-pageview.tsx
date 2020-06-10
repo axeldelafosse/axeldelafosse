@@ -10,7 +10,7 @@ function TrackPageView() {
     Router.events.on('routeChangeComplete', (url: string) => {
       (window as GAWindow & typeof globalThis).gtag(
         'config',
-        'UA-145831230-1',
+        process.env.NEXT_PUBLIC_GA,
         {
           page_path: url
         }

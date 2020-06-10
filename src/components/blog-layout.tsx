@@ -9,6 +9,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-x: hidden;
+  word-break: break-word;
 
   height: 100%;
   min-height: 100vh;
@@ -80,7 +82,7 @@ const WritingHand = styled.span`
 
 function getGithubUrl(pathname: string) {
   const postUid = pathname.replace('/blog/', '');
-  return `https://github.com/axeldelafosse/axeldelafosse/tree/master/pages/blog/${postUid}.mdx`;
+  return `https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}/tree/master/pages/blog/${postUid}.mdx`;
 }
 
 function getBackButtonProps(
@@ -126,7 +128,7 @@ function BlogLayout({ children }: BlogLayoutProps) {
             </BackButton>
           </Link>
           <Link href={'/'} passHref={true}>
-            <Logo src={require('../images/logo.svg')} alt="A" />
+            <Logo src={require('../images/logo.svg')} alt={process.env.NEXT_PUBLIC_FULL_NAME} />
           </Link>
           {isBlogPost ? (
             <GithubLink

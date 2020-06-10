@@ -10,7 +10,7 @@ interface PostHeadProps {
 }
 
 function PostHead({ uid, title, description, date, dateLastModified }: PostHeadProps) {
-  const url = `https://axeldelafosse.com/blog/${uid}`;
+  const url = `https://${process.env.NEXT_PUBLIC_ID}.com/blog/${uid}`;
   const json = {
     '@context': 'http://www.schema.org',
     '@type': 'BlogPosting',
@@ -24,14 +24,14 @@ function PostHead({ uid, title, description, date, dateLastModified }: PostHeadP
     dateModified: dateLastModified,
     author: {
       '@type': 'Person',
-      name: 'Axel Delafosse'
+      name: process.env.NEXT_PUBLIC_FULL_NAME
     },
     description
   };
 
   return (
     <Head>
-      <title>{title} - Axel Delafosse</title>
+      <title>{title} - {process.env.NEXT_PUBLIC_FULL_NAME}</title>
       <meta key="description" name="description" content={description} />
       <meta key="twitter:title" name="twitter:title" content={title} />
       <meta

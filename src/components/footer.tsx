@@ -25,7 +25,7 @@ function Footer({ color }: { color: string }) {
   return (
     <Wrapper color={color}>
       <Link
-        href="https://github.com/axeldelafosse"
+        href={`https://github.com/${process.env.NEXT_PUBLIC_ID}`}
         target="_blank"
         rel="noopener noreferrer"
         color={color}
@@ -34,7 +34,7 @@ function Footer({ color }: { color: string }) {
       </Link>
       <Bull>•</Bull>
       <Link
-        href="https://www.linkedin.com/in/axeldelafosse/"
+        href={`https://www.linkedin.com/in/${process.env.NEXT_PUBLIC_ID}`}
         target="_blank"
         rel="noopener noreferrer"
         color={color}
@@ -43,16 +43,7 @@ function Footer({ color }: { color: string }) {
       </Link>
       <Bull>•</Bull>
       <Link
-        href="https://medium.com/@axeldelafosse"
-        target="_blank"
-        rel="noopener noreferrer"
-        color={color}
-      >
-        medium
-      </Link>
-      <Bull>•</Bull>
-      <Link
-        href="https://twitter.com/axeldelafosse"
+        href={`https://twitter.com/${process.env.NEXT_PUBLIC_ID}`}
         target="_blank"
         rel="noopener noreferrer"
         color={color}

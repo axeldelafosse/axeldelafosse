@@ -16,10 +16,18 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+
+  code {
+    background-color: darkgrey;
+    border-radius: 2px;
+    padding: 0 2px;
+    font-size: 95%;
+  }
 `;
 
-const title = `Axel Delafosse`;
-const description = `Axel's blog`;
+const id = process.env.NEXT_PUBLIC_ID;
+const title = process.env.NEXT_PUBLIC_FULL_NAME;
+const description = `Startups. Growth. Code. Electronic music.`;
 
 function App({ Component, pageProps, router }: AppProps) {
   const { pathname } = router;
@@ -37,7 +45,7 @@ function App({ Component, pageProps, router }: AppProps) {
           name="twitter:description"
           content={description}
         />
-        <meta key="twitter:site" name="twitter:site" content="@axeldelafosse" />
+        <meta key="twitter:site" name="twitter:site" content={`@${id}`} />
         <meta key="og:title" property="og:title" content={title} />
         <meta
           key="og:description"
@@ -47,12 +55,12 @@ function App({ Component, pageProps, router }: AppProps) {
         <meta
           key="og:url"
           property="og:url"
-          content="https://axeldelafosse.com"
+          content={`https://${id}.com`}
         />
         <meta
           key="og:site_name"
           property="og:site_name"
-          content="Axel Delafosse"
+          content={title}
         />
         <meta key="og:type" property="og:type" content="website" />
         <link
@@ -62,7 +70,7 @@ function App({ Component, pageProps, router }: AppProps) {
         />
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=UA-145831230-1"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`}
         />
         <script />
         <script
@@ -72,7 +80,7 @@ function App({ Component, pageProps, router }: AppProps) {
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', 'UA-145831230-1');
+                gtag('config', '${process.env.NEXT_PUBLIC_GA}');
               `
           }}
         />
