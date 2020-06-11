@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "axeldelafosse",
   "builds": [{ "src": "package.json", "use": "@now/next" }],
   "build": {
     "env": {}

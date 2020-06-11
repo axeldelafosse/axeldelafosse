@@ -6,11 +6,11 @@ const Wrapper = styled.footer`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
 `;
 
 const Link = styled.a`
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   text-decoration: none;
   font-size: 14px;
 `;
@@ -31,6 +31,15 @@ function Footer({ color }: { color: string }) {
         color={color}
       >
         github
+      </Link>
+      <Bull>•</Bull>
+      <Link
+        href={`https://soundcloud.com/${process.env.NEXT_PUBLIC_ID}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        color={color}
+      >
+        soundcloud
       </Link>
       <Bull>•</Bull>
       <Link

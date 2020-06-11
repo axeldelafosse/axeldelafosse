@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "now-build": "next build",
-    "deploy": "now --prod"
+    "deploy": "vercel --prod --no-clipboard",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "@mdx-js/loader": "^1.6.5",
@@ -29,6 +30,7 @@
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^8.0.0",
+    "prettier": "2.0.5",
     "typescript": "^3.9.5"
   },
   "license": "ISC"

@@ -1,17 +1,17 @@
 import React from 'react';
 import { NextPageContext } from 'next';
 
-import postList, { Post } from '../src/utils/post-list';
+import postList, { Post } from '@/utils/post-list';
 
 const formatDate = (date: number) => {
-    return new Date(date).toISOString().substring(0, 10);
-}
+  return new Date(date).toISOString().substring(0, 10);
+};
 
 const sitemapXml = (posts: Post[]) => {
   let latestPost = 0;
   let postsXML = '';
 
-  posts.map(post => {
+  posts.map((post) => {
     const postDate = Date.parse(post.dateLastModified);
     if (!latestPost || postDate > latestPost) {
       latestPost = postDate;
@@ -50,9 +50,9 @@ class Sitemap extends React.Component {
     const posts = await Promise.resolve(postList());
 
     if (res && posts) {
-        res.setHeader('Content-Type', 'text/xml');
-        res.write(sitemapXml(posts));
-        res.end();
+      res.setHeader('Content-Type', 'text/xml');
+      res.write(sitemapXml(posts));
+      res.end();
     }
   }
 }

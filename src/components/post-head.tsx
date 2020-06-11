@@ -9,7 +9,13 @@ interface PostHeadProps {
   dateLastModified: string;
 }
 
-function PostHead({ uid, title, description, date, dateLastModified }: PostHeadProps) {
+function PostHead({
+  uid,
+  title,
+  description,
+  date,
+  dateLastModified
+}: PostHeadProps) {
   const url = `https://${process.env.NEXT_PUBLIC_ID}.com/blog/${uid}`;
   const json = {
     '@context': 'http://www.schema.org',
@@ -31,7 +37,9 @@ function PostHead({ uid, title, description, date, dateLastModified }: PostHeadP
 
   return (
     <Head>
-      <title>{title} - {process.env.NEXT_PUBLIC_FULL_NAME}</title>
+      <title>
+        {title} - {process.env.NEXT_PUBLIC_FULL_NAME}
+      </title>
       <meta key="description" name="description" content={description} />
       <meta key="twitter:title" name="twitter:title" content={title} />
       <meta

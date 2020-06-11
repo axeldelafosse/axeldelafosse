@@ -68,11 +68,14 @@ function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          source code
+          source
         </MenuItem>
       </Header>
       <Link href="/blog" passHref={true}>
-        <Logo src={require('../images/logo-white.svg')} alt={process.env.NEXT_PUBLIC_FULL_NAME} />
+        <Logo
+          src={require('../images/logo-white.svg')}
+          alt={process.env.NEXT_PUBLIC_FULL_NAME}
+        />
       </Link>
       <Footer color="#FFF" />
     </Wrapper>

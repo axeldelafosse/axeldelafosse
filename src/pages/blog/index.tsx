@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { GetStaticProps } from 'next';
 import Link from 'next/link';
 
-import postList, { Post } from '../../src/utils/post-list';
+import postList, { Post } from '@/utils/post-list';
 
 const Title = styled.h1``;
 
@@ -14,7 +15,7 @@ function Blog({ posts }: { posts: Post[] }) {
   return (
     <>
       <Title>Blog</Title>
-      {posts.map(post => (
+      {posts.map((post) => (
         <Link key={post.uid} href={post.urlPath} passHref={true}>
           <PostTitle>{post.title}</PostTitle>
         </Link>
@@ -23,9 +24,9 @@ function Blog({ posts }: { posts: Post[] }) {
   );
 }
 
-Blog.getInitialProps = async () => {
-  const posts = await Promise.resolve(postList());
-  return { posts };
-};
-
 export default Blog;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const posts = await Promise.resolve(postList());
+  return { props: { posts } };
+};

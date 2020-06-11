@@ -14,11 +14,11 @@ const Wrapper = styled.div`
 
   height: 100%;
   min-height: 100vh;
-  max-width: 550px;
+  max-width: 600px;
   margin: auto;
 
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 18px;
+  padding-right: 18px;
 
   border-left: 1px solid #f5f5f9;
   border-right: 1px solid #f5f5f9;
@@ -128,7 +128,10 @@ function BlogLayout({ children }: BlogLayoutProps) {
             </BackButton>
           </Link>
           <Link href={'/'} passHref={true}>
-            <Logo src={require('../images/logo.svg')} alt={process.env.NEXT_PUBLIC_FULL_NAME} />
+            <Logo
+              src={require('../images/logo.svg')}
+              alt={process.env.NEXT_PUBLIC_FULL_NAME}
+            />
           </Link>
           {isBlogPost ? (
             <GithubLink

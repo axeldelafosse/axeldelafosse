@@ -1,7 +1,8 @@
 const postFileNames = () => {
   const postFileNames =
     // @ts-ignore
-    preval`module.exports = require('fs').readdirSync('./pages/blog')` || [];
+    preval`module.exports = require('fs').readdirSync('./src/pages/blog')` ||
+    [];
   return Promise.resolve(postFileNames);
 };
 
@@ -29,7 +30,7 @@ const createPostList = (fileNameList: string[]): Post[] => {
         description,
         date,
         dateLastModified
-      } = require(`../../pages/blog/${fileName}`).meta;
+      } = require(`../pages/blog/${fileName}`).meta;
 
       list.push({
         uid,
@@ -49,8 +50,8 @@ const createPostList = (fileNameList: string[]): Post[] => {
 
 export default async function postList() {
   return postFileNames()
-    .then(fileNameList => {
+    .then((fileNameList) => {
       return createPostList(fileNameList);
     })
-    .catch(error => console.error(error));
+    .catch((error) => console.error(error));
 }

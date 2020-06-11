@@ -18,7 +18,15 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["src/components/*"],
+      "@/images/*": ["src/images/*"],
+      "@/modules/*": ["src/modules/*"],
+      "@/pages/*": ["src/pages/*"],
+      "@/utils/*": ["src/utils/*"]
+    }
   },
   "exclude": ["node_modules", "static"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
