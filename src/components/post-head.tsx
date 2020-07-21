@@ -55,6 +55,7 @@ function PostHead({
       />
       <meta key="og:type" property="og:type" content="article" />
       <meta key="og:url" property="og:url" content={url} />
+      <meta key="og:image" property="og:image" content={`https://og-image.axeldelafosse.now.sh/**${encodeURIComponent(title)}**.png?theme=dark&md=1&fontSize=75px&widths=100&heights=100`} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}

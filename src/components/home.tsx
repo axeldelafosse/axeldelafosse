@@ -47,6 +47,21 @@ const Logo = styled.img`
   width: 20vh;
   height: 20vh;
   cursor: zoom-in;
+
+  @keyframes growing {
+    0%,
+    to {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(0.95);
+    }
+  }
+
+  animation: growing 5000ms infinite;
 `;
 
 function Home() {

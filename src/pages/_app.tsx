@@ -43,6 +43,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: monospace;
+    font-size: 115%;
   }
 
   * {
@@ -50,10 +51,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   code {
-    background-color: darkgrey;
+    color: rgb(40, 42, 46);
+    background-color: rgb(246, 246, 246);
     border-radius: 2px;
     padding: 0 2px;
-    font-size: 95%;
+    font-size: 99%;
   }
 
   .language-tsx {
@@ -76,7 +78,7 @@ function App({ Component, pageProps, router }: AppProps) {
         <title>{title}</title>
         <meta key="title" name="title" content={title} />
         <meta key="description" name="description" content={description} />
-        <meta key="twitter:card" name="twitter:card" content="summary" />
+        <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
         <meta key="twitter:title" name="twitter:title" content={title} />
         <meta
           key="twitter:description"
@@ -93,10 +95,11 @@ function App({ Component, pageProps, router }: AppProps) {
         <meta key="og:url" property="og:url" content={`https://${id}.com`} />
         <meta key="og:site_name" property="og:site_name" content={title} />
         <meta key="og:type" property="og:type" content="website" />
+        <meta key="og:image" property="og:image" content="https://og-image.axeldelafosse.now.sh/.png?theme=dark&md=1&widths=350&heights=350" />
         <link
           rel="shortcut icon"
           type="image/x-icon"
-          href="/public/favicon.ico"
+          href="/favicon.ico"
         />
         <script
           async
