@@ -82,7 +82,7 @@ const WritingHand = styled.span`
 
 function getGithubUrl(pathname: string) {
   const postUid = pathname.replace('/blog/', '');
-  return `https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}/tree/master/pages/blog/${postUid}.mdx`;
+  return `https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}/tree/master/src/pages/blog/${postUid}.mdx`;
 }
 
 function getBackButtonProps(
