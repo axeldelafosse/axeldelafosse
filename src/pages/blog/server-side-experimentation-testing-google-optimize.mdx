@@ -1,0 +1,268 @@
+import PostHead from '@/components/post-head';
+
+export const meta = {
+  uid: 'server-side-experimentation-testing-google-optimize',
+  title: `Server-side Experimentation and Testing with Google Optimize`,
+  description: `Learn how to easily run experiments on your React web app, for free.`,
+  date: '2020-06-09',
+  dateLastModified: '2020-07-21'
+};
+
+<PostHead {...meta} />
+
+# Server-side Experimentation and Testing with Google Optimize
+
+## Learn how to easily run experiments on your React web app, for free.
+
+Experimentation is not the same as testing. In reality, experimentation is a broader process of identifying strategic opportunities, then developing potential solutions against them, then testing and learning to validate those solutions, and then thinking about how we implement those solutions once they're fully validated.
+
+1. Identify strategic opportunities
+2. Develop solutions
+3. `Test & learn`
+4. Productize
+
+Testing is the specific method we use in order to learn and validate our hypothesis. An experimentation program is all four combined into a repeatable system that we can improve over time.
+
+As you'll see in this article, it's pretty easy to run A/B tests. But it's hard to create a culture of experimentation. I can help you launch your experimentation program -- send me an email if you need help.
+
+## Why server-side?
+
+- Use with your server-side rendered web app (here we use Next.js)
+- More control of the experiences your users are getting
+- Do your own data analysis on logged-in users
+- Persist the experiment allocation for logged-in users across devices (e.g. in a funnel where the user come back after a retargeting email or in your product)
+- Benefit from a mix between in-house system with an easy-to-use interface
+- Experiment on multi-channel
+- And more...
+
+## Why Optimize?
+
+- Integrated with Google Analytics (i.e. use your existing event tracking / dashboard)
+- Start for free
+- Bayesian inference doesn’t need a minimum sample and uses historic GA data
+
+## Tech
+
+We are going to setup server-side experiments using Google Optimize. Optimize uses Google Analytics for measurement and is set with Google Analytics via Segment or RudderStack.
+
+The code samples uses Next.js, TypeScript, and GraphQL: https://github.com/axeldelafosse/experiments
+
+In a server-side experiment, your code must perform all the tasks that Optimize handles in a client-side experiment. For example, your code will target audiences and consistently serve the appropriate variant to each user. You only use the Optimize interface to create experiments, set objectives, create variants, and view reports.
+
+Optimize uses Bayesian analysis to determine how the variants will perform in the future and improvement is the Bayesian equivalent of a confidence interval. Google Optimize uses Bayesian methods rather than Frequentist methods, also known as Null Hypothesis Significance Testing (NHST). Though the market is moving toward Bayesian models, most tools today still use Frequentist.
+
+## Module
+
+We don't store the running experiments in database, you need to keep track of those by yourself in the experiments config file and make sure to use the correct id depending on the env. You need to create the same experiment on Google Optimize for dev, staging and prod.
+
+### Config & setup:
+
+- Have a look at the [experiments config file](https://github.com/axeldelafosse/experiments/blob/master/experiments.ts). More details later
+- Call [`getExperimentsAllocations()`](https://github.com/axeldelafosse/experiments/blob/master/get-experiments-allocations.tsx#L45) in your app or page `getInitialProps()` or `getServerSideProps()` and pass the `experimentsAllocations` as props
+- Set `<ExperimentsProvider value={experimentsAllocations}>`
+- Set `<SaveExperiments experiments={experimentsAllocations} />`
+- Your `render()` should look like this:
+
+```tsx
+...
+<ExperimentsProvider value={experimentsAllocations}>
+  ...
+  <SaveExperiments experiments={experimentsAllocations} />
+  <Component ... />
+  ...
+</ExperimentsProvider>
+...
+```
+
+### Serving content:
+
+- Custom React hooks: [`useExperiment()`](https://github.com/axeldelafosse/experiments/blob/master/use-experiment.tsx) and [`useVariantId()`](https://github.com/axeldelafosse/experiments/blob/master/use-variant-id.tsx)
+- Call `useExperiment()` with the name of the experiment
+- Get the variant id using `useVariantId()` and display conditionally the variants. It will also save the experiment allocation and tell Google Analytics which variant the user is seeing
+
+```tsx
+import { useExperiment, useVariantId } from '@src/modules/experiments';
+
+function Component() {
+  const experiment = useExperiment('name');
+  const variantId = useVariantId(experiment);
+
+  return (
+    <>
+      {variantId === '0' && <>Version A</>}
+      {variantId === '1' && <>Version B</>}
+    </>
+  );
+}
+```
+
+### Experiment inclusion:
+
+- [`getExperimentsAllocations()`](https://github.com/axeldelafosse/experiments/blob/master/get-experiments-allocations.tsx#L45)
+- If customerId, check database for allocations
+- If customerId and cookies, sync database and cookies allocations
+- Else if cookies, set to cookies allocations
+
+### Variant allocations:
+
+- Allocate to a variant for every new experiment and save allocations in database and cookies
+- `useVariantId()` will save the experiment allocation in database and push the experiment allocation to Google Analytics in order to tell Google Optimize which variant the visitor has seen
+
+### Persistence of variants for users:
+
+- cookie based: stored in cookie `X`
+- customerId based: stored in `experiments_allocations` table
+
+### Sending users’ hits (e.g. pageview hits) on the variants to Google Analytics:
+
+- Send `exp` event to GA and retrieve the value on `pageview` event:
+
+```tsx
+function setExpGoogleAnalytics(exp: string) {
+  if (!isBrowser || !window.ga) {
+    return;
+  }
+
+  window.ga('set', 'exp', exp);
+  window.ga('send', 'pageview');
+}
+```
+
+or with gtag:
+
+```tsx
+gtag('config', 'UA-XXXXXXX-X', {experiments: [ { id: 'ExperimentID 1', variant: '1' }, { id: 'ExperimentID 2', variant: '2' }, ]});
+```
+
+## End-to-end Testing
+
+To test your experiments with Cypress, you need to:
+
+- Get the variant id: `cy.getVariantId(experimentId)`
+- Implement the business logic behind your experiment to correctly test it:
+
+```tsx
+cy.getVariantId('xoo8Mc2ITTCSiXLjuOqrng').then((variantId) => {
+  if (variantId === '0') {
+    //
+  }
+});
+```
+
+Where `getVariantId` is:
+
+```tsx
+Cypress.Commands.add('getVariantId', (experimentId) => {
+  cy.getCookie('X').then((X) => {
+    if (X) {
+      const experiments = JSON.parse(decodeURIComponent(X.value));
+      const experiment = experiments.find(
+        (exp) => exp.experimentId === experimentId
+      );
+      return experiment.variantId;
+    }
+    return '0';
+  });
+});
+```
+
+## Server-side Experiment Creation
+
+[https://developers.google.com/optimize/devguides/experiments](https://developers.google.com/optimize/devguides/experiments)
+
+- Create an experiment in Optimize
+- URL field is ignored here. Enter a placeholder URL that doesn't exist on your website, e.g. https://axeldelafosse.com/sse
+- Create variants
+  - Click on ADD VARIANT
+  - Set the variants weighting
+- Set experiment targeting
+  - Set rule to URL equals `SERVER_SIDE`:
+
+<img src={require('./images/go-targeting.png')} width="100%" />
+
+- Set experiment objectives
+  - Click on ADD EXPERIMENT OBJECTIVE
+  - Set your success metric and trade-off metric
+  - Objective configuration example:
+
+<img src={require('./images/go-objective.png')} width="100%" />
+
+- Get the experiment id and list of variations ids (original is `0` and variants are `1`, `2`, `3`, etc…) and save them in the [experiments config file](https://github.com/axeldelafosse/experiments/blob/master/experiments.ts)
+- Start the experiment
+
+## Analysis
+
+During the experiment and at the end of it, we need to analyze the experiment results and the statistical significance behind them.
+
+- When to stop a test?
+
+Control > Test. Test > Control. Control = Test
+
+- When to keep testing?
+
+Overlap Low. Overlap High. Middle Overlap
+
+- Extract the maximum amount of learnings possible:
+
+Was the experiment a success or failure? Did it improve the metric in the hypothesis?
+
+How accurate were the results to my hypothesis? Close or really far off?
+
+Ask why the experiment was a success/failure? What are the potential reasons?
+
+- Learn how to read the Optimize analysis:
+
+[Reporting overview](https://support.google.com/optimize/answer/6218117)
+
+- Use custom segments in Google Analytics:
+
+[Optimize data in Google Analytics](https://support.google.com/optimize/answer/7364397)
+
+- Do your own analysis:
+
+[Evan's Awesome A/B Tools](https://www.evanmiller.org/ab-testing/chi-squared.html)
+
+## Architecture
+
+How we store the experiments allocations in the db:
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>customer_id</th>
+      <th>experiment_id</th>
+      <th>variant_id</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+    </tr>
+  </thead>
+</table>
+
+unique (customer_id, experiment_id)
+
+How we store the experiments in the config file:
+
+```tsx
+experiments: [
+  {
+    name: 'X',
+    id: 'X',
+    variants: [
+      { id: '0', weight: 0.5 },
+      { id: '1', weight: 0.5 }
+    ]
+  }
+];
+```
+
+How we store the experiments allocations in the web app:
+
+```tsx
+experiments: [
+  { id: 'X', variantId: 'X' },
+  { id: 'X', variantId: 'X' }
+];
+```
+
+Happy testing! Let me know if you have any questions.
