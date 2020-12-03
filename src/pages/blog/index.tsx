@@ -11,13 +11,24 @@ const PostTitle = styled.h3`
   cursor: pointer;
 `;
 
+const PostDate = styled.span`
+  font-size: 90%;
+  font-weight: 500;
+  color: lightgrey;
+`;
+
 function Blog({ posts }: { posts: Post[] }) {
   return (
     <>
       <Title>Blog</Title>
       {posts.map((post) => (
         <Link key={post.uid} href={post.urlPath} passHref={true}>
-          <PostTitle>{post.title}</PostTitle>
+          <PostTitle>
+            {post.title}{' '}
+            <PostDate>
+              {new Date(post.dateLastModified).toDateString()}
+            </PostDate>
+          </PostTitle>
         </Link>
       ))}
     </>

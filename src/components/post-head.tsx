@@ -1,5 +1,23 @@
 import React from 'react';
 import Head from 'next/head';
+import styled from 'styled-components';
+
+const Meta = styled.div`
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+`;
+
+const Img = styled.img`
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+`;
+
+const Text = styled.div`
+  font-size: 14px;
+  padding-left: 10px;
+`;
 
 interface PostHeadProps {
   uid: string;
@@ -36,31 +54,46 @@ function PostHead({
   };
 
   return (
-    <Head>
-      <title>
-        {title} - {process.env.NEXT_PUBLIC_FULL_NAME}
-      </title>
-      <meta key="description" name="description" content={description} />
-      <meta key="twitter:title" name="twitter:title" content={title} />
-      <meta
-        key="twitter:description"
-        name="twitter:description"
-        content={description}
-      />
-      <meta key="og:title" property="og:title" content={title} />
-      <meta
-        key="og:description"
-        property="og:description"
-        content={description}
-      />
-      <meta key="og:type" property="og:type" content="article" />
-      <meta key="og:url" property="og:url" content={url} />
-      <meta key="og:image" property="og:image" content={`https://og-image.axeldelafosse.now.sh/**${encodeURIComponent(title)}**.png?theme=dark&md=1&fontSize=75px&widths=100&heights=100`} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
-      />
-    </Head>
+    <>
+      <Head>
+        <title>
+          {title} - {process.env.NEXT_PUBLIC_FULL_NAME}
+        </title>
+        <meta key="description" name="description" content={description} />
+        <meta key="twitter:title" name="twitter:title" content={title} />
+        <meta
+          key="twitter:description"
+          name="twitter:description"
+          content={description}
+        />
+        <meta key="og:title" property="og:title" content={title} />
+        <meta
+          key="og:description"
+          property="og:description"
+          content={description}
+        />
+        <meta key="og:type" property="og:type" content="article" />
+        <meta key="og:url" property="og:url" content={url} />
+        <meta
+          key="og:image"
+          property="og:image"
+          content={`https://og-image.axeldelafosse.now.sh/**${encodeURIComponent(
+            title
+          )}**.png?theme=dark&md=1&fontSize=75px&widths=100&heights=100`}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+        />
+      </Head>
+
+      <Meta>
+        <Img src={require('../images/axel.png')} />
+        <Text>{process.env.NEXT_PUBLIC_FULL_NAME}</Text>
+        <Text>⟫</Text>
+        <Text>{new Date(dateLastModified).toDateString()}</Text>
+      </Meta>
+    </>
   );
 }
 
