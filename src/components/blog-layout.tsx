@@ -14,8 +14,12 @@ const Wrapper = styled.div`
 
   height: 100%;
   min-height: 100vh;
-  max-width: 600px;
   margin: auto;
+
+  @media (min-width: 1024px) {
+    width: 600px;
+    max-width: 600px;
+  }
 
   padding-left: 18px;
   padding-right: 18px;
