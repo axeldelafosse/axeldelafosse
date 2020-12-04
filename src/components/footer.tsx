@@ -21,45 +21,77 @@ const Bull = styled.span`
   cursor: none;
 `;
 
-function Footer({ color }: { color: string }) {
+const SubscribeText = styled.div`
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+`;
+
+function Footer({
+  color,
+  shouldShowSubscribeEmbed = false
+}: {
+  color: string;
+  shouldShowSubscribeEmbed?: boolean;
+}) {
   return (
-    <Wrapper color={color}>
-      <Link
-        href={`https://github.com/${process.env.NEXT_PUBLIC_ID}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        color={color}
-      >
-        github
-      </Link>
-      <Bull>•</Bull>
-      <Link
-        href={`https://soundcloud.com/${process.env.NEXT_PUBLIC_ID}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        color={color}
-      >
-        soundcloud
-      </Link>
-      <Bull>•</Bull>
-      <Link
-        href={`https://www.linkedin.com/in/${process.env.NEXT_PUBLIC_ID}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        color={color}
-      >
-        linkedin
-      </Link>
-      <Bull>•</Bull>
-      <Link
-        href={`https://twitter.com/${process.env.NEXT_PUBLIC_ID}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        color={color}
-      >
-        twitter
-      </Link>
-    </Wrapper>
+    <div>
+      {shouldShowSubscribeEmbed && (
+        <>
+          <SubscribeText>
+            Pssst... Hey you! You can subscribe to my blog.
+            <br />
+            Don't worry, I don't post often.
+          </SubscribeText>
+          <iframe
+            id="substack"
+            src="https://axeldelafosse.substack.com/embed"
+            width="100%"
+            height="100"
+            frameBorder="0"
+            scrolling="no"
+          />
+        </>
+      )}
+
+      <Wrapper color={color}>
+        <Link
+          href={`https://github.com/${process.env.NEXT_PUBLIC_ID}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          color={color}
+        >
+          github
+        </Link>
+        <Bull>•</Bull>
+        <Link
+          href={`https://soundcloud.com/${process.env.NEXT_PUBLIC_ID}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          color={color}
+        >
+          soundcloud
+        </Link>
+        <Bull>•</Bull>
+        <Link
+          href={`https://www.linkedin.com/in/${process.env.NEXT_PUBLIC_ID}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          color={color}
+        >
+          linkedin
+        </Link>
+        <Bull>•</Bull>
+        <Link
+          href={`https://twitter.com/${process.env.NEXT_PUBLIC_ID}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          color={color}
+        >
+          twitter
+        </Link>
+      </Wrapper>
+    </div>
   );
 }
 

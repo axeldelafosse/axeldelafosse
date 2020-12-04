@@ -89,7 +89,7 @@ function Home() {
       <Link href="/blog" passHref={true}>
         <Logo
           src={require('../images/logo-white.svg')}
-          alt={process.env.NEXT_PUBLIC_FULL_NAME}
+          alt="think outside the box"
         />
       </Link>
       <Footer color="#FFF" />

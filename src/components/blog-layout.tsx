@@ -149,7 +149,7 @@ function BlogLayout({ children }: BlogLayoutProps) {
         </Header>
         {children}
       </Box>
-      <Footer color="#000" />
+      <Footer color="#000" shouldShowSubscribeEmbed={isBlogPost} />
     </Wrapper>
   );
 }
