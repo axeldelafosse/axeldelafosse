@@ -67,7 +67,7 @@ const GlobalStyle = createGlobalStyle`
 
 const id = process.env.NEXT_PUBLIC_ID;
 const title = process.env.NEXT_PUBLIC_FULL_NAME;
-const description = `Startups + Growth + Code + Electronic music`;
+const description = `Startups, Growth, Code, Electronic music...`;
 
 function App({ Component, pageProps, router }: AppProps) {
   const { pathname } = router;
@@ -78,7 +78,11 @@ function App({ Component, pageProps, router }: AppProps) {
         <title>{title}</title>
         <meta key="title" name="title" content={title} />
         <meta key="description" name="description" content={description} />
-        <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
+        <meta
+          key="twitter:card"
+          name="twitter:card"
+          content="summary_large_image"
+        />
         <meta key="twitter:title" name="twitter:title" content={title} />
         <meta
           key="twitter:description"
@@ -95,12 +99,12 @@ function App({ Component, pageProps, router }: AppProps) {
         <meta key="og:url" property="og:url" content={`https://${id}.com`} />
         <meta key="og:site_name" property="og:site_name" content={title} />
         <meta key="og:type" property="og:type" content="website" />
-        <meta key="og:image" property="og:image" content="https://og-image.axeldelafosse.now.sh/.png?theme=dark&md=1&widths=350&heights=350" />
-        <link
-          rel="shortcut icon"
-          type="image/x-icon"
-          href="/favicon.ico"
+        <meta
+          key="og:image"
+          property="og:image"
+          content="https://og-image.axeldelafosse.now.sh/.png?theme=dark&md=1&widths=350&heights=350"
         />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`}

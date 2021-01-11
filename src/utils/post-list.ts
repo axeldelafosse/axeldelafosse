@@ -39,7 +39,7 @@ const createPostList = (fileNameList: string[]): Post[] => {
         urlPath: `/blog/${uid}`,
         date: new Date(date).toISOString(),
         dateLastModified: new Date(dateLastModified).toISOString(),
-        secondsSinceEpoch: new Date(date).getTime() / 1000
+        secondsSinceEpoch: new Date(dateLastModified).getTime() / 1000
       });
 
       return list;
