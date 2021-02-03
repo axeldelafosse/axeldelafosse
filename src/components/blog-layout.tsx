@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import Image from 'next/image';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -60,7 +61,7 @@ const PointingIndex = styled.span`
   padding-right: 5px;
 `;
 
-const Logo = styled.img`
+const Logo = styled(Image)`
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -135,6 +136,8 @@ function BlogLayout({ children }: BlogLayoutProps) {
             <Logo
               src={require('../images/logo.svg')}
               alt={process.env.NEXT_PUBLIC_FULL_NAME}
+              width={20}
+              height={20}
             />
           </Link>
           {isBlogPost ? (

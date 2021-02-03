@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.footer`
@@ -34,6 +34,12 @@ function Footer({
   color: string;
   shouldShowSubscribeEmbed?: boolean;
 }) {
+  const [shouldShowIframe, setShouldShowIframe] = useState(false);
+
+  useEffect(() => {
+    setShouldShowIframe(true);
+  }, []);
+
   return (
     <div>
       {shouldShowSubscribeEmbed && (
@@ -43,14 +49,16 @@ function Footer({
             <br />
             Don't worry, I don't post often.
           </SubscribeText>
-          <iframe
-            id="substack"
-            src="https://axeldelafosse.substack.com/embed"
-            width="100%"
-            height="100"
-            frameBorder="0"
-            scrolling="no"
-          />
+          {shouldShowIframe && (
+            <iframe
+              id="substack"
+              src="https://axeldelafosse.substack.com/embed"
+              width="100%"
+              height="100"
+              frameBorder="0"
+              scrolling="no"
+            />
+          )}
         </>
       )}
 

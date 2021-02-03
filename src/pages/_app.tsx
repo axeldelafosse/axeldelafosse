@@ -107,10 +107,12 @@ function App({ Component, pageProps, router }: AppProps) {
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <script
           async
+          defer
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`}
         />
-        <script />
         <script
+          async
+          defer
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `

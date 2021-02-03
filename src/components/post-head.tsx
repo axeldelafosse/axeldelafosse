@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import styled from 'styled-components';
 
 const Meta = styled.div`
@@ -8,7 +9,7 @@ const Meta = styled.div`
   padding-top: 5px;
 `;
 
-const Img = styled.img`
+const Img = styled(Image)`
   border-radius: 50%;
   width: 25px;
   height: 25px;
@@ -88,7 +89,12 @@ function PostHead({
       </Head>
 
       <Meta>
-        <Img src={require('../images/axel.png')} />
+        <Img
+          src={require('../images/axel.png')}
+          alt={process.env.NEXT_PUBLIC_FULL_NAME}
+          width={25}
+          height={25}
+        />
         <Text>{process.env.NEXT_PUBLIC_FULL_NAME}</Text>
         <Text>⟫</Text>
         <Text>{new Date(dateLastModified).toDateString()}</Text>

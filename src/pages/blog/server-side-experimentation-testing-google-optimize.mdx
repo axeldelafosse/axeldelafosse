@@ -1,4 +1,5 @@
 import PostHead from '@/components/post-head';
+import Image from 'next/image';
 
 export const meta = {
   uid: 'server-side-experimentation-testing-google-optimize',
@@ -131,7 +132,12 @@ function setExpGoogleAnalytics(exp: string) {
 or with gtag:
 
 ```tsx
-gtag('config', 'UA-XXXXXXX-X', {experiments: [ { id: 'ExperimentID 1', variant: '1' }, { id: 'ExperimentID 2', variant: '2' }, ]});
+gtag('config', 'UA-XXXXXXX-X', {
+  experiments: [
+    { id: 'ExperimentID 1', variant: '1' },
+    { id: 'ExperimentID 2', variant: '2' }
+  ]
+});
 ```
 
 ## End-to-end Testing
@@ -178,14 +184,26 @@ Cypress.Commands.add('getVariantId', (experimentId) => {
 - Set experiment targeting
   - Set rule to URL equals `SERVER_SIDE`:
 
-<img src={require('./images/go-targeting.png')} width="100%" />
+<Image
+  src={require('./images/go-targeting.png')}
+  width={500}
+  height={500}
+  layout="responsive"
+  objectFit="contain"
+/>
 
 - Set experiment objectives
   - Click on ADD EXPERIMENT OBJECTIVE
   - Set your success metric and trade-off metric
   - Objective configuration example:
 
-<img src={require('./images/go-objective.png')} width="100%" />
+<Image
+  src={require('./images/go-objective.png')}
+  width={500}
+  height={500}
+  layout="responsive"
+  objectFit="contain"
+/>
 
 - Get the experiment id and list of variations ids (original is `0` and variants are `1`, `2`, `3`, etc…) and save them in the [experiments config file](https://github.com/axeldelafosse/experiments/blob/master/experiments.ts)
 - Start the experiment
