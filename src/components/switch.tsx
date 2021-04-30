@@ -16,7 +16,7 @@ export default function StyledSwitch({
       checked={enabled}
       onChange={setEnabled}
       className={`${
-        enabled ? 'bg-purple-400' : 'bg-gray-200'
+        enabled ? 'bg-purple-400' : 'bg-gray-400'
       } relative inline-flex items-center h-6 rounded-full w-11 cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
     >
       <span className="sr-only">{accessibility}</span>
