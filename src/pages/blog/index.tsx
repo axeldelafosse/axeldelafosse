@@ -13,7 +13,7 @@ function Blog({ posts }: { posts: Post[] }) {
       <div className="flex items-center justify-between">
         <h1>Blog</h1>
         <div className="flex items-center">
-          <h3 className="mr-2">Tech?</h3>
+          <h4 className="mr-2 font-bold">Tech?</h4>
           <Switch
             enabled={showTechPosts}
             setEnabled={setShowTechPosts}
