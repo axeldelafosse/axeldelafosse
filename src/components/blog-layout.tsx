@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MDXProvider } from '@mdx-js/react';
-// import { Tweet } from 'react-static-tweets';
+import { Tweet } from 'react-static-tweets';
 
 import PostHead from '@/components/post-head';
 import CustomLink from '@/components/custom-link';
@@ -48,6 +48,11 @@ const components = {
       layout="responsive"
       objectFit="contain"
     />
+  ),
+  Tweet: ({ id }: { id: string }) => (
+    <div className="flex justify-center">
+      <Tweet id={id} />
+    </div>
   )
 };
 

@@ -1,4 +1,5 @@
 import '../styles/globals.scss';
+import 'react-static-tweets/styles.css';
 
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
@@ -11,8 +12,6 @@ import TrackPageView from '@/components/track-pageview';
 const DynamicLoadAnalytics = dynamic<any>(() =>
   import('@/utils/load-analytics').then((mod) => mod.LoadAnalytics)
 );
-
-// import 'react-static-tweets/styles.css';
 
 interface GAWindow extends Window {
   gtag(cmd: string, event: string, props?: Record<string, any>): void;
