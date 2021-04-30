@@ -6,24 +6,24 @@ import postList, { Post } from '@/utils/post-list';
 import Switch from '@/components/switch';
 
 function Blog({ posts }: { posts: Post[] }) {
-  const [showTechPosts, setShowTechPosts] = useState(true);
+  const [hideTechPosts, setHideTechPosts] = useState(false);
 
   return (
     <>
       <div className="flex items-center justify-between">
         <h1>Blog</h1>
         <div className="flex items-center">
-          <h4 className="mr-2 font-bold">Tech?</h4>
+          <h4 className="mr-2 font-bold">Hide tech posts</h4>
           <Switch
-            enabled={showTechPosts}
-            setEnabled={setShowTechPosts}
-            accessibility="Show tech posts?"
+            enabled={hideTechPosts}
+            setEnabled={setHideTechPosts}
+            accessibility="Hide tech posts"
           />
         </div>
       </div>
       {posts
         .filter((post) =>
-          !showTechPosts ? post.tags.includes('tech') === false : true
+          hideTechPosts ? post.tags.includes('tech') === false : true
         )
         .map((post) => (
           <Link key={post.uid} href={post.urlPath} passHref={true}>
