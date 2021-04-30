@@ -14,6 +14,7 @@ export interface Post {
   dateLastModified: string;
   secondsSinceEpoch: number;
   urlPath: string;
+  tags: string[];
 }
 
 const createPostList = (fileNameList: string[]): Post[] => {
@@ -29,7 +30,8 @@ const createPostList = (fileNameList: string[]): Post[] => {
         title,
         description,
         date,
-        dateLastModified
+        dateLastModified,
+        tags
       } = require(`../pages/blog/${fileName}`).meta;
 
       list.push({
@@ -39,7 +41,8 @@ const createPostList = (fileNameList: string[]): Post[] => {
         urlPath: `/blog/${uid}`,
         date: new Date(date).toISOString(),
         dateLastModified: new Date(dateLastModified).toISOString(),
-        secondsSinceEpoch: new Date(dateLastModified).getTime() / 1000
+        secondsSinceEpoch: new Date(dateLastModified).getTime() / 1000,
+        tags: tags ?? []
       });
 
       return list;
