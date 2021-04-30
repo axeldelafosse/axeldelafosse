@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
+
+const Substack = dynamic(() => import('./substack'));
 
 const Wrapper = styled.footer`
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${(props) => props.color};
 `;
 
 const Link = styled.a`
-  color: ${(props) => props.color};
   text-decoration: none;
   font-size: 14px;
 `;
@@ -21,53 +22,23 @@ const Bull = styled.span`
   cursor: none;
 `;
 
-const SubscribeText = styled.div`
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
-`;
-
 function Footer({
-  color,
+  color = 'black',
   shouldShowSubscribeEmbed = false
 }: {
-  color: string;
+  color?: string;
   shouldShowSubscribeEmbed?: boolean;
 }) {
-  const [shouldShowIframe, setShouldShowIframe] = useState(false);
-
-  useEffect(() => {
-    setShouldShowIframe(true);
-  }, []);
-
   return (
-    <div>
-      {shouldShowSubscribeEmbed && (
-        <>
-          <SubscribeText>
-            Pssst... Hey you! You can subscribe to my blog.
-            <br />
-            Don't worry, I don't post often.
-          </SubscribeText>
-          {shouldShowIframe && (
-            <iframe
-              id="substack"
-              src="https://axeldelafosse.substack.com/embed"
-              width="100%"
-              height="100"
-              frameBorder="0"
-              scrolling="no"
-            />
-          )}
-        </>
-      )}
+    <div className="z-10">
+      {shouldShowSubscribeEmbed && <Substack />}
 
-      <Wrapper color={color}>
+      <Wrapper className={`text-${color} dark:text-white`}>
         <Link
           href={`https://github.com/${process.env.NEXT_PUBLIC_ID}`}
           target="_blank"
           rel="noopener noreferrer"
-          color={color}
+          className={`text-${color} dark:text-white`}
         >
           github
         </Link>
@@ -76,7 +47,7 @@ function Footer({
           href={`https://soundcloud.com/${process.env.NEXT_PUBLIC_ID}`}
           target="_blank"
           rel="noopener noreferrer"
-          color={color}
+          className={`text-${color} dark:text-white`}
         >
           soundcloud
         </Link>
@@ -85,7 +56,7 @@ function Footer({
           href={`https://www.linkedin.com/in/${process.env.NEXT_PUBLIC_ID}`}
           target="_blank"
           rel="noopener noreferrer"
-          color={color}
+          className={`text-${color} dark:text-white`}
         >
           linkedin
         </Link>
@@ -94,7 +65,7 @@ function Footer({
           href={`https://twitter.com/${process.env.NEXT_PUBLIC_ID}`}
           target="_blank"
           rel="noopener noreferrer"
-          color={color}
+          className={`text-${color} dark:text-white`}
         >
           twitter
         </Link>

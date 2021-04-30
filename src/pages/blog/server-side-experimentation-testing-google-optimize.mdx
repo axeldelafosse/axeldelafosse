@@ -1,6 +1,3 @@
-import PostHead from '@/components/post-head';
-import Image from 'next/image';
-
 export const meta = {
   uid: 'server-side-experimentation-testing-google-optimize',
   title: `Server-side Experimentation and Testing with Google Optimize`,
@@ -118,7 +115,7 @@ function Component() {
 
 - Send `exp` event to GA and retrieve the value on `pageview` event:
 
-```tsx
+```ts
 function setExpGoogleAnalytics(exp: string) {
   if (!isBrowser || !window.ga) {
     return;
@@ -131,7 +128,7 @@ function setExpGoogleAnalytics(exp: string) {
 
 or with gtag:
 
-```tsx
+```ts
 gtag('config', 'UA-XXXXXXX-X', {
   experiments: [
     { id: 'ExperimentID 1', variant: '1' },
@@ -147,7 +144,7 @@ To test your experiments with Cypress, you need to:
 - Get the variant id: `cy.getVariantId(experimentId)`
 - Implement the business logic behind your experiment to correctly test it:
 
-```tsx
+```ts
 cy.getVariantId('xoo8Mc2ITTCSiXLjuOqrng').then((variantId) => {
   if (variantId === '0') {
     //
@@ -157,7 +154,7 @@ cy.getVariantId('xoo8Mc2ITTCSiXLjuOqrng').then((variantId) => {
 
 Where `getVariantId` is:
 
-```tsx
+```ts
 Cypress.Commands.add('getVariantId', (experimentId) => {
   cy.getCookie('X').then((X) => {
     if (X) {
@@ -184,26 +181,14 @@ Cypress.Commands.add('getVariantId', (experimentId) => {
 - Set experiment targeting
   - Set rule to URL equals `SERVER_SIDE`:
 
-<Image
-  src={require('./images/go-targeting.png')}
-  width={500}
-  height={500}
-  layout="responsive"
-  objectFit="contain"
-/>
+<img src="/images/go-targeting.png" />
 
 - Set experiment objectives
   - Click on ADD EXPERIMENT OBJECTIVE
   - Set your success metric and trade-off metric
   - Objective configuration example:
 
-<Image
-  src={require('./images/go-objective.png')}
-  width={500}
-  height={500}
-  layout="responsive"
-  objectFit="contain"
-/>
+<img src="/images/go-objective.png" />
 
 - Get the experiment id and list of variations ids (original is `0` and variants are `1`, `2`, `3`, etc…) and save them in the [experiments config file](https://github.com/axeldelafosse/experiments/blob/master/experiments.ts)
 - Start the experiment
@@ -261,7 +246,7 @@ unique (customer_id, experiment_id)
 
 How we store the experiments in the config file:
 
-```tsx
+```ts
 experiments: [
   {
     name: 'X',
@@ -276,7 +261,7 @@ experiments: [
 
 How we store the experiments allocations in the web app:
 
-```tsx
+```ts
 experiments: [
   { id: 'X', variantId: 'X' },
   { id: 'X', variantId: 'X' }

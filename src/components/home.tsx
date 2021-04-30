@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
+import { Post } from '@/utils/post-list';
+import Gradient from '@/components/gradient';
+import Logo from '@/components/logo';
 import Footer from './footer';
 
 const Wrapper = styled.div`
@@ -10,22 +13,6 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 100vh;
-
-  background: linear-gradient(242deg, #00ffff, #0000c3, #ff47ff);
-  background-size: 600% 600%;
-  animation: bg 32s ease infinite;
-
-  @keyframes bg {
-    0% {
-      background-position: 0% 42%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 42%;
-    }
-  }
 `;
 
 const Header = styled.header`
@@ -34,6 +21,7 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  z-index: 10;
 `;
 
 const MenuItem = styled.a`
@@ -43,7 +31,7 @@ const MenuItem = styled.a`
   margin-right: 25px;
 `;
 
-const Logo = styled.img`
+const LogoContainer = styled.div`
   width: 20vh;
   height: 20vh;
   cursor: zoom-in;
@@ -64,36 +52,55 @@ const Logo = styled.img`
   animation: growing 5000ms infinite;
 `;
 
-function Home() {
+function Home({ posts }: { posts: Post[] }) {
+  useEffect(() => {
+    const gradient = new Gradient();
+    // @ts-ignore
+    gradient.initGradient('#gradient-canvas');
+  }, []);
+
   return (
-    <Wrapper>
-      <Header>
-        <Link href="/blog" passHref={true}>
-          <MenuItem>blog</MenuItem>
-        </Link>
-        <MenuItem
-          href="https://pool.social"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          pool
-        </MenuItem>
-        <MenuItem
-          href={`https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          source
-        </MenuItem>
-      </Header>
-      <Link href="/blog" passHref={true}>
-        <Logo
-          src={require('../images/logo-white.svg')}
-          alt="think outside the box"
-        />
-      </Link>
-      <Footer color="#FFF" />
-    </Wrapper>
+    <>
+      <div className="absolute h-screen w-screen">
+        <canvas id="gradient-canvas" data-transition-in />
+      </div>
+      <Wrapper>
+        <Header>
+          <Link href="/blog" passHref={true}>
+            <MenuItem>blog</MenuItem>
+          </Link>
+          <MenuItem
+            href="https://poolmessenger.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            pool
+          </MenuItem>
+          <MenuItem
+            href={`https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            source
+          </MenuItem>
+        </Header>
+        <div className="h-auto z-10 flex flex-col justify-center items-center">
+          <Link href="/blog" passHref={true}>
+            <LogoContainer>
+              <Logo color="#FFF" />
+              {/* <img alt="think outside the box" /> */}
+            </LogoContainer>
+          </Link>
+          <Link href={posts[0].urlPath} passHref={true}>
+            <div className="text-white text-lg pt-12 flex justify-center cursor-pointer">
+              <strong className="pr-2">New: </strong>
+              {posts[0].title}
+            </div>
+          </Link>
+        </div>
+        <Footer color="white" />
+      </Wrapper>
+    </>
   );
 }
 

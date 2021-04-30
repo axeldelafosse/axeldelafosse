@@ -38,6 +38,6 @@ function Blog({ posts }: { posts: Post[] }) {
 export default Blog;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = await Promise.resolve(postList());
+  const posts = postList();
   return { props: { posts } };
 };

@@ -1,7 +1,7 @@
 const postFileNames = () => {
   const postFileNames =
     // @ts-ignore
-    preval`module.exports = require('fs').readdirSync('./src/pages/blog')` ||
+    preval`module.exports = require('fs').readdirSync('./src/pages/blog/drafts')` ||
     [];
   return postFileNames;
 };
@@ -25,22 +25,29 @@ const createPostList = (fileNameList: string[]): Post[] => {
 
       if (fileExtension !== 'mdx') return list;
 
-      const {
-        title,
-        description,
-        date,
-        dateLastModified
-      } = require(`../pages/blog/${fileName}`).meta;
+      try {
+        const {
+          title,
+          description,
+          date,
+          dateLastModified
+        } = require(`../pages/blog/drafts/${fileName}`).meta || {
+          title: uid,
+          description: '',
+          date: new Date(),
+          dateLastModified: new Date()
+        };
 
-      list.push({
-        uid,
-        title,
-        description,
-        urlPath: `/blog/${uid}`,
-        date: new Date(date).toISOString(),
-        dateLastModified: new Date(dateLastModified).toISOString(),
-        secondsSinceEpoch: new Date(dateLastModified).getTime() / 1000
-      });
+        list.push({
+          uid,
+          title,
+          description,
+          urlPath: `/blog/drafts/${uid}`,
+          date: new Date(date).toISOString(),
+          dateLastModified: new Date(dateLastModified).toISOString(),
+          secondsSinceEpoch: new Date(date).getTime() / 1000
+        });
+      } catch (error) {}
 
       return list;
     }, [])

@@ -1,13 +1,21 @@
-import React from 'react';
+import '../styles/globals.css';
+
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import { AppProps } from 'next/app';
-import { createGlobalStyle } from 'styled-components';
 
 import BlogLayout from '@/components/blog-layout';
 import TrackPageView from '@/components/track-pageview';
 
+const DynamicLoadAnalytics = dynamic<any>(() =>
+  import('@/utils/load-analytics').then((mod) => mod.LoadAnalytics)
+);
+
+// import 'react-static-tweets/styles.css';
+
 interface GAWindow extends Window {
-  gtag: any;
+  gtag(cmd: string, event: string, props?: Record<string, any>): void;
 }
 
 export function reportWebVitals({
@@ -21,8 +29,9 @@ export function reportWebVitals({
   label: string;
   value: number;
 }) {
-  (window as GAWindow & typeof globalThis).gtag('event', name, {
-    eventCategory:
+  const gaWindow = (window as unknown) as GAWindow;
+  gaWindow?.gtag?.('event', name, {
+    event_category:
       label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
     // Google Analytics metrics must be integers, so the value is rounded.
     // For CLS the value is first multiplied by 1000 for greater precision
@@ -38,39 +47,17 @@ export function reportWebVitals({
   });
 }
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: monospace;
-    font-size: 115%;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  code {
-    color: rgb(40, 42, 46);
-    background-color: rgb(246, 246, 246);
-    border-radius: 2px;
-    padding: 0 2px;
-    font-size: 99%;
-  }
-
-  .language-tsx {
-    color: rgb(40, 42, 46);
-    background-color: rgb(246, 246, 246);
-    overflow-x: auto;
-  }
-`;
-
 const id = process.env.NEXT_PUBLIC_ID;
 const title = process.env.NEXT_PUBLIC_FULL_NAME;
 const description = `Startups, Growth, Code, Electronic music...`;
 
 function App({ Component, pageProps, router }: AppProps) {
   const { pathname } = router;
+  const [shouldLoadAnalytics, setShouldLoadAnalytics] = useState(false);
+
+  useEffect(() => {
+    setShouldLoadAnalytics(true);
+  }, []);
 
   return (
     <>
@@ -99,39 +86,44 @@ function App({ Component, pageProps, router }: AppProps) {
         <meta key="og:url" property="og:url" content={`https://${id}.com`} />
         <meta key="og:site_name" property="og:site_name" content={title} />
         <meta key="og:type" property="og:type" content="website" />
-        <meta
+        {/* <meta
           key="og:image"
           property="og:image"
           content="https://og-image.axeldelafosse.now.sh/.png?theme=dark&md=1&widths=350&heights=350"
-        />
+        /> */}
+        <meta name="application-name" content={title} />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content={title} />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#000000" />
+
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
+
         <script
-          async
-          defer
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`}
-        />
-        <script
-          async
-          defer
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GA}');
+                gtag('config', '${process.env.NEXT_PUBLIC_GA}', { 'transport_type': 'beacon' });
               `
           }}
         />
       </Head>
+      {shouldLoadAnalytics && <DynamicLoadAnalytics />}
       {pathname.includes('blog') ? (
-        <BlogLayout>
-          <Component {...pageProps} />
-        </BlogLayout>
+        <div className="bg-white dark:bg-black text-black dark:text-white">
+          <BlogLayout>
+            <Component {...pageProps} />
+          </BlogLayout>
+        </div>
       ) : (
         <Component {...pageProps} />
       )}
-      <GlobalStyle />
       <TrackPageView />
     </>
   );

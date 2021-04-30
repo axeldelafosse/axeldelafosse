@@ -47,7 +47,7 @@ const sitemapXml = (posts: Post[]) => {
 class Sitemap extends React.Component {
   static async getInitialProps(ctx: NextPageContext) {
     const { res } = ctx;
-    const posts = await Promise.resolve(postList());
+    const posts = postList();
 
     if (res && posts) {
       res.setHeader('Content-Type', 'text/xml');

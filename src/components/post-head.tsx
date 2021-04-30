@@ -90,7 +90,7 @@ function PostHead({
 
       <Meta>
         <Img
-          src={require('../images/axel.png')}
+          src="/images/axel.png"
           alt={process.env.NEXT_PUBLIC_FULL_NAME}
           width={25}
           height={25}

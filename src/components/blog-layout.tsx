@@ -1,9 +1,14 @@
 import React, { ReactNode } from 'react';
-import Image from 'next/image';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
+import { MDXProvider } from '@mdx-js/react';
+// import { Tweet } from 'react-static-tweets';
 
+import PostHead from './post-head';
+import CustomLink from './custom-link';
+import CodeBlock from './code-block';
 import Footer from './footer';
 
 const Wrapper = styled.div`
@@ -20,13 +25,13 @@ const Wrapper = styled.div`
   @media (min-width: 1024px) {
     width: 600px;
     max-width: 600px;
+
+    border-left: 1px solid #f5f5f9;
+    border-right: 1px solid #f5f5f9;
   }
 
   padding-left: 18px;
   padding-right: 18px;
-
-  border-left: 1px solid #f5f5f9;
-  border-right: 1px solid #f5f5f9;
 
   h2,
   h3,
@@ -59,12 +64,6 @@ const BackButton = styled.div`
 const PointingIndex = styled.span`
   font-size: 20px;
   padding-right: 5px;
-`;
-
-const Logo = styled(Image)`
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
 `;
 
 const GithubLink = styled.a`
@@ -110,6 +109,21 @@ function getBackButtonProps(
   return { linkUrl, linkText };
 }
 
+const components = {
+  a: CustomLink,
+  PostHead: PostHead,
+  code: CodeBlock,
+  img: ({ src }: { src: string }) => (
+    <Image
+      src={src}
+      width={500}
+      height="auto"
+      layout="responsive"
+      objectFit="contain"
+    />
+  )
+};
+
 interface BlogLayoutProps {
   children: ReactNode;
 }
@@ -128,17 +142,18 @@ function BlogLayout({ children }: BlogLayoutProps) {
       <Box>
         <Header>
           <Link href={linkUrl} passHref={true}>
-            <BackButton>
+            <BackButton className="text-black dark:text-white">
               <PointingIndex>☜</PointingIndex> {linkText}
             </BackButton>
           </Link>
-          <Link href={'/'} passHref={true}>
-            <Logo
-              src={require('../images/logo.svg')}
-              alt={process.env.NEXT_PUBLIC_FULL_NAME}
-              width={20}
-              height={20}
-            />
+          <Link href="/" passHref={true}>
+            <svg
+              className="fill-current text-black dark:text-white w-5 h-5 cursor-pointer"
+              viewBox="0 0 80 80"
+            >
+              <polygon points="63.33 46.67 40 0 16.67 46.67 63.33 46.67" />
+              <polygon points="13.33 53.33 0 80 80 80 66.67 53.33 13.33 53.33" />
+            </svg>
           </Link>
           {isBlogPost ? (
             <GithubLink
@@ -146,7 +161,7 @@ function BlogLayout({ children }: BlogLayoutProps) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <RightButton>
+              <RightButton className="text-black dark:text-white">
                 edit <WritingHand>✍︎</WritingHand>
               </RightButton>
             </GithubLink>
@@ -154,9 +169,15 @@ function BlogLayout({ children }: BlogLayoutProps) {
             <RightButton />
           )}
         </Header>
-        {children}
+        {isBlogPost ? (
+          <MDXProvider components={components}>
+            <article>{children}</article>
+          </MDXProvider>
+        ) : (
+          <>{children}</>
+        )}
       </Box>
-      <Footer color="#000" shouldShowSubscribeEmbed={isBlogPost} />
+      <Footer shouldShowSubscribeEmbed={isBlogPost} />
     </Wrapper>
   );
 }
