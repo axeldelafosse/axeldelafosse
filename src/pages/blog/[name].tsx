@@ -1,10 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
-
-const Error = styled.h1``;
-
-const Suggestion = styled.h3``;
 
 function BlogPost404() {
   const router = useRouter();
@@ -12,8 +7,8 @@ function BlogPost404() {
 
   return (
     <>
-      <Error>Can't find post "{query.name}"</Error>
-      <Suggestion>
+      <h1>Can't find post "{query.name}"</h1>
+      <h3>
         Here's what we can do:
         <br />
         <br />
@@ -22,7 +17,7 @@ function BlogPost404() {
         or
         <br />
         2. Open a pull request to submit this post
-      </Suggestion>
+      </h3>
     </>
   );
 }

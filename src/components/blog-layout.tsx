@@ -1,88 +1,15 @@
 import React, { ReactNode } from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MDXProvider } from '@mdx-js/react';
 // import { Tweet } from 'react-static-tweets';
 
-import PostHead from './post-head';
-import CustomLink from './custom-link';
-import CodeBlock from './code-block';
-import Footer from './footer';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow-x: hidden;
-  word-break: break-word;
-
-  height: 100%;
-  min-height: 100vh;
-  margin: auto;
-
-  @media (min-width: 1024px) {
-    width: 600px;
-    max-width: 600px;
-
-    border-left: 1px solid #f5f5f9;
-    border-right: 1px solid #f5f5f9;
-  }
-
-  padding-left: 18px;
-  padding-right: 18px;
-
-  h2,
-  h3,
-  p {
-    text-align: justify;
-  }
-`;
-
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Header = styled.header`
-  height: 50px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const BackButton = styled.div`
-  width: 60px;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  cursor: w-resize;
-`;
-
-const PointingIndex = styled.span`
-  font-size: 20px;
-  padding-right: 5px;
-`;
-
-const GithubLink = styled.a`
-  color: black;
-  text-decoration: none;
-`;
-
-const RightButton = styled.div`
-  width: 60px;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  cursor: alias;
-`;
-
-const WritingHand = styled.span`
-  font-size: 20px;
-  padding-left: 5px;
-`;
+import PostHead from '@/components/post-head';
+import CustomLink from '@/components/custom-link';
+import CodeBlock from '@/components/code-block';
+import Footer from '@/components/footer';
+import styles from '@/components/wrapper.module.scss';
 
 function getGithubUrl(pathname: string) {
   const postUid = pathname.replace('/blog/', '');
@@ -138,13 +65,13 @@ function BlogLayout({ children }: BlogLayoutProps) {
   );
 
   return (
-    <Wrapper>
-      <Box>
-        <Header>
+    <div className={styles.wrapper}>
+      <div className="flex flex-col">
+        <div className="h-16 w-100 flex justify-between items-center">
           <Link href={linkUrl} passHref={true}>
-            <BackButton className="text-black dark:text-white">
-              <PointingIndex>☜</PointingIndex> {linkText}
-            </BackButton>
+            <div className="text-black dark:text-white w-16 flex items-center cursor-w-resize">
+              <span className="text-2xl pr-2">☜</span> {linkText}
+            </div>
           </Link>
           <Link href="/" passHref={true}>
             <svg
@@ -156,19 +83,20 @@ function BlogLayout({ children }: BlogLayoutProps) {
             </svg>
           </Link>
           {isBlogPost ? (
-            <GithubLink
+            <a
+              className="no-underline"
               href={getGithubUrl(router.pathname)}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <RightButton className="text-black dark:text-white">
-                edit <WritingHand>✍︎</WritingHand>
-              </RightButton>
-            </GithubLink>
+              <div className="text-black dark:text-white w-16 flex items-center cursor-alias">
+                edit <div className="text-2xl pl-2">✍︎</div>
+              </div>
+            </a>
           ) : (
-            <RightButton />
+            <div className="w-16" />
           )}
-        </Header>
+        </div>
         {isBlogPost ? (
           <MDXProvider components={components}>
             <article>{children}</article>
@@ -176,9 +104,9 @@ function BlogLayout({ children }: BlogLayoutProps) {
         ) : (
           <>{children}</>
         )}
-      </Box>
+      </div>
       <Footer shouldShowSubscribeEmbed={isBlogPost} />
-    </Wrapper>
+    </div>
   );
 }
 

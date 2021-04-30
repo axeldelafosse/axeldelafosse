@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-x: hidden;
+  word-break: break-word;
+
+  height: 100%;
+  min-height: 100vh;
+  margin: auto;
+
+  @media (min-width: 1024px) {
+    width: 600px;
+    max-width: 600px;
+
+    border-left: 1px solid #f5f5f9;
+    border-right: 1px solid #f5f5f9;
+  }
+
+  padding-left: 18px;
+  padding-right: 18px;
+
+  h2,
+  h3,
+  p {
+    text-align: justify;
+  }
+}

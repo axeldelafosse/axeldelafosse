@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+import '../styles/globals.scss';
 
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';

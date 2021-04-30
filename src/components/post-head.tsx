@@ -1,24 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import styled from 'styled-components';
-
-const Meta = styled.div`
-  display: flex;
-  align-items: center;
-  padding-top: 5px;
-`;
-
-const Img = styled(Image)`
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-`;
-
-const Text = styled.div`
-  font-size: 14px;
-  padding-left: 10px;
-`;
 
 interface PostHeadProps {
   uid: string;
@@ -88,17 +70,18 @@ function PostHead({
         />
       </Head>
 
-      <Meta>
-        <Img
+      <div className="flex items-center pt-2">
+        <Image
           src="/images/axel.png"
           alt={process.env.NEXT_PUBLIC_FULL_NAME}
           width={25}
           height={25}
+          className="rounded-full"
         />
-        <Text>{process.env.NEXT_PUBLIC_FULL_NAME}</Text>
-        <Text>⟫</Text>
-        <Text>{new Date(dateLastModified).toDateString()}</Text>
-      </Meta>
+        <div className="pl-3">{process.env.NEXT_PUBLIC_FULL_NAME}</div>
+        <div className="pl-3">⟫</div>
+        <div className="pl-3">{new Date(dateLastModified).toDateString()}</div>
+      </div>
     </>
   );
 }

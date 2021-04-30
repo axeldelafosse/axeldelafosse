@@ -30,7 +30,7 @@
     "remark-emoji": "^2.1.0",
     "remark-images": "^2.0.0",
     "remark-slug": "^6.0.0",
-    "styled-components": "^5.2.1",
+    "sass": "^1.32.12",
     "tailwindcss": "^2.0.3"
   },
   "devDependencies": {
@@ -38,9 +38,7 @@
     "@types/mdx-js__react": "^1.5.3",
     "@types/node": "^14.14.28",
     "@types/react": "^17.0.2",
-    "@types/styled-components": "^5.1.7",
     "babel-plugin-preval": "^5.0.0",
-    "babel-plugin-styled-components": "^1.12.0",
     "encoding": "^0.1.13",
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-optipng": "^8.0.0",
