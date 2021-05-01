@@ -1,0 +1,95 @@
+export const meta = {
+  uid: 'sidecar-mac',
+  title: 'Sidecar Mac',
+  description: `How to use your old Mac as a second display.`,
+  date: '2021-04-30',
+  dateLastModified: '2021-05-01',
+  tags: ['tech']
+};
+
+<PostHead {...meta} />
+
+# Sidecar Mac
+
+## How to use your old Mac as a second display.
+
+Actually this title is pretty misleading. We are not going to use Sidecar --
+but we are going to replicate the same UX.
+
+Use cases:
+
+- Using a Macbook as a side display to improve your desktop workspace (I use it to run the terminal)
+- Using two Macbooks while traveling (really useful if your work require dual screen, like UI dev)
+- Just for fun!
+
+I'm going to refer to the primary display as the "main Mac" and the second display as the "old Mac".
+
+What we are going to do is actually pretty simple: we need to create a
+Virtual Display on the main Mac and to stream this display on the old Mac.
+
+### Virtual Display
+
+**Software**
+
+First, we need to create a Virtual Display to simulate a second display on the main Mac.
+
+You can use this nice little app called [FluffyDisplay](https://github.com/tml1024/FluffyDisplay).
+It will let you create a second display of the resolution that you want.
+It is not on the App Store so you'll have to install the app with Xcode or download the [.app bundle](https://github.com/tml1024/FluffyDisplay/releases).
+
+Pro tip: you can also install the app on your old Mac to
+easily create a new display based on the resolution of the screen. Once it is installed
+on the old Mac, go to FluffyDisplay on your main Mac and select "New on peer" -> "Display".
+
+You should now have two displays:
+
+<img src="/images/sidecar-mac-displays.png" />
+
+You can now go to the "Displays Preferences" > "Arrangement" and rearrange the displays.
+
+<img src="/images/sidecar-mac-arrangement.png" />
+
+**Hardware**
+
+You can also buy a hardware Virtual Display. Search for "Virtual Display Adapter / Headless / Dummy".
+
+### Stream
+
+You can use Apple [Screen Sharing](https://support.apple.com/guide/mac-help/share-the-screen-of-another-mac-mh14066/mac)
+to stream your second display with VNC.
+
+I really recommend using Remotix to make this process smoother.
+You can set the default to "Observe Mode", to the Display 2 and to the desired quality.
+They developed a low-latency remote desktop protocol called [NEAR](https://remotix.com/help/cloud/near/)
+which I also recommend.
+
+On your main Mac, in Remotix Agent, you need to select "Enable direct connections".
+
+Pro tip: you can use [Amphetamine](https://apps.apple.com/us/app/amphetamine/id937984704)
+to make sure your old Mac doesn't go to sleep.
+But make sure to select "Allow system sleep when display is closed".
+
+Add Remotix and Amphetamine to Users & Groups > Login Items to open at startup.
+
+If you want the sound on your old Mac, you'll need to use BlackHole:
+
+`brew install blackhole-2ch`
+
+You can create a [Multi Output Device](https://github.com/ExistentialAudio/BlackHole/wiki/Multi-Output-Device)
+to get the sound on your main Mac and get the Sound Redirection on your old Mac.
+You'll probably edit the settings to deselect "Enable Remote Sound" or
+mute your old Mac for now but you'll see why it's interesting in the next section.
+
+### Bonus
+
+Another benefit of setting this up is that now I can use my old Mac (Macbook Pro) to
+connect to main Mac (Mac Pro) when I'm not behind my desk. The resolution is already correct
+and I have done the hard work of making everything work seamlessly.
+My main Mac _almost_ becomes a [Cloud Mac](/blog/drafts/cloud-mac).
+
+### Performances
+
+There is still room for improvements. Happy to learn about new ways to optimize
+this setup and reduce the latency. Please share your tips!
+
+<img src="/images/workspace.jpg" />

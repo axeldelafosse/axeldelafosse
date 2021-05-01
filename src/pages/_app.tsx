@@ -4,7 +4,7 @@ import 'react-static-tweets/styles.css';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import { AppProps } from 'next/app';
+import { AppProps, NextWebVitalsMetric } from 'next/app';
 
 import BlogLayout from '@/components/blog-layout';
 import TrackPageView from '@/components/track-pageview';
@@ -22,12 +22,7 @@ export function reportWebVitals({
   name,
   label,
   value
-}: {
-  id: string;
-  name: string;
-  label: string;
-  value: number;
-}) {
+}: NextWebVitalsMetric) {
   const gaWindow = (window as unknown) as GAWindow;
   gaWindow?.gtag?.('event', name, {
     event_category:
@@ -85,11 +80,11 @@ function App({ Component, pageProps, router }: AppProps) {
         <meta key="og:url" property="og:url" content={`https://${id}.com`} />
         <meta key="og:site_name" property="og:site_name" content={title} />
         <meta key="og:type" property="og:type" content="website" />
-        {/* <meta
+        <meta
           key="og:image"
           property="og:image"
           content="https://og-image.axeldelafosse.now.sh/.png?theme=dark&md=1&widths=350&heights=350"
-        /> */}
+        />
         <meta name="application-name" content={title} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
