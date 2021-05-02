@@ -57,34 +57,43 @@ function App({ Component, pageProps, router }: AppProps) {
     <>
       <Head>
         <title>{title}</title>
-        <meta key="title" name="title" content={title} />
-        <meta key="description" name="description" content={description} />
-        <meta
-          key="twitter:card"
-          name="twitter:card"
-          content="summary_large_image"
-        />
-        <meta key="twitter:title" name="twitter:title" content={title} />
-        <meta
-          key="twitter:description"
-          name="twitter:description"
-          content={description}
-        />
-        <meta key="twitter:site" name="twitter:site" content={`@${id}`} />
-        <meta key="og:title" property="og:title" content={title} />
-        <meta
-          key="og:description"
-          property="og:description"
-          content={description}
-        />
-        <meta key="og:url" property="og:url" content={`https://${id}.com`} />
-        <meta key="og:site_name" property="og:site_name" content={title} />
-        <meta key="og:type" property="og:type" content="website" />
-        <meta
-          key="og:image"
-          property="og:image"
-          content="https://og-image.axeldelafosse.now.sh/.png?theme=dark&md=1&widths=350&heights=350"
-        />
+        {!pathname.includes('blog/') && (
+          <>
+            <meta key="title" name="title" content={title} />
+            <meta key="description" name="description" content={description} />
+            <meta
+              key="twitter:card"
+              name="twitter:card"
+              content="summary_large_image"
+            />
+            <meta key="twitter:title" name="twitter:title" content={title} />
+            <meta
+              key="twitter:description"
+              name="twitter:description"
+              content={description}
+            />
+            <meta key="twitter:site" name="twitter:site" content={`@${id}`} />
+            <meta key="og:title" property="og:title" content={title} />
+            <meta
+              key="og:description"
+              property="og:description"
+              content={description}
+            />
+            <meta
+              key="og:url"
+              property="og:url"
+              content={`https://${id}.com`}
+            />
+            <meta key="og:site_name" property="og:site_name" content={title} />
+            <meta key="og:type" property="og:type" content="website" />
+            <meta
+              key="og:image"
+              property="og:image"
+              content="https://og-image.axeldelafosse.now.sh/.png?theme=dark&md=1&widths=350&heights=350"
+            />
+          </>
+        )}
+
         <meta name="application-name" content={title} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
