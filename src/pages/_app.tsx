@@ -1,21 +1,12 @@
 import '../styles/globals.scss';
 import 'react-static-tweets/styles.css';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import { AppProps, NextWebVitalsMetric } from 'next/app';
 
 import BlogLayout from '@/components/blog-layout';
-import TrackPageView from '@/components/track-pageview';
-
-const DynamicLoadAnalytics = dynamic<any>(() =>
-  import('@/utils/load-analytics').then((mod) => mod.LoadAnalytics)
-);
-
-interface GAWindow extends Window {
-  gtag(cmd: string, event: string, props?: Record<string, any>): void;
-}
+import { LoadAnalytics, TrackPageView } from '@/lib/analytics';
 
 export function reportWebVitals({
   id,
@@ -23,8 +14,7 @@ export function reportWebVitals({
   label,
   value
 }: NextWebVitalsMetric) {
-  const gaWindow = (window as unknown) as GAWindow;
-  gaWindow?.gtag?.('event', name, {
+  window?.gtag?.('event', name, {
     event_category:
       label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
     // Google Analytics metrics must be integers, so the value is rounded.
@@ -47,11 +37,6 @@ const description = `Startups, Growth, Code, Electronic music...`;
 
 function App({ Component, pageProps, router }: AppProps) {
   const { pathname } = router;
-  const [shouldLoadAnalytics, setShouldLoadAnalytics] = useState(false);
-
-  useEffect(() => {
-    setShouldLoadAnalytics(true);
-  }, []);
 
   return (
     <>
@@ -117,7 +102,7 @@ function App({ Component, pageProps, router }: AppProps) {
           }}
         />
       </Head>
-      {shouldLoadAnalytics && <DynamicLoadAnalytics />}
+      <LoadAnalytics />
       {pathname.includes('blog') ? (
         <div className="bg-white dark:bg-black text-black dark:text-white">
           <BlogLayout>

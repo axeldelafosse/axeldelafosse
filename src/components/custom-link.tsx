@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
 
+import { LinkPreview } from './link-preview';
+
 interface LinkProps {
   href: string;
   children: ReactNode;
@@ -9,16 +11,20 @@ interface LinkProps {
 function CustomLink({ href, children }: LinkProps) {
   if (href.includes('axeldelafosse.com') || href[0] === '/') {
     return (
-      <Link href={href} passHref={true}>
-        {children}
-      </Link>
+      <LinkPreview url={href}>
+        <Link href={href} passHref={true}>
+          {children}
+        </Link>
+      </LinkPreview>
     );
   }
 
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer">
-      {children}
-    </a>
+    <LinkPreview url={href}>
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    </LinkPreview>
   );
 }
 

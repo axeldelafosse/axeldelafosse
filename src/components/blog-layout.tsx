@@ -10,6 +10,7 @@ import CustomLink from '@/components/custom-link';
 import CodeBlock from '@/components/code-block';
 import Footer from '@/components/footer';
 import styles from '@/components/wrapper.module.scss';
+import { LinkPreview } from '@/components/link-preview';
 
 function getGithubUrl(pathname: string) {
   const postUid = pathname.replace('/blog/', '');
@@ -44,7 +45,7 @@ const components = {
     <Image
       src={src}
       width={500}
-      height="auto"
+      height={500}
       layout="responsive"
       objectFit="contain"
     />
@@ -53,7 +54,8 @@ const components = {
     <div className="flex justify-center">
       <Tweet id={id} />
     </div>
-  )
+  ),
+  LinkPreview
 };
 
 interface BlogLayoutProps {

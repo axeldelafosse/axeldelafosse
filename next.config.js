@@ -1,22 +1,20 @@
 const withPlugins = require('next-compose-plugins');
-const images = require('remark-images');
-const emoji = require('remark-emoji');
 const slug = require('remark-slug');
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/
 });
-const withPreact = require('next-plugin-preact');
 const withPWA = require('next-pwa');
 const runtimeCaching = require('next-pwa/cache');
 
 const nextConfig = {
-  env: {},
   publicRuntimeConfig: false,
   images: {
-    domains: ['pbs.twimg.com']
+    domains: ['pbs.twimg.com', 'api.microlink.io']
+  },
+  experimental: {
+    optimizeCss: true
   },
   future: {
-    webpack5: false,
     strictPostcssConfiguration: true
   },
   async headers() {
@@ -28,7 +26,6 @@ const nextConfig = {
 };
 
 module.exports = withPlugins([
-  [withPreact],
   [
     withPWA,
     {
@@ -43,7 +40,7 @@ module.exports = withPlugins([
     withMDX,
     {
       pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
-      remarkPlugins: [images, emoji, slug]
+      remarkPlugins: [slug]
     }
   ],
   nextConfig

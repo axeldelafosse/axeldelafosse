@@ -5,3 +5,5 @@
 .now
 .vercel
 /src/pages/blog/drafts
+**/public/workbox-*.js
+**/public/sw.js

@@ -1,8 +1,8 @@
 {
   "name": "Axel Delafosse",
   "short_name": "Ax",
-  "theme_color": "#FFFFFF",
-  "background_color": "#FFFFFF",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "scope": "/",
   "start_url": "/",
   "display": "standalone",

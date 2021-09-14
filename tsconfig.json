@@ -25,7 +25,8 @@
       "@/images/*": ["src/images/*"],
       "@/modules/*": ["src/modules/*"],
       "@/pages/*": ["src/pages/*"],
-      "@/utils/*": ["src/utils/*"]
+      "@/utils/*": ["src/utils/*"],
+      "@/lib/*": ["src/lib/*"]
     }
   },
   "exclude": ["node_modules", "static"],
