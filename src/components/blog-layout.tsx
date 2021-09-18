@@ -11,6 +11,7 @@ import CodeBlock from '@/components/code-block';
 import Footer from '@/components/footer';
 import styles from '@/components/wrapper.module.scss';
 import { LinkPreview } from '@/components/link-preview';
+import { weservLoader } from '@/lib/weserv-loader';
 
 function getGithubUrl(pathname: string) {
   const postUid = pathname.replace('/blog/', '');
@@ -48,6 +49,7 @@ const components = {
       height={500}
       layout="responsive"
       objectFit="contain"
+      loader={weservLoader}
     />
   ),
   Tweet: ({ id }: { id: string }) => (

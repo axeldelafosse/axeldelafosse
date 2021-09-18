@@ -9,7 +9,8 @@ const runtimeCaching = require('next-pwa/cache');
 const nextConfig = {
   publicRuntimeConfig: false,
   images: {
-    domains: ['pbs.twimg.com', 'api.microlink.io']
+    // domains: ['pbs.twimg.com', 'api.microlink.io']
+    loader: 'custom'
   },
   experimental: {
     optimizeCss: true

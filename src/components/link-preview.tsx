@@ -6,6 +6,8 @@ import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import Image from 'next/image';
 import { encode } from 'qss';
 
+import { weservLoader } from '@/lib/weserv-loader';
+
 export const LinkPreview = ({
   children,
   url
@@ -61,6 +63,7 @@ export const LinkPreview = ({
               height={height}
               layout={layout}
               priority={true}
+              loader={weservLoader}
             />
           </div>
         </Portal>

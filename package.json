@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
-    "build": "rimraf .next && next build",
+    "build": "next build",
+    "build:static": "rimraf src/pages/sitemap.xml.ts && next build",
     "start": "next start",
-    "now-build": "rimraf .next && next build",
+    "now-build": "next build",
     "deploy": "vercel --prod --no-clipboard",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "export": "next export"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.1",

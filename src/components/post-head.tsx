@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 
 interface PostHeadProps {
   uid: string;
@@ -71,7 +70,7 @@ function PostHead({
       </Head>
 
       <div className="flex items-center pt-2">
-        <Image
+        <img
           src="/images/axel.png"
           alt={process.env.NEXT_PUBLIC_FULL_NAME}
           width={25}
