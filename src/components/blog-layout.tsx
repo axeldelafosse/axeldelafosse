@@ -50,6 +50,7 @@ const components = {
       layout="responsive"
       objectFit="contain"
       loader={weservLoader}
+      quality={100}
     />
   ),
   Tweet: ({ id }: { id: string }) => (

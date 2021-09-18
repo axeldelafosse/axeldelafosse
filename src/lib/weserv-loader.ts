@@ -5,5 +5,7 @@ export const weservLoader = ({
   width,
   quality = 69
 }: ImageLoaderProps) => {
-  return `https://images.weserv.nl/?url=${src}&w=${width}&q=${quality}&af&il&trim`;
+  return `https://images.weserv.nl/?url=${encodeURIComponent(
+    src
+  )}&w=${width}&q=${quality}&af&il&trim`;
 };

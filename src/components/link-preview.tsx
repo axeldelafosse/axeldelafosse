@@ -101,6 +101,7 @@ export const LinkPreview = ({
                 height={height}
                 layout={layout}
                 className="rounded-lg"
+                loader={weservLoader}
               />
             </a>
           </Transition>
