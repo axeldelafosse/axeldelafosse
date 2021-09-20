@@ -1,20 +1,5 @@
-@keyframes growing {
-  0%,
-  to {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(1.2);
-  }
-  50% {
-    transform: scale(0.95);
-  }
-}
-
 .logo {
   width: 20vh;
   height: 20vh;
   cursor: zoom-in;
-
-  animation: growing 5000ms infinite;
 }
