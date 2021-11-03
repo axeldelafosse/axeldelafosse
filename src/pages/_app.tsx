@@ -1,5 +1,5 @@
 import '../styles/globals.scss';
-import 'react-static-tweets/styles.css';
+import '../styles/tweet.scss';
 
 import React from 'react';
 import Head from 'next/head';

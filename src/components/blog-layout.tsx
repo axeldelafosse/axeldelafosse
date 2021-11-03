@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MDXProvider } from '@mdx-js/react';
-import { Tweet } from 'react-static-tweets';
 
+import { Tweet } from '@/components/static-tweet';
 import PostHead from '@/components/post-head';
 import CustomLink from '@/components/custom-link';
 import CodeBlock from '@/components/code-block';
