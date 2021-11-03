@@ -12,7 +12,7 @@ function Substack() {
       <div className="text-center p-5 text-base">
         Pssst... Hey you! You can subscribe to my blog.
         <br />
-        Don't worry, I don't post often.
+        Don&apos;t worry, I don&apos;t post often.
       </div>
       {shouldShowIframe && (
         <iframe

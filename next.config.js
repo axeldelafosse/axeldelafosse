@@ -7,9 +7,12 @@ const withPWA = require('next-pwa');
 const runtimeCaching = require('next-pwa/cache');
 
 const nextConfig = {
+  typescript: {
+    ignoreDevErrors: true,
+    ignoreBuildErrors: true
+  },
   publicRuntimeConfig: false,
   images: {
-    // domains: ['pbs.twimg.com', 'api.microlink.io']
     loader: 'custom'
   },
   experimental: {

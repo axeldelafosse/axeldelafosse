@@ -7,9 +7,9 @@ function BlogPost404() {
 
   return (
     <>
-      <h1>Can't find post "{query.name}"</h1>
+      <h1>Can&apos;t find post &quot;{query.name}&quot;</h1>
       <h3>
-        Here's what we can do:
+        Here&apos;s what we can do:
         <br />
         <br />
         1. Send me an email to suggest this post
