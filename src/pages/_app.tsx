@@ -1,7 +1,6 @@
 import '../styles/globals.scss';
 import '../styles/tweet.scss';
 
-import React from 'react';
 import Head from 'next/head';
 import { AppProps, NextWebVitalsMetric } from 'next/app';
 
