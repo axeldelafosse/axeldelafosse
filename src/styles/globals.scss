@@ -70,22 +70,6 @@ body {
   --gradient-color-4: #0000c3;
 }
 
-html {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-  ::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-}
-
 /**
    * Building on the RNWeb reset:
    * https://github.com/necolas/react-native-web/blob/master/packages/react-native-web/src/exports/StyleSheet/initialRules.js
