@@ -332,11 +332,13 @@ And as an example, here is `text/index.tsx`.
 
 ```tsx:app/design-system/text/index.tsx
 import { ComponentProps } from 'react'
-import { Text as DripsyText } from 'dripsy'
+import { Text as DripsyText, Theme } from 'dripsy'
 
 import { tw as tailwind } from 'app/design-system/tailwind'
 
-type TextProps = { tw?: string } & ComponentProps<typeof DripsyText>
+type Variant = keyof Theme['text']
+
+type TextProps = { tw?: string; variant?: Variant } & Omit<ComponentProps<typeof DripsyText>, 'variant'>
 
 // Note: You can wrap <DripsyText> in a <View> with a background color
 // to verify if the text is rendered correctly and if Capsize is working well.
