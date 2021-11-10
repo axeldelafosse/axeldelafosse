@@ -1,0 +1,400 @@
+export const meta = {
+  uid: 'universal-design-system',
+  title: 'How to build a universal design system',
+  description: `Using React Native for Web, Tailwind CSS and Dripsy.`,
+  date: '2021-11-03',
+  dateLastModified: '2021-11-10',
+  tags: ['tech', 'showtime']
+};
+
+<PostHead {...meta} />
+
+# How to build a universal design system
+
+## Using React Native for Web, Tailwind CSS and Dripsy.
+
+"Universal" and "design system" can mean different things so let me clarify:
+
+> **Universal**: that works on all platforms (Web, iOS, Android...).
+
+> **Design system**: a library of UI elements and other components that share a common design language.
+> A good example is [Vercel's Geist](https://vercel.com/design).
+
+The problem is: how do you build a design system that works on React DOM and React Native, with
+a familiar styling solution that can be shared across multiple apps and used by
+multiple teams?
+
+Before we jump in, let me give you a little bit of context.
+I just joined [Showtime](https://showtime.io) to build the mobile app and
+I'm excited to help create the design system for the mobile app.
+But I'm also a web dev and I want to be able to use this new design system on
+the web app as well.
+
+We are currently using Tailwind to style our web app. It's a great solution so I
+wanted to find a way to use it on the mobile app as well.
+This will help keep our native and web app in sync.
+And I think it goes even deeper than just sharing some code --
+it will also bring the web and native teams closer together and it will
+help us move much faster.
+We will learn from each other and everything will be better.
+
+Another good reason to use Tailwind is given by Dan Abramov:
+
+<Tweet id="1452326610904961032" />
+
+Yes, you can easily copy paste styles from Tailwind! This will be helpful to
+share styles. Now, imagine if you could do this and still benefit from
+React Native APIs...
+
+This is what we do here. Ditch your `div`s and `span`s -- let's use React Native
+components and let's get the best of both worlds.
+
+You benefit from the power and interopability of React Native for Web,
+the simplicity and scalability of Tailwind CSS and
+low-level building blocks from Dripsy.
+
+### [React Native for Web](https://github.com/necolas/react-native-web)
+
+> React Native Components and APIs for the Web.
+
+This is the basis of our design system. Here is a good introduction to RNW by
+his creator, Nicolas Gallagher: [Twitter Lite, React Native, and Progressive Web Apps](https://www.youtube.com/watch?v=tFFn39lLO-U).
+
+### [Tailwind React Native Classnames](https://github.com/jaredh159/tailwind-react-native-classnames)
+
+> A simple, expressive API for TailwindCSS + React Native, written in TypeScript.
+
+This is a great way to use Tailwind CSS in React Native and
+this is the nicest way to implement dark mode and responsive design in your app.
+You even have cool utilities like platform prefixes:
+`ios:text-purple-900 android:text-purple-800 web:text-purple-700`.
+
+### [Dripsy](https://github.com/nandorojo/dripsy)
+
+> Responsive, unstyled UI primitives for React Native + Web.
+
+Dripsy is used in our case as a set of low-level building blocks for React Native.
+You can learn more about Dripsy on this talk at Next.js conf by Fernando Rojo:
+[Zero to $10 Million with React Native + Next.js](https://www.youtube.com/watch?v=0lnbdRweJtA).
+
+---
+
+If you are coming from a web development background, you might be wondering
+what are the differences between React DOM and React Native. I recommend to watch
+[Native for React Developers](https://www.youtube.com/watch?v=_wDCFCnxMrU)
+by Lydia Hallie and Evan Bacon.
+
+Here is a quick overview of the different APIs:
+
+```
+<div> -> <View> or <Text> or <Pressable>
+<span> -> <View> or <Text>
+<a> -> <Pressable>
+<img> -> <Image>
+<button> -> <Button> or <Pressable>
+onClick -> onPress
+```
+
+You might also see this warning:
+
+`Text strings must be rendered within a <Text> component.`
+
+Indeed, you must use the `Text` component for strings.
+
+In React Native, everything is using Flexbox. You can learn more about it in the
+[Layout with Flexbox](https://reactnative.dev/docs/flexbox) documentation.
+You don't need to use the `flex` utility from your current Tailwind CSS styles.
+Here are some important notes about the Flexbox implementation in React Native:
+
+> Flexbox works the same way in React Native as it does in CSS on the web,
+> with a few exceptions. The defaults are different, with `flexDirection`
+> defaulting to `column` instead of `row`, `alignContent` defaulting to `flex-start`
+> instead of `stretch`, `flexShrink` defaulting to `0` instead of `1`, the
+> `flex` parameter only supporting a single number.
+
+---
+
+OK so let's check some code from our design system. Here is the Dripsy theme:
+
+`theme.ts`
+
+```ts
+import { makeTheme } from 'dripsy';
+import { Platform } from 'react-native';
+
+import {
+  fontFamily,
+  textSizes,
+  headingSizes
+} from 'app/design-system/typography';
+
+const webFont = (font: string) => {
+  return Platform.select({
+    web: `"${fontFamily(
+      font
+    )}", Arial, Helvetica Neue, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
+    default: font
+  });
+};
+
+const theme = makeTheme({
+  space: [],
+  fontSizes: [],
+  fonts: {
+    root: 'Inter',
+    inter: 'Inter'
+  },
+  customFonts: {
+    Inter: {
+      bold: webFont('Inter-Bold'),
+      default: webFont('Inter-Regular'),
+      normal: webFont('Inter-Regular'),
+      100: webFont('Inter-Thin'),
+      200: webFont('Inter-ExtraLight'),
+      300: webFont('Inter-Light'),
+      400: webFont('Inter-Regular'),
+      500: webFont('Inter-Semibold'),
+      600: webFont('Inter-Bold'),
+      700: webFont('Inter-Bold'),
+      800: webFont('Inter-ExtraBold'),
+      900: webFont('Inter-Black')
+    }
+  },
+  text: {
+    body: {
+      fontWeight: 'default',
+      ...textSizes.body
+    },
+    small: {
+      fontWeight: 'default',
+      ...textSizes.small
+    },
+    title: {
+      fontWeight: 900,
+      ...headingSizes.title
+    },
+    heading: {
+      fontWeight: 'bold',
+      ...headingSizes.heading
+    }
+  }
+});
+
+type MyTheme = typeof theme;
+
+declare module 'dripsy' {
+  interface DripsyCustomTheme extends MyTheme {}
+}
+
+export { theme };
+```
+
+We use this Dripsy theme for global custom fonts support and text variants.
+In React Native, you otherwise need to set the font family for every
+text element. But with Dripsy, you can use the `fonts` property to set the
+font family for every text element.
+
+Note that we are importing `textSizes` and `headingSizes` from
+`app/design-system/typography`. This is where we use `capsize`:
+
+```ts
+// Based on https://github.com/rainbow-me/rainbow/blob/%40markdalgleish/design-system/src/design-system/typography/typography.ts
+
+import { precomputeValues } from '@capsizecss/core';
+import { Platform, PixelRatio } from 'react-native';
+
+export const fontFamily = (font: string) => {
+  if (Platform.OS === 'web') {
+    return font.replace(/\-/g, ' ');
+  }
+
+  return font;
+};
+
+const capsize = (options: Parameters<typeof precomputeValues>[0]) => {
+  const values = precomputeValues(options);
+  const fontSize = parseFloat(values.fontSize);
+  const baselineTrimEm = parseFloat(values.baselineTrim);
+  const capHeightTrimEm = parseFloat(values.capHeightTrim);
+  const fontScale = PixelRatio.getFontScale();
+
+  return {
+    fontSize,
+    lineHeight:
+      values.lineHeight !== 'normal'
+        ? parseFloat(values.lineHeight)
+        : undefined,
+    marginBottom: PixelRatio.roundToNearestPixel(
+      baselineTrimEm * fontSize * fontScale
+    ),
+    marginTop: PixelRatio.roundToNearestPixel(
+      capHeightTrimEm * fontSize * fontScale
+    )
+  } as const;
+};
+
+// Sourced from https://seek-oss.github.io/capsize
+const fontMetrics = {
+  capHeight: 2048,
+  ascent: 2728,
+  descent: -680,
+  lineGap: 0,
+  unitsPerEm: 2816
+};
+
+const createTextSize = ({
+  fontSize,
+  lineHeight: leading,
+  letterSpacing
+}: {
+  fontSize: number;
+  lineHeight: number;
+  letterSpacing: number;
+}) => {
+  return {
+    letterSpacing,
+    ...capsize({
+      fontMetrics,
+      fontSize,
+      leading
+    })
+  };
+};
+
+export const headingSizes = {
+  title: createTextSize({
+    fontSize: 23,
+    letterSpacing: 0.6,
+    lineHeight: 27
+  }),
+  heading: createTextSize({
+    fontSize: 20,
+    letterSpacing: 0.6,
+    lineHeight: 24
+  })
+} as const;
+
+export const textSizes = {
+  body: createTextSize({
+    fontSize: 16,
+    letterSpacing: 0.5,
+    lineHeight: 24
+  }),
+  small: createTextSize({
+    fontSize: 14,
+    letterSpacing: 0.6,
+    lineHeight: 17
+  })
+} as const;
+```
+
+[Capsize](https://github.com/seek-oss/capsize) makes the sizing and layout of
+text as predictable as every other element on the screen. Using font metadata,
+text can now be sized according to the height of its capital letters while
+trimming the space above capital letters and below the baseline.
+
+What it means is that we now have a predictable size and layout
+for every text element on every browsers and every platforms.
+Fonts can be displayed differently because of the white space around text,
+it can be inconsistent, maybe it doesn't align correctly...
+well, it can be frustrating. Capsize solves this.
+
+Next up: `tailwind/index.ts`. The tailwind config is the exact same as
+what we already have on web. It's very helpful!
+
+```ts
+import { create } from 'twrnc';
+
+const tw = create(require('./tailwind.config.js'));
+
+export { tw };
+```
+
+`index.tsx`
+
+```tsx
+export { View } from 'app/design-system/view';
+
+export { ScrollView } from 'app/design-system/scroll-view';
+
+export { Text } from 'app/design-system/text';
+
+export { TextInput } from 'app/design-system/text-input';
+
+export { Gradient } from 'app/design-system/gradient';
+
+export { Pressable } from 'app/design-system/pressable-scale';
+
+export { Button, ButtonLabel } from 'app/design-system/button';
+
+export { Image } from 'app/design-system/image';
+
+export { Modal } from 'app/design-system/modal';
+
+export { ActivityIndicator } from 'app/design-system/activity-indicator';
+```
+
+And as an example, here is `text/index.tsx`.
+
+```tsx
+import { ComponentProps } from 'react';
+import { Text as DripsyText } from 'dripsy';
+
+import { tw as tailwind } from 'app/design-system/tailwind';
+
+type TextProps = { tw?: string } & ComponentProps<typeof DripsyText>;
+
+// Note: You can wrap <DripsyText> in a <View> with a background color
+// to verify if the text is rendered correctly and if Capsize is working well.
+
+function Text({ tw, sx, variant, ...props }: TextProps) {
+  return (
+    <DripsyText
+      sx={{ ...sx, ...tailwind.style(tw) }}
+      variant={variant}
+      {...props}
+    />
+  );
+}
+
+export { Text };
+```
+
+`twrnc` lets you easily handle dark mode and responsive like you would do with
+Tailwind CSS so it's a really nice implementation.
+You can even compose and do crazy stuff like `md:dark:text-stpurple700`:
+
+```tsx
+import { View, Text } from 'app/design-system';
+
+export function HelloWorld() {
+  return (
+    <View tw="flex-1 justify-center items-center bg-white dark:bg-black">
+      <Text tw="text-black dark:text-white md:dark:text-stpurple700">
+        Hello, World!
+      </Text>
+    </View>
+  );
+}
+```
+
+> Pro tip: you can add `tw` to `Tailwind CSS: Class Attributes` VS Code extension setting to get IntelliSense working!
+
+---
+
+What's next? Now we need to create the more complex components of
+our design system. The missing piece to do this easily is a set of
+high-quality, unstyled UI components like Radix UI or Headless UI.
+
+Like I said here, this is still a hard problem to solve today:
+
+<Tweet id="1435242291665453058" />
+
+But thanks to this approach, I feel like we are getting closer to this.
+And we might even open source this design system in the future. Stay tuned.
+
+Unifying the codebase by following best practices from both React DOM
+and React Native is a great way to move forward. Let's do it!
+
+**Thanks** to Henry Fontanier, Lois Tatis, Fernando Rojo and Nishan Bende
+for reading drafts of this.
