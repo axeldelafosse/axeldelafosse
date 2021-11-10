@@ -14,9 +14,8 @@ import styles from '@/components/wrapper.module.scss'
 import { LinkPreview } from '@/components/link-preview'
 import { weservLoader } from '@/lib/weserv-loader'
 
-function getGithubUrl(pathname: string) {
-  const postUid = pathname.replace('/blog/', '')
-  return `https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}/tree/master/src/pages/blog/${postUid}.mdx`
+function getGithubUrl(slug: string) {
+  return `https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}/tree/master/blog/${slug}.mdx`
 }
 
 function getBackButtonProps(
@@ -96,7 +95,7 @@ function BlogLayout({ post, children }: BlogLayoutProps) {
           {isBlogPost ? (
             <a
               className="no-underline"
-              href={getGithubUrl(router.pathname)}
+              href={getGithubUrl(post?.slug ?? '')}
               target="_blank"
               rel="noopener noreferrer"
             >
