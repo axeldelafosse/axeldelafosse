@@ -2,14 +2,17 @@ import React, { useState } from 'react'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 
-import postList, { Post } from '@/utils/post-list'
+import { allPosts } from '.contentlayer/data'
+import type { Post } from '.contentlayer/types'
+
+import BlogLayout from '@/components/blog-layout'
 import Switch from '@/components/switch'
 
 function Blog({ posts }: { posts: Post[] }) {
   const [hideTechPosts, setHideTechPosts] = useState(false)
 
   return (
-    <>
+    <BlogLayout>
       <div className="flex items-center justify-between">
         <h1>Blog</h1>
         <div className="flex items-center">
@@ -26,7 +29,7 @@ function Blog({ posts }: { posts: Post[] }) {
           hideTechPosts ? post.tags.includes('tech') === false : true
         )
         .map((post) => (
-          <Link key={post.uid} href={post.urlPath} passHref={true}>
+          <Link key={post.uid} href={`/blog/${post.slug}`} passHref={true}>
             <h3 className="cursor-pointer">
               {post.title}{' '}
               <span className="text-lg text-gray-400 font-normal">
@@ -35,13 +38,20 @@ function Blog({ posts }: { posts: Post[] }) {
             </h3>
           </Link>
         ))}
-    </>
+    </BlogLayout>
   )
 }
 
 export default Blog
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = postList()
+  const posts = allPosts
+    .filter((post: Post) => post._raw.sourceFileDir === '.')
+    .sort(
+      (a: Post, b: Post) =>
+        Number(new Date(b.dateLastModified)) -
+        Number(new Date(a.dateLastModified))
+    )
+
   return { props: { posts } }
 }

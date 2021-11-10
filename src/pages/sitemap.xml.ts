@@ -1,7 +1,8 @@
 import React from 'react'
 import { NextPageContext } from 'next'
 
-import postList, { Post } from '@/utils/post-list'
+import { allPosts } from '.contentlayer/data'
+import type { Post } from '.contentlayer/types'
 
 const formatDate = (date: number) => {
   return new Date(date).toISOString().substring(0, 10)
@@ -17,7 +18,7 @@ const sitemapXml = (posts: Post[]) => {
       latestPost = postDate
     }
 
-    const postURL = `https://${process.env.NEXT_PUBLIC_ID}.com${post.urlPath}/`
+    const postURL = `https://${process.env.NEXT_PUBLIC_ID}.com/blog/${post.slug}/`
     postsXML += `
       <url>
         <loc>${postURL}</loc>
@@ -47,7 +48,13 @@ const sitemapXml = (posts: Post[]) => {
 class Sitemap extends React.Component {
   static async getInitialProps(ctx: NextPageContext) {
     const { res } = ctx
-    const posts = postList()
+    const posts = allPosts
+      .filter((post: Post) => post._raw.sourceFileDir === '.')
+      .sort(
+        (a: Post, b: Post) =>
+          Number(new Date(b.dateLastModified)) -
+          Number(new Date(a.dateLastModified))
+      )
 
     if (res && posts) {
       res.setHeader('Content-Type', 'text/xml')

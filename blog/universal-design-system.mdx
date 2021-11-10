@@ -1,13 +1,11 @@
-export const meta = {
-  uid: 'universal-design-system',
-  title: 'How to build a universal design system',
-  description: `Using React Native for Web, Tailwind CSS and Dripsy.`,
-  date: '2021-11-03',
-  dateLastModified: '2021-11-10',
-  tags: ['tech', 'showtime']
-}
-
-<PostHead {...meta} />
+---
+uid: 'universal-design-system'
+title: 'How to build a universal design system'
+description: 'Using React Native for Web, Tailwind CSS and Dripsy.'
+date: '2021-11-03'
+dateLastModified: '2021-11-10'
+tags: ['tech', 'showtime']
+---
 
 # How to build a universal design system
 
@@ -116,9 +114,7 @@ Here are some important notes about the Flexbox implementation in React Native:
 
 OK so let's check some code from our design system. Here is the Dripsy theme:
 
-`theme.ts`
-
-```ts
+```ts:app/design-system/theme.ts
 import { makeTheme } from 'dripsy'
 import { Platform } from 'react-native'
 
@@ -197,7 +193,7 @@ font family for every text element.
 Note that we are importing `textSizes` and `headingSizes` from
 `app/design-system/typography`. This is where we use `capsize`:
 
-```ts
+```ts:app/design-system/typography/index.ts
 // Based on https://github.com/rainbow-me/rainbow/blob/%40markdalgleish/design-system/src/design-system/typography/typography.ts
 
 import { precomputeValues } from '@capsizecss/core'
@@ -302,7 +298,7 @@ well, it can be frustrating. Capsize solves this.
 Next up: `tailwind/index.ts`. The tailwind config is the exact same as
 what we already have on web. It's very helpful!
 
-```ts
+```ts:app/design-system/tailwind/index.ts
 import { create } from 'twrnc'
 
 const tw = create(require('./tailwind.config.js'))
@@ -310,9 +306,7 @@ const tw = create(require('./tailwind.config.js'))
 export { tw }
 ```
 
-`index.tsx`
-
-```tsx
+```tsx:app/design-system/index.tsx
 export { View } from 'app/design-system/view'
 
 export { ScrollView } from 'app/design-system/scroll-view'
@@ -336,7 +330,7 @@ export { ActivityIndicator } from 'app/design-system/activity-indicator'
 
 And as an example, here is `text/index.tsx`.
 
-```tsx
+```tsx:app/design-system/text/index.tsx
 import { ComponentProps } from 'react'
 import { Text as DripsyText } from 'dripsy'
 
@@ -364,7 +358,7 @@ export { Text }
 Tailwind CSS so it's a really nice implementation.
 You can even compose and do crazy stuff like `md:dark:text-stpurple700`:
 
-```tsx
+```tsx:app/hello-world.tsx
 import { View, Text } from 'app/design-system'
 
 export function HelloWorld() {

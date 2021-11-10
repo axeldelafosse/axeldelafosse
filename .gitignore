@@ -4,7 +4,8 @@
 /node_modules
 .now
 .vercel
-/src/pages/blog/drafts
+/blog/drafts
 **/public/workbox-*.js
 **/public/sw.js
 /out
+.contentlayer

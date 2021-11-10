@@ -2,7 +2,9 @@ import React, { useEffect } from 'react'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 
-import postList, { Post } from '@/utils/post-list'
+import { allPosts } from '.contentlayer/data'
+import type { Post } from '.contentlayer/types'
+
 import Gradient from '@/components/gradient'
 import Logo from '@/components/logo'
 import Header from '@/components/header'
@@ -27,10 +29,9 @@ function Home({ posts }: { posts: Post[] }) {
           <Link href="/blog" passHref={true}>
             <div className={styles.logo}>
               <Logo color="#FFF" />
-              {/* <img alt="think outside the box" /> */}
             </div>
           </Link>
-          <Link href={posts[0].urlPath} passHref={true}>
+          <Link href={`/blog/${posts[0].slug}`} passHref={true}>
             <div className="text-white text-lg pt-12 flex justify-center cursor-pointer">
               <strong className="pr-2">New: </strong>
               {posts[0].title}
@@ -46,6 +47,13 @@ function Home({ posts }: { posts: Post[] }) {
 export default Home
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = postList()
+  const posts = allPosts
+    .filter((post: Post) => post._raw.sourceFileDir === '.')
+    .sort(
+      (a: Post, b: Post) =>
+        Number(new Date(b.dateLastModified)) -
+        Number(new Date(a.dateLastModified))
+    )
+
   return { props: { posts } }
 }

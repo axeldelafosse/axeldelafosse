@@ -4,7 +4,6 @@ import '../styles/tweet.scss'
 import Head from 'next/head'
 import { AppProps, NextWebVitalsMetric } from 'next/app'
 
-import BlogLayout from '@/components/blog-layout'
 import { LoadAnalytics, TrackPageView } from '@/lib/analytics'
 
 export function reportWebVitals({
@@ -102,15 +101,7 @@ function App({ Component, pageProps, router }: AppProps) {
         />
       </Head>
       <LoadAnalytics />
-      {pathname.includes('blog') ? (
-        <div className="bg-white dark:bg-black text-black dark:text-white">
-          <BlogLayout>
-            <Component {...pageProps} />
-          </BlogLayout>
-        </div>
-      ) : (
-        <Component {...pageProps} />
-      )}
+      <Component {...pageProps} />
       <TrackPageView />
     </>
   )

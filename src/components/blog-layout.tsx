@@ -2,7 +2,8 @@ import React, { ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
-import { MDXProvider } from '@mdx-js/react'
+
+import type { Post } from '.contentlayer/types'
 
 import { Tweet } from '@/components/static-tweet'
 import PostHead from '@/components/post-head'
@@ -38,9 +39,8 @@ function getBackButtonProps(
   return { linkUrl, linkText }
 }
 
-const components = {
+export const components = {
   a: CustomLink,
-  PostHead: PostHead,
   code: CodeBlock,
   img: ({ src }: { src: string }) => (
     <Image
@@ -62,10 +62,11 @@ const components = {
 }
 
 interface BlogLayoutProps {
+  post?: Post
   children: ReactNode
 }
 
-function BlogLayout({ children }: BlogLayoutProps) {
+function BlogLayout({ post, children }: BlogLayoutProps) {
   const router = useRouter()
   const isBlogPost = router.pathname.includes('blog/')
   const isStartupNotebookPost = router.pathname.includes('startup-notebook/')
@@ -76,7 +77,7 @@ function BlogLayout({ children }: BlogLayoutProps) {
 
   return (
     <div className={styles.wrapper}>
-      <div className="flex flex-col">
+      <div className="flex flex-col bg-white dark:bg-black text-black dark:text-white">
         <div className="h-16 w-100 flex justify-between items-center">
           <Link href={linkUrl} passHref={true}>
             <div className="text-black dark:text-white w-16 flex items-center cursor-w-resize">
@@ -107,13 +108,8 @@ function BlogLayout({ children }: BlogLayoutProps) {
             <div className="w-16" />
           )}
         </div>
-        {isBlogPost ? (
-          <MDXProvider components={components}>
-            <article>{children}</article>
-          </MDXProvider>
-        ) : (
-          <>{children}</>
-        )}
+        {post && <PostHead {...post} />}
+        {children}
       </div>
       <Footer shouldShowSubscribeEmbed={isBlogPost} />
     </div>

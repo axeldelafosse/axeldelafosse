@@ -1,12 +1,11 @@
 const withPlugins = require('next-compose-plugins')
-const slug = require('remark-slug')
-const withMDX = require('@next/mdx')({
-  extension: /\.mdx?$/
-})
 const withPWA = require('next-pwa')
 const runtimeCaching = require('next-pwa/cache')
+const { withContentlayer } = require('next-contentlayer')
 
 const nextConfig = {
+  swcMinify: true,
+  reactStrictMode: true,
   typescript: {
     ignoreDevErrors: true,
     ignoreBuildErrors: true
@@ -40,12 +39,6 @@ module.exports = withPlugins([
       }
     }
   ],
-  [
-    withMDX,
-    {
-      pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
-      remarkPlugins: [slug]
-    }
-  ],
+  withContentlayer(),
   nextConfig
 ])

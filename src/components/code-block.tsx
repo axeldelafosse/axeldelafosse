@@ -74,7 +74,11 @@ interface CodeBlockProps {
 }
 
 function CodeBlock({ className, children }: CodeBlockProps) {
-  const language = (className?.replace(/language-/, '') as Language) ?? 'tsx'
+  const language = className?.replace(/language-/, '') as Language
+
+  if (!language) {
+    return <code>{children}</code>
+  }
 
   return (
     <Highlight
