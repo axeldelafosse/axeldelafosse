@@ -1,11 +1,11 @@
-import '../styles/globals.scss';
-import '../styles/tweet.scss';
+import '../styles/globals.scss'
+import '../styles/tweet.scss'
 
-import Head from 'next/head';
-import { AppProps, NextWebVitalsMetric } from 'next/app';
+import Head from 'next/head'
+import { AppProps, NextWebVitalsMetric } from 'next/app'
 
-import BlogLayout from '@/components/blog-layout';
-import { LoadAnalytics, TrackPageView } from '@/lib/analytics';
+import BlogLayout from '@/components/blog-layout'
+import { LoadAnalytics, TrackPageView } from '@/lib/analytics'
 
 export function reportWebVitals({
   id,
@@ -27,15 +27,15 @@ export function reportWebVitals({
     event_label: id,
     // Use a non-interaction event to avoid affecting bounce rate.
     non_interaction: true
-  });
+  })
 }
 
-const id = process.env.NEXT_PUBLIC_ID;
-const title = process.env.NEXT_PUBLIC_FULL_NAME;
-const description = `Startups, Growth, Code, Electronic music...`;
+const id = process.env.NEXT_PUBLIC_ID
+const title = process.env.NEXT_PUBLIC_FULL_NAME
+const description = `Startups, Growth, Code, Electronic music...`
 
 function App({ Component, pageProps, router }: AppProps) {
-  const { pathname } = router;
+  const { pathname } = router
 
   return (
     <>
@@ -113,7 +113,7 @@ function App({ Component, pageProps, router }: AppProps) {
       )}
       <TrackPageView />
     </>
-  );
+  )
 }
 
-export default App;
+export default App

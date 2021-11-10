@@ -1,11 +1,11 @@
-import React, { ReactNode } from 'react';
-import Link from 'next/link';
+import React, { ReactNode } from 'react'
+import Link from 'next/link'
 
-import { LinkPreview } from './link-preview';
+import { LinkPreview } from './link-preview'
 
 interface LinkProps {
-  href: string;
-  children: ReactNode;
+  href: string
+  children: ReactNode
 }
 
 function CustomLink({ href, children }: LinkProps) {
@@ -16,7 +16,7 @@ function CustomLink({ href, children }: LinkProps) {
           {children}
         </Link>
       </LinkPreview>
-    );
+    )
   }
 
   return (
@@ -25,7 +25,7 @@ function CustomLink({ href, children }: LinkProps) {
         {children}
       </a>
     </LinkPreview>
-  );
+  )
 }
 
-export default CustomLink;
+export default CustomLink

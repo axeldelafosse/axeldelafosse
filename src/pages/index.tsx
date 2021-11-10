@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import { GetStaticProps } from 'next';
-import Link from 'next/link';
+import React, { useEffect } from 'react'
+import { GetStaticProps } from 'next'
+import Link from 'next/link'
 
-import postList, { Post } from '@/utils/post-list';
-import Gradient from '@/components/gradient';
-import Logo from '@/components/logo';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import styles from '@/components/logo.module.scss';
+import postList, { Post } from '@/utils/post-list'
+import Gradient from '@/components/gradient'
+import Logo from '@/components/logo'
+import Header from '@/components/header'
+import Footer from '@/components/footer'
+import styles from '@/components/logo.module.scss'
 
 function Home({ posts }: { posts: Post[] }) {
   useEffect(() => {
-    const gradient = new Gradient();
+    const gradient = new Gradient()
     // @ts-ignore
-    gradient.initGradient('#gradient-canvas');
-  }, []);
+    gradient.initGradient('#gradient-canvas')
+  }, [])
 
   return (
     <>
@@ -40,12 +40,12 @@ function Home({ posts }: { posts: Post[] }) {
         <Footer color="white" />
       </div>
     </>
-  );
+  )
 }
 
-export default Home;
+export default Home
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = postList();
-  return { props: { posts } };
-};
+  const posts = postList()
+  return { props: { posts } }
+}

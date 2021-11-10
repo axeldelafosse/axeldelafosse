@@ -1,41 +1,41 @@
-import React, { ReactNode } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import Image from 'next/image';
-import { MDXProvider } from '@mdx-js/react';
+import React, { ReactNode } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import Image from 'next/image'
+import { MDXProvider } from '@mdx-js/react'
 
-import { Tweet } from '@/components/static-tweet';
-import PostHead from '@/components/post-head';
-import CustomLink from '@/components/custom-link';
-import CodeBlock from '@/components/code-block';
-import Footer from '@/components/footer';
-import styles from '@/components/wrapper.module.scss';
-import { LinkPreview } from '@/components/link-preview';
-import { weservLoader } from '@/lib/weserv-loader';
+import { Tweet } from '@/components/static-tweet'
+import PostHead from '@/components/post-head'
+import CustomLink from '@/components/custom-link'
+import CodeBlock from '@/components/code-block'
+import Footer from '@/components/footer'
+import styles from '@/components/wrapper.module.scss'
+import { LinkPreview } from '@/components/link-preview'
+import { weservLoader } from '@/lib/weserv-loader'
 
 function getGithubUrl(pathname: string) {
-  const postUid = pathname.replace('/blog/', '');
-  return `https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}/tree/master/src/pages/blog/${postUid}.mdx`;
+  const postUid = pathname.replace('/blog/', '')
+  return `https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}/tree/master/src/pages/blog/${postUid}.mdx`
 }
 
 function getBackButtonProps(
   isBlogPost: boolean,
   isStartupNotebookPost: boolean
 ) {
-  let linkUrl = '/';
-  let linkText = 'home';
+  let linkUrl = '/'
+  let linkText = 'home'
 
   if (isBlogPost) {
-    linkUrl = '/blog';
-    linkText = 'blog';
+    linkUrl = '/blog'
+    linkText = 'blog'
   }
 
   if (isStartupNotebookPost) {
-    linkUrl = '/blog/startup-notebook';
-    linkText = 'back';
+    linkUrl = '/blog/startup-notebook'
+    linkText = 'back'
   }
 
-  return { linkUrl, linkText };
+  return { linkUrl, linkText }
 }
 
 const components = {
@@ -59,20 +59,20 @@ const components = {
     </div>
   ),
   LinkPreview
-};
+}
 
 interface BlogLayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 function BlogLayout({ children }: BlogLayoutProps) {
-  const router = useRouter();
-  const isBlogPost = router.pathname.includes('blog/');
-  const isStartupNotebookPost = router.pathname.includes('startup-notebook/');
+  const router = useRouter()
+  const isBlogPost = router.pathname.includes('blog/')
+  const isStartupNotebookPost = router.pathname.includes('startup-notebook/')
   const { linkUrl, linkText } = getBackButtonProps(
     isBlogPost,
     isStartupNotebookPost
-  );
+  )
 
   return (
     <div className={styles.wrapper}>
@@ -117,7 +117,7 @@ function BlogLayout({ children }: BlogLayoutProps) {
       </div>
       <Footer shouldShowSubscribeEmbed={isBlogPost} />
     </div>
-  );
+  )
 }
 
-export default BlogLayout;
+export default BlogLayout

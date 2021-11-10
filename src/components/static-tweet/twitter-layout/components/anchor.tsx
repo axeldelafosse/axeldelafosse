@@ -25,8 +25,8 @@ const beautifyHref = (href) => {
 export const A = (p) => (
   <a
     href={p.href}
-    target='_blank'
-    rel='noopener noreferrer'
+    target="_blank"
+    rel="noopener noreferrer"
     title={p.title || p.href}
     className={cs('static-tweet-anchor', p.className)}
   >

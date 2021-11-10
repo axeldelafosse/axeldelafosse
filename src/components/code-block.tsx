@@ -1,8 +1,8 @@
 // From https://mdxjs.com/guides/syntax-highlighting
 
-import React, { ReactNode } from 'react';
-import Highlight, { defaultProps, Language } from 'prism-react-renderer';
-import type { PrismTheme } from 'prism-react-renderer';
+import React, { ReactNode } from 'react'
+import Highlight, { defaultProps, Language } from 'prism-react-renderer'
+import type { PrismTheme } from 'prism-react-renderer'
 
 var theme: PrismTheme = {
   plain: {
@@ -66,15 +66,15 @@ var theme: PrismTheme = {
       }
     }
   ]
-};
+}
 
 interface CodeBlockProps {
-  className: string;
-  children: ReactNode;
+  className: string
+  children: ReactNode
 }
 
 function CodeBlock({ className, children }: CodeBlockProps) {
-  const language = (className?.replace(/language-/, '') as Language) ?? 'tsx';
+  const language = (className?.replace(/language-/, '') as Language) ?? 'tsx'
 
   return (
     <Highlight
@@ -103,7 +103,7 @@ function CodeBlock({ className, children }: CodeBlockProps) {
         </pre>
       )}
     </Highlight>
-  );
+  )
 }
 
-export default CodeBlock;
+export default CodeBlock

@@ -5,5 +5,5 @@ export default function Logo({ color = '#000' }: { color: string }) {
       <polygon points="63.33 46.67 40 0 16.67 46.67 63.33 46.67" />
       <polygon points="13.33 53.33 0 80 80 80 66.67 53.33 13.33 53.33" />
     </svg>
-  );
+  )
 }

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { GetStaticProps } from 'next';
-import Link from 'next/link';
+import React, { useState } from 'react'
+import { GetStaticProps } from 'next'
+import Link from 'next/link'
 
-import postList, { Post } from '@/utils/post-list';
-import Switch from '@/components/switch';
+import postList, { Post } from '@/utils/post-list'
+import Switch from '@/components/switch'
 
 function Blog({ posts }: { posts: Post[] }) {
-  const [hideTechPosts, setHideTechPosts] = useState(false);
+  const [hideTechPosts, setHideTechPosts] = useState(false)
 
   return (
     <>
@@ -36,12 +36,12 @@ function Blog({ posts }: { posts: Post[] }) {
           </Link>
         ))}
     </>
-  );
+  )
 }
 
-export default Blog;
+export default Blog
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = postList();
-  return { props: { posts } };
-};
+  const posts = postList()
+  return { props: { posts } }
+}

@@ -1,23 +1,23 @@
 // Slightly modified version of https://github.com/delbaoliveira/website/blob/main/ui/LinkPreview.tsx
 
-import React, { useState, useEffect } from 'react';
-import { Portal, Transition } from '@headlessui/react';
-import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
-import Image from 'next/image';
-import { encode } from 'qss';
+import React, { useState, useEffect } from 'react'
+import { Portal, Transition } from '@headlessui/react'
+import * as HoverCardPrimitive from '@radix-ui/react-hover-card'
+import Image from 'next/image'
+import { encode } from 'qss'
 
-import { weservLoader } from '@/lib/weserv-loader';
+import { weservLoader } from '@/lib/weserv-loader'
 
 export const LinkPreview = ({
   children,
   url
 }: {
-  children: React.ReactNode;
-  url: string;
+  children: React.ReactNode
+  url: string
 }) => {
-  const width = 200;
-  const height = 125;
-  const layout = 'fixed';
+  const width = 200
+  const height = 125
+  const layout = 'fixed'
 
   // Simplifies things by encoding our microlink params into a query string.
   const params = encode({
@@ -32,16 +32,16 @@ export const LinkPreview = ({
     // than our images but maintain the same ratio
     'viewport.width': width * 3,
     'viewport.height': height * 3
-  });
+  })
 
-  const src = `https://api.microlink.io/?${params}`;
+  const src = `https://api.microlink.io/?${params}`
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    setIsMounted(true)
+  }, [])
 
   return (
     <>
@@ -72,7 +72,7 @@ export const LinkPreview = ({
       <HoverCardPrimitive.Root
         openDelay={50}
         onOpenChange={(open) => {
-          setIsOpen(open);
+          setIsOpen(open)
         }}
       >
         <HoverCardPrimitive.Trigger href={url}>
@@ -108,5 +108,5 @@ export const LinkPreview = ({
         </HoverCardPrimitive.Content>
       </HoverCardPrimitive.Root>
     </>
-  );
-};
+  )
+}

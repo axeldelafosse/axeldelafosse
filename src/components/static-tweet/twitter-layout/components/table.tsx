@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const Table = (p) => (
-  <div className='table-container'>
+  <div className="table-container">
     <table {...p} />
   </div>
 )

@@ -1,28 +1,28 @@
-import React, { forwardRef } from 'react';
-import cs from 'classnames';
-import useSWR from 'swr';
+import React, { forwardRef } from 'react'
+import cs from 'classnames'
+import useSWR from 'swr'
 
-import { useTwitterContext } from './twitter';
-import Node from './html/node';
-import components from './twitter-layout/components';
+import { useTwitterContext } from './twitter'
+import Node from './html/node'
+import components from './twitter-layout/components'
 
 type TweetProps = {
-  id: string;
-  ast?: any;
-  caption?: string;
-  className?: string;
+  id: string
+  ast?: any
+  caption?: string
+  className?: string
   // TODO: understand what br is used for
   // br?: string
-};
+}
 
 const Tweet = forwardRef<HTMLElement, TweetProps>(
   ({ id, ast, caption, className }: TweetProps, ref) => {
-    const twitter = useTwitterContext();
+    const twitter = useTwitterContext()
     const { data: tweetAst } = useSWR(
       id,
       (id) => ast || twitter.tweetAstMap[id] || twitter.swrOptions.fetcher(id),
       twitter.swrOptions
-    );
+    )
 
     return (
       <article ref={ref} className={cs('static-tweet', className)}>
@@ -36,10 +36,10 @@ const Tweet = forwardRef<HTMLElement, TweetProps>(
           </>
         )}
       </article>
-    );
+    )
   }
-);
+)
 
-Tweet.displayName = 'Tweet';
+Tweet.displayName = 'Tweet'
 
-export { Tweet };
+export { Tweet }

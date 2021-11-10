@@ -5,7 +5,7 @@ export const meta = {
   date: '2021-11-03',
   dateLastModified: '2021-11-10',
   tags: ['tech', 'showtime']
-};
+}
 
 <PostHead {...meta} />
 
@@ -119,14 +119,14 @@ OK so let's check some code from our design system. Here is the Dripsy theme:
 `theme.ts`
 
 ```ts
-import { makeTheme } from 'dripsy';
-import { Platform } from 'react-native';
+import { makeTheme } from 'dripsy'
+import { Platform } from 'react-native'
 
 import {
   fontFamily,
   textSizes,
   headingSizes
-} from 'app/design-system/typography';
+} from 'app/design-system/typography'
 
 const webFont = (font: string) => {
   return Platform.select({
@@ -134,8 +134,8 @@ const webFont = (font: string) => {
       font
     )}", Arial, Helvetica Neue, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
     default: font
-  });
-};
+  })
+}
 
 const theme = makeTheme({
   space: [],
@@ -178,15 +178,15 @@ const theme = makeTheme({
       ...headingSizes.heading
     }
   }
-});
+})
 
-type MyTheme = typeof theme;
+type MyTheme = typeof theme
 
 declare module 'dripsy' {
   interface DripsyCustomTheme extends MyTheme {}
 }
 
-export { theme };
+export { theme }
 ```
 
 We use this Dripsy theme for global custom fonts support and text variants.
@@ -200,23 +200,23 @@ Note that we are importing `textSizes` and `headingSizes` from
 ```ts
 // Based on https://github.com/rainbow-me/rainbow/blob/%40markdalgleish/design-system/src/design-system/typography/typography.ts
 
-import { precomputeValues } from '@capsizecss/core';
-import { Platform, PixelRatio } from 'react-native';
+import { precomputeValues } from '@capsizecss/core'
+import { Platform, PixelRatio } from 'react-native'
 
 export const fontFamily = (font: string) => {
   if (Platform.OS === 'web') {
-    return font.replace(/\-/g, ' ');
+    return font.replace(/\-/g, ' ')
   }
 
-  return font;
-};
+  return font
+}
 
 const capsize = (options: Parameters<typeof precomputeValues>[0]) => {
-  const values = precomputeValues(options);
-  const fontSize = parseFloat(values.fontSize);
-  const baselineTrimEm = parseFloat(values.baselineTrim);
-  const capHeightTrimEm = parseFloat(values.capHeightTrim);
-  const fontScale = PixelRatio.getFontScale();
+  const values = precomputeValues(options)
+  const fontSize = parseFloat(values.fontSize)
+  const baselineTrimEm = parseFloat(values.baselineTrim)
+  const capHeightTrimEm = parseFloat(values.capHeightTrim)
+  const fontScale = PixelRatio.getFontScale()
 
   return {
     fontSize,
@@ -230,8 +230,8 @@ const capsize = (options: Parameters<typeof precomputeValues>[0]) => {
     marginTop: PixelRatio.roundToNearestPixel(
       capHeightTrimEm * fontSize * fontScale
     )
-  } as const;
-};
+  } as const
+}
 
 // Sourced from https://seek-oss.github.io/capsize
 const fontMetrics = {
@@ -240,16 +240,16 @@ const fontMetrics = {
   descent: -680,
   lineGap: 0,
   unitsPerEm: 2816
-};
+}
 
 const createTextSize = ({
   fontSize,
   lineHeight: leading,
   letterSpacing
 }: {
-  fontSize: number;
-  lineHeight: number;
-  letterSpacing: number;
+  fontSize: number
+  lineHeight: number
+  letterSpacing: number
 }) => {
   return {
     letterSpacing,
@@ -258,8 +258,8 @@ const createTextSize = ({
       fontSize,
       leading
     })
-  };
-};
+  }
+}
 
 export const headingSizes = {
   title: createTextSize({
@@ -272,7 +272,7 @@ export const headingSizes = {
     letterSpacing: 0.6,
     lineHeight: 24
   })
-} as const;
+} as const
 
 export const textSizes = {
   body: createTextSize({
@@ -285,7 +285,7 @@ export const textSizes = {
     letterSpacing: 0.6,
     lineHeight: 17
   })
-} as const;
+} as const
 ```
 
 [Capsize](https://github.com/seek-oss/capsize) makes the sizing and layout of
@@ -303,46 +303,46 @@ Next up: `tailwind/index.ts`. The tailwind config is the exact same as
 what we already have on web. It's very helpful!
 
 ```ts
-import { create } from 'twrnc';
+import { create } from 'twrnc'
 
-const tw = create(require('./tailwind.config.js'));
+const tw = create(require('./tailwind.config.js'))
 
-export { tw };
+export { tw }
 ```
 
 `index.tsx`
 
 ```tsx
-export { View } from 'app/design-system/view';
+export { View } from 'app/design-system/view'
 
-export { ScrollView } from 'app/design-system/scroll-view';
+export { ScrollView } from 'app/design-system/scroll-view'
 
-export { Text } from 'app/design-system/text';
+export { Text } from 'app/design-system/text'
 
-export { TextInput } from 'app/design-system/text-input';
+export { TextInput } from 'app/design-system/text-input'
 
-export { Gradient } from 'app/design-system/gradient';
+export { Gradient } from 'app/design-system/gradient'
 
-export { Pressable } from 'app/design-system/pressable-scale';
+export { Pressable } from 'app/design-system/pressable-scale'
 
-export { Button, ButtonLabel } from 'app/design-system/button';
+export { Button, ButtonLabel } from 'app/design-system/button'
 
-export { Image } from 'app/design-system/image';
+export { Image } from 'app/design-system/image'
 
-export { Modal } from 'app/design-system/modal';
+export { Modal } from 'app/design-system/modal'
 
-export { ActivityIndicator } from 'app/design-system/activity-indicator';
+export { ActivityIndicator } from 'app/design-system/activity-indicator'
 ```
 
 And as an example, here is `text/index.tsx`.
 
 ```tsx
-import { ComponentProps } from 'react';
-import { Text as DripsyText } from 'dripsy';
+import { ComponentProps } from 'react'
+import { Text as DripsyText } from 'dripsy'
 
-import { tw as tailwind } from 'app/design-system/tailwind';
+import { tw as tailwind } from 'app/design-system/tailwind'
 
-type TextProps = { tw?: string } & ComponentProps<typeof DripsyText>;
+type TextProps = { tw?: string } & ComponentProps<typeof DripsyText>
 
 // Note: You can wrap <DripsyText> in a <View> with a background color
 // to verify if the text is rendered correctly and if Capsize is working well.
@@ -354,10 +354,10 @@ function Text({ tw, sx, variant, ...props }: TextProps) {
       variant={variant}
       {...props}
     />
-  );
+  )
 }
 
-export { Text };
+export { Text }
 ```
 
 `twrnc` lets you easily handle dark mode and responsive like you would do with
@@ -365,7 +365,7 @@ Tailwind CSS so it's a really nice implementation.
 You can even compose and do crazy stuff like `md:dark:text-stpurple700`:
 
 ```tsx
-import { View, Text } from 'app/design-system';
+import { View, Text } from 'app/design-system'
 
 export function HelloWorld() {
   return (
@@ -374,7 +374,7 @@ export function HelloWorld() {
         Hello, World!
       </Text>
     </View>
-  );
+  )
 }
 ```
 

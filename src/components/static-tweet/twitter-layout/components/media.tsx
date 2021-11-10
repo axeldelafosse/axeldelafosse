@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 // import dynamic from 'next/dynamic' // TODO
-import Image from 'next/image';
-import { useTweet } from './tweet/tweet';
+import Image from 'next/image'
+import { useTweet } from './tweet/tweet'
 
-import { weservLoader } from '@/lib/weserv-loader';
+import { weservLoader } from '@/lib/weserv-loader'
 
 export const Img = ({ width, height, src, ...p }) => {
-  const tweet = useTweet();
-  const tweetUrl = `https://twitter.com/${tweet.username}/status/${tweet.id}`;
+  const tweet = useTweet()
+  const tweetUrl = `https://twitter.com/${tweet.username}/status/${tweet.id}`
 
   return (
     <details className="static-tweet-details">
@@ -34,5 +34,5 @@ export const Img = ({ width, height, src, ...p }) => {
         </a>
       </summary>
     </details>
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 function Header() {
   return (
@@ -31,7 +31,7 @@ function Header() {
         source
       </a>
     </div>
-  );
+  )
 }
 
-export default Header;
+export default Header

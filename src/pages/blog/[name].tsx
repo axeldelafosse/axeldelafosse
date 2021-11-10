@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
 function BlogPost404() {
-  const router = useRouter();
-  const query = router.query;
+  const router = useRouter()
+  const query = router.query
 
   return (
     <>
@@ -18,7 +18,7 @@ function BlogPost404() {
         2. Open a pull request to submit this post
       </h3>
     </>
-  );
+  )
 }
 
-export default BlogPost404;
+export default BlogPost404

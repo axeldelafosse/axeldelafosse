@@ -1,12 +1,12 @@
-import React from 'react';
-import Image from 'next/image';
+import React from 'react'
+import Image from 'next/image'
 
-import { weservLoader } from '@/lib/weserv-loader';
+import { weservLoader } from '@/lib/weserv-loader'
 
 export default function TweetHeader({ tweet }) {
-  const authorUrl = `https://twitter.com/${tweet.username}`;
-  const tweetUrl = `https://twitter.com/${tweet.username}/status/${tweet.id}`;
-  const avatar = tweet.avatar.normal;
+  const authorUrl = `https://twitter.com/${tweet.username}`
+  const tweetUrl = `https://twitter.com/${tweet.username}/status/${tweet.id}`
+  const avatar = tweet.avatar.normal
 
   return (
     <div className="static-tweet-header">
@@ -57,5 +57,5 @@ export default function TweetHeader({ tweet }) {
         />
       </a>
     </div>
-  );
+  )
 }

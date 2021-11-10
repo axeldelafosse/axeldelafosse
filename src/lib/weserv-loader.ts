@@ -1,4 +1,4 @@
-import { ImageLoaderProps } from 'next/image';
+import { ImageLoaderProps } from 'next/image'
 
 export const weservLoader = ({
   src,
@@ -7,5 +7,5 @@ export const weservLoader = ({
 }: ImageLoaderProps) => {
   return `https://images.weserv.nl/?url=${encodeURIComponent(
     src
-  )}&w=${width}&q=${quality}&af&il&trim`;
-};
+  )}&w=${width}&q=${quality}&af&il&trim`
+}

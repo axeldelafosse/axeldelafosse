@@ -1,10 +1,10 @@
-const withPlugins = require('next-compose-plugins');
-const slug = require('remark-slug');
+const withPlugins = require('next-compose-plugins')
+const slug = require('remark-slug')
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/
-});
-const withPWA = require('next-pwa');
-const runtimeCaching = require('next-pwa/cache');
+})
+const withPWA = require('next-pwa')
+const runtimeCaching = require('next-pwa/cache')
 
 const nextConfig = {
   typescript: {
@@ -24,10 +24,10 @@ const nextConfig = {
   async headers() {
     const cacheHeaders = [
       { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
-    ];
-    return [{ source: '/_next/static/:static*', headers: cacheHeaders }];
+    ]
+    return [{ source: '/_next/static/:static*', headers: cacheHeaders }]
   }
-};
+}
 
 module.exports = withPlugins([
   [
@@ -48,4 +48,4 @@ module.exports = withPlugins([
     }
   ],
   nextConfig
-]);
+])

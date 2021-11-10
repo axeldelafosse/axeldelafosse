@@ -6,10 +6,10 @@ import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 export const TwitterLink = (p) => (
   <a
     href={p.href}
-    target='_blank'
-    rel='noopener noreferrer'
+    target="_blank"
+    rel="noopener noreferrer"
     title={p.title || p.href}
-    className='static-tweet-twitter-link'
+    className="static-tweet-twitter-link"
   >
     <s>{p.type}</s>
 
@@ -18,19 +18,19 @@ export const TwitterLink = (p) => (
 )
 
 export const Mention = (p) => (
-  <TwitterLink href={p.href} type='@'>
+  <TwitterLink href={p.href} type="@">
     {p.children[0].replace(/^@/, '')}
   </TwitterLink>
 )
 
 export const Hashtag = (p) => (
-  <TwitterLink href={p.href} type='#'>
+  <TwitterLink href={p.href} type="#">
     {p.children[0].replace(/^\#/, '')}
   </TwitterLink>
 )
 
 export const Cashtag = (p) => (
-  <TwitterLink href={p.href} type='$'>
+  <TwitterLink href={p.href} type="$">
     {p.children[0].replace(/^\$/, '')}
   </TwitterLink>
 )
@@ -50,8 +50,8 @@ export const Poll = ({ data }) => {
   const now = new Date()
 
   return (
-    <div className='static-tweet-poll'>
-      <div className='static-tweet-options'>
+    <div className="static-tweet-poll">
+      <div className="static-tweet-options">
         {data.options.map((option) => {
           const per = Math.round((option.votes / votesCount) * 100) || 0
           const width = per || 1 + '%'
@@ -59,16 +59,16 @@ export const Poll = ({ data }) => {
 
           return (
             <Fragment key={option.position}>
-              <span className='static-tweet-label'>{option.label}</span>
-              <span className='static-tweet-chart' style={{ width }}></span>
+              <span className="static-tweet-label">{option.label}</span>
+              <span className="static-tweet-chart" style={{ width }}></span>
               <span>{widthLabel}</span>
             </Fragment>
           )
         })}
       </div>
       <hr />
-      <div className='static-tweet-footer'>
-        <span className='static-tweet-votes-count'>{votesCount} votes</span>
+      <div className="static-tweet-footer">
+        <span className="static-tweet-votes-count">{votesCount} votes</span>
         <span>
           {now > endsAt
             ? 'Final results'

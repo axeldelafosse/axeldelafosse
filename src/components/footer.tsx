@@ -1,13 +1,13 @@
-import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic'
 
-const Substack = dynamic(() => import('./substack'));
+const Substack = dynamic(() => import('./substack'))
 
 function Footer({
   color = 'black',
   shouldShowSubscribeEmbed = false
 }: {
-  color?: string;
-  shouldShowSubscribeEmbed?: boolean;
+  color?: string
+  shouldShowSubscribeEmbed?: boolean
 }) {
   return (
     <div className="z-10">
@@ -53,7 +53,7 @@ function Footer({
         </a>
       </footer>
     </div>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

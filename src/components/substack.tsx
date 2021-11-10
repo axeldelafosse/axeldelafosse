@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 function Substack() {
-  const [shouldShowIframe, setShouldShowIframe] = useState(false);
+  const [shouldShowIframe, setShouldShowIframe] = useState(false)
 
   useEffect(() => {
-    setShouldShowIframe(true);
-  }, []);
+    setShouldShowIframe(true)
+  }, [])
 
   return (
     <div className="pt-10">
@@ -27,7 +27,7 @@ function Substack() {
         />
       )}
     </div>
-  );
+  )
 }
 
-export default Substack;
+export default Substack

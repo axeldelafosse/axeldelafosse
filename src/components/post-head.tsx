@@ -1,11 +1,11 @@
-import Head from 'next/head';
+import Head from 'next/head'
 
 interface PostHeadProps {
-  uid: string;
-  title: string;
-  description: string;
-  date: string;
-  dateLastModified: string;
+  uid: string
+  title: string
+  description: string
+  date: string
+  dateLastModified: string
 }
 
 function PostHead({
@@ -15,7 +15,7 @@ function PostHead({
   date,
   dateLastModified
 }: PostHeadProps) {
-  const url = `https://${process.env.NEXT_PUBLIC_ID}.com/blog/${uid}`;
+  const url = `https://${process.env.NEXT_PUBLIC_ID}.com/blog/${uid}`
   const json = {
     '@context': 'http://www.schema.org',
     '@type': 'BlogPosting',
@@ -32,7 +32,7 @@ function PostHead({
       name: process.env.NEXT_PUBLIC_FULL_NAME
     },
     description
-  };
+  }
 
   return (
     <>
@@ -81,7 +81,7 @@ function PostHead({
         <div className="pl-3">{new Date(dateLastModified).toDateString()}</div>
       </div>
     </>
-  );
+  )
 }
 
-export default PostHead;
+export default PostHead

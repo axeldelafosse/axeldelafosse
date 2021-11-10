@@ -2,7 +2,7 @@ import React from 'react'
 import cs from 'classnames'
 
 export const P = ({ className = undefined, ...p }) => (
-  <p className='static-tweet-p' {...p} />
+  <p className="static-tweet-p" {...p} />
 )
 
 export const Blockquote = ({ className = undefined, ...p }) => (

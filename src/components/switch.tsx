@@ -1,10 +1,10 @@
-import { Switch } from '@headlessui/react';
+import { Switch } from '@headlessui/react'
 
 type Props = {
-  enabled: boolean;
-  setEnabled: (enabled: boolean) => void;
-  accessibility: string;
-};
+  enabled: boolean
+  setEnabled: (enabled: boolean) => void
+  accessibility: string
+}
 
 export default function StyledSwitch({
   enabled,
@@ -27,5 +27,5 @@ export default function StyledSwitch({
         } pointer-events-none inline-block w-4 h-4 bg-white rounded-full shadow-lg transform ring-0 transition ease-in-out duration-200`}
       />
     </Switch>
-  );
+  )
 }

@@ -15,21 +15,21 @@ export default function TweetInfo({ tweet, className = undefined }) {
   return (
     <div className={cs('static-tweet-info', className)}>
       <a
-        className='static-tweet-like'
+        className="static-tweet-like"
         href={likeUrl}
-        title='Like'
-        target='_blank'
-        rel='noopener noreferrer'
+        title="Like"
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        <div className='static-tweet-heart'>
+        <div className="static-tweet-heart">
           <div
-            className='static-tweet-icon static-tweet-icon-heart'
-            role='img'
+            className="static-tweet-icon static-tweet-icon-heart"
+            role="img"
           />
         </div>
 
         {(tweet.heartCount || tweet.likes > 0) && (
-          <span className='static-tweet-likes'>
+          <span className="static-tweet-likes">
             {tweet.heartCount || formatNumber(tweet.likes)}
           </span>
         )}
@@ -37,10 +37,10 @@ export default function TweetInfo({ tweet, className = undefined }) {
 
       {createdAt && (
         <a
-          className='static-tweet-time'
+          className="static-tweet-time"
           href={tweetUrl}
-          target='_blank'
-          rel='noopener noreferrer'
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <time
             title={`Time Posted: ${createdAt.toUTCString()}`}

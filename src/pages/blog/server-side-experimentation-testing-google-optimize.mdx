@@ -5,7 +5,7 @@ export const meta = {
   date: '2020-06-09',
   dateLastModified: '2020-07-21',
   tags: ['tech']
-};
+}
 
 <PostHead {...meta} />
 
@@ -80,18 +80,18 @@ We don't store the running experiments in database, you need to keep track of th
 - Get the variant id using `useVariantId()` and display conditionally the variants. It will also save the experiment allocation and tell Google Analytics which variant the user is seeing
 
 ```tsx
-import { useExperiment, useVariantId } from '@src/modules/experiments';
+import { useExperiment, useVariantId } from '@src/modules/experiments'
 
 function Component() {
-  const experiment = useExperiment('name');
-  const variantId = useVariantId(experiment);
+  const experiment = useExperiment('name')
+  const variantId = useVariantId(experiment)
 
   return (
     <>
       {variantId === '0' && <>Version A</>}
       {variantId === '1' && <>Version B</>}
     </>
-  );
+  )
 }
 ```
 
@@ -119,11 +119,11 @@ function Component() {
 ```ts
 function setExpGoogleAnalytics(exp: string) {
   if (!isBrowser || !window.ga) {
-    return;
+    return
   }
 
-  window.ga('set', 'exp', exp);
-  window.ga('send', 'pageview');
+  window.ga('set', 'exp', exp)
+  window.ga('send', 'pageview')
 }
 ```
 
@@ -135,7 +135,7 @@ gtag('config', 'UA-XXXXXXX-X', {
     { id: 'ExperimentID 1', variant: '1' },
     { id: 'ExperimentID 2', variant: '2' }
   ]
-});
+})
 ```
 
 ## End-to-end Testing
@@ -150,7 +150,7 @@ cy.getVariantId('xoo8Mc2ITTCSiXLjuOqrng').then((variantId) => {
   if (variantId === '0') {
     //
   }
-});
+})
 ```
 
 Where `getVariantId` is:
@@ -159,15 +159,15 @@ Where `getVariantId` is:
 Cypress.Commands.add('getVariantId', (experimentId) => {
   cy.getCookie('X').then((X) => {
     if (X) {
-      const experiments = JSON.parse(decodeURIComponent(X.value));
+      const experiments = JSON.parse(decodeURIComponent(X.value))
       const experiment = experiments.find(
         (exp) => exp.experimentId === experimentId
-      );
-      return experiment.variantId;
+      )
+      return experiment.variantId
     }
-    return '0';
-  });
-});
+    return '0'
+  })
+})
 ```
 
 ## Server-side Experiment Creation
@@ -257,7 +257,7 @@ experiments: [
       { id: '1', weight: 0.5 }
     ]
   }
-];
+]
 ```
 
 How we store the experiments allocations in the web app:
@@ -266,7 +266,7 @@ How we store the experiments allocations in the web app:
 experiments: [
   { id: 'X', variantId: 'X' },
   { id: 'X', variantId: 'X' }
-];
+]
 ```
 
 Happy testing! Let me know if you have any questions.
