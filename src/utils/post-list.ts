@@ -1,38 +1,32 @@
+import fs from 'fs'
+
 const postFileNames = () => {
-  const postFileNames =
-    // @ts-ignore
-    preval`module.exports = require('fs').readdirSync('./src/pages/blog')` ||
-    [];
-  return postFileNames;
-};
+  const postFileNames = fs.readdirSync('./src/pages/blog') ?? []
+  return postFileNames
+}
 
 export interface Post {
-  uid: string;
-  title: string;
-  description: string;
-  date: string;
-  dateLastModified: string;
-  secondsSinceEpoch: number;
-  urlPath: string;
-  tags: string[];
+  uid: string
+  title: string
+  description: string
+  date: string
+  dateLastModified: string
+  secondsSinceEpoch: number
+  urlPath: string
+  tags: string[]
 }
 
 const createPostList = (fileNameList: string[]): Post[] => {
   return fileNameList
     .reduce((list: Post[], fileName: string) => {
-      const splittedFileName = fileName.split('.');
-      const uid = splittedFileName[0];
-      const fileExtension = splittedFileName[1];
+      const splittedFileName = fileName.split('.')
+      const uid = splittedFileName[0]
+      const fileExtension = splittedFileName[1]
 
-      if (fileExtension !== 'mdx') return list;
+      if (fileExtension !== 'mdx') return list
 
-      const {
-        title,
-        description,
-        date,
-        dateLastModified,
-        tags
-      } = require(`../pages/blog/${fileName}`).meta;
+      const { title, description, date, dateLastModified, tags } =
+        require(`../pages/blog/${fileName}`).meta
 
       list.push({
         uid,
@@ -43,15 +37,15 @@ const createPostList = (fileNameList: string[]): Post[] => {
         dateLastModified: new Date(dateLastModified).toISOString(),
         secondsSinceEpoch: new Date(dateLastModified).getTime() / 1000,
         tags: tags ?? []
-      });
+      })
 
-      return list;
+      return list
     }, [])
     .sort((a, b) => a.secondsSinceEpoch - b.secondsSinceEpoch)
-    .reverse();
-};
+    .reverse()
+}
 
 export default function postList() {
-  const fileNameList = postFileNames();
-  return createPostList(fileNameList);
+  const fileNameList = postFileNames()
+  return createPostList(fileNameList)
 }
