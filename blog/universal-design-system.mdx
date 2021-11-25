@@ -120,8 +120,7 @@ import { Platform } from 'react-native'
 
 import {
   fontFamily,
-  textSizes,
-  headingSizes
+  textSizes
 } from 'app/design-system/typography'
 
 const webFont = (font: string) => {
@@ -141,39 +140,57 @@ const theme = makeTheme({
     inter: 'Inter'
   },
   customFonts: {
-    Inter: {
-      bold: webFont('Inter-Bold'),
-      default: webFont('Inter-Regular'),
-      normal: webFont('Inter-Regular'),
-      100: webFont('Inter-Thin'),
-      200: webFont('Inter-ExtraLight'),
-      300: webFont('Inter-Light'),
-      400: webFont('Inter-Regular'),
-      500: webFont('Inter-Semibold'),
-      600: webFont('Inter-Bold'),
-      700: webFont('Inter-Bold'),
-      800: webFont('Inter-ExtraBold'),
-      900: webFont('Inter-Black')
-    }
-  },
-  text: {
-    body: {
-      fontWeight: 'default',
-      ...textSizes.body
-    },
-    small: {
-      fontWeight: 'default',
-      ...textSizes.small
-    },
-    title: {
-      fontWeight: 900,
-      ...headingSizes.title
-    },
-    heading: {
-      fontWeight: 'bold',
-      ...headingSizes.heading
-    }
-  }
+		Inter: {
+			default: webFont('Inter-Regular'),
+			normal: webFont('Inter-Regular'),
+			regular: webFont('Inter-Regular'),
+			400: webFont('Inter-Regular'),
+			semibold: webFont('Inter-Semibold'),
+			500: webFont('Inter-Semibold'),
+			bold: webFont('Inter-Bold'),
+			600: webFont('Inter-Bold'),
+			700: webFont('Inter-Bold'),
+		},
+	},
+	text: {
+		'text-xs': {
+			fontWeight: 'default',
+			...textSizes['text-xs'],
+		},
+		'text-sm': {
+			fontWeight: 'default',
+			...textSizes['text-sm'],
+		},
+		// `body` is the default text variant in Dripsy
+		body: {
+			fontWeight: 'default',
+			...textSizes['text-base'],
+		},
+		'text-base': {
+			fontWeight: 'default',
+			...textSizes['text-base'],
+		},
+		'text-lg': {
+			fontWeight: 'default',
+			...textSizes['text-lg'],
+		},
+		'text-xl': {
+			fontWeight: 'default',
+			...textSizes['text-xl'],
+		},
+		'text-2xl': {
+			fontWeight: 'default',
+			...textSizes['text-2xl'],
+		},
+		'text-3xl': {
+			fontWeight: 'default',
+			...textSizes['text-3xl'],
+		},
+		'text-4xl': {
+			fontWeight: 'default',
+			...textSizes['text-4xl'],
+		},
+	},
 })
 
 type MyTheme = typeof theme
@@ -190,7 +207,7 @@ In React Native, you otherwise need to set the font family for every
 text element. But with Dripsy, you can use the `fonts` property to set the
 font family for every text element.
 
-Note that we are importing `textSizes` and `headingSizes` from
+Note that we are importing `textSizes` from
 `app/design-system/typography`. This is where we use `capsize`:
 
 ```ts:app/design-system/typography/index.ts
@@ -239,48 +256,111 @@ const fontMetrics = {
 }
 
 const createTextSize = ({
-  fontSize,
-  lineHeight: leading,
-  letterSpacing
+	fontSize,
+	lineHeight: leading,
+	letterSpacing,
+	marginCorrection,
 }: {
-  fontSize: number
-  lineHeight: number
-  letterSpacing: number
+	fontSize: number
+	lineHeight: number
+	letterSpacing: number
+	marginCorrection: {
+		ios: number
+		android: number
+	}
 }) => {
-  return {
-    letterSpacing,
-    ...capsize({
-      fontMetrics,
-      fontSize,
-      leading
-    })
-  }
+	const styles = {
+		letterSpacing,
+		...capsize({
+			fontMetrics,
+			fontSize,
+			leading,
+		}),
+	} as const
+
+	const marginCorrectionForPlatform =
+		Platform.OS === 'ios' || Platform.OS === 'android' ? marginCorrection[Platform.OS] : 0
+
+	return {
+		...styles,
+		marginTop: PixelRatio.roundToNearestPixel(styles.marginTop + marginCorrectionForPlatform),
+		marginBottom: PixelRatio.roundToNearestPixel(styles.marginBottom - marginCorrectionForPlatform),
+	}
 }
 
-export const headingSizes = {
-  title: createTextSize({
-    fontSize: 23,
-    letterSpacing: 0.6,
-    lineHeight: 27
-  }),
-  heading: createTextSize({
-    fontSize: 20,
-    letterSpacing: 0.6,
-    lineHeight: 24
-  })
-} as const
-
 export const textSizes = {
-  body: createTextSize({
-    fontSize: 16,
-    letterSpacing: 0.5,
-    lineHeight: 24
-  }),
-  small: createTextSize({
-    fontSize: 14,
-    letterSpacing: 0.6,
-    lineHeight: 17
-  })
+	'text-xs': createTextSize({
+		fontSize: 12,
+		letterSpacing: 0.6,
+		lineHeight: 15,
+		marginCorrection: {
+			android: -0.1,
+			ios: -0.3,
+		},
+	}),
+	'text-sm': createTextSize({
+		fontSize: 14,
+		letterSpacing: 0.6,
+		lineHeight: 17,
+		marginCorrection: {
+			android: -0.1,
+			ios: -0.3,
+		},
+	}),
+	'text-base': createTextSize({
+		fontSize: 16,
+		letterSpacing: 0.5,
+		lineHeight: 19,
+		marginCorrection: {
+			android: -0.1,
+			ios: -0.5,
+		},
+	}),
+	'text-lg': createTextSize({
+		fontSize: 18,
+		letterSpacing: 0.5,
+		lineHeight: 21,
+		marginCorrection: {
+			android: 0.2,
+			ios: 0,
+		},
+	}),
+	'text-xl': createTextSize({
+		fontSize: 20,
+		letterSpacing: 0.6,
+		lineHeight: 23,
+		marginCorrection: {
+			android: 0,
+			ios: -0.5,
+		},
+	}),
+	'text-2xl': createTextSize({
+		fontSize: 24,
+		letterSpacing: 0.6,
+		lineHeight: 27,
+		marginCorrection: {
+			android: -0.3,
+			ios: -0.3,
+		},
+	}),
+	'text-3xl': createTextSize({
+		fontSize: 30,
+		letterSpacing: 0.6,
+		lineHeight: 33,
+		marginCorrection: {
+			android: -0.3,
+			ios: -0.3,
+		},
+	}),
+	'text-4xl': createTextSize({
+		fontSize: 36,
+		letterSpacing: 0.6,
+		lineHeight: 41,
+		marginCorrection: {
+			android: -0.3,
+			ios: -0.3,
+		},
+	}),
 } as const
 ```
 
@@ -367,6 +447,23 @@ export function HelloWorld() {
   return (
     <View tw="flex-1 justify-center items-center bg-white dark:bg-black">
       <Text tw="text-black dark:text-white md:dark:text-stpurple700">
+        Hello, World!
+      </Text>
+    </View>
+  )
+}
+```
+
+And you can also use a text variant to control the text size following Tailwind
+`text-{size}` utilities:
+
+```tsx:app/hello-world.tsx
+import { View, Text } from 'app/design-system'
+
+export function HelloWorld() {
+  return (
+    <View tw="flex-1 justify-center items-center bg-white dark:bg-black">
+      <Text variant="text-lg" tw="text-black dark:text-white md:dark:text-stpurple700">
         Hello, World!
       </Text>
     </View>
