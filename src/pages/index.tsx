@@ -1,46 +1,36 @@
-import React, { useEffect } from 'react'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 
 import { allPosts } from '.contentlayer/data'
 import type { Post } from '.contentlayer/types'
 
-import Gradient from '@/components/gradient'
-import Logo from '@/components/logo'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-import styles from '@/components/logo.module.scss'
+
+const CrystalBall = dynamic(() => import('@/components/crystal-ball'), {
+  ssr: false
+})
 
 function Home({ posts }: { posts: Post[] }) {
-  useEffect(() => {
-    const gradient = new Gradient()
-    // @ts-ignore
-    gradient.initGradient('#gradient-canvas')
-  }, [])
-
   return (
-    <>
-      <div className="absolute h-screen w-screen">
-        <canvas id="gradient-canvas" data-transition-in />
+    <div className="h-screen w-screen flex flex-col justify-between items-center">
+      <Header />
+      <div className="h-auto z-10 flex flex-col justify-center items-center">
+        <Link href="/blog" passHref={true}>
+          <div className="h-[50vh] w-[55vw] cursor-zoom-in">
+            <CrystalBall />
+          </div>
+        </Link>
+        <Link href={`/blog/${posts[0].slug}`} passHref={true}>
+          <div className="text-white text-lg pt-12 px-5 flex justify-center cursor-pointer break-words text-center">
+            <strong className="pr-2">New: </strong>
+            {posts[0].title}
+          </div>
+        </Link>
       </div>
-      <div className="h-screen w-screen flex flex-col justify-between items-center">
-        <Header />
-        <div className="h-auto z-10 flex flex-col justify-center items-center">
-          <Link href="/blog" passHref={true}>
-            <div className={styles.logo}>
-              <Logo color="#FFF" />
-            </div>
-          </Link>
-          <Link href={`/blog/${posts[0].slug}`} passHref={true}>
-            <div className="text-white text-lg pt-12 flex justify-center cursor-pointer">
-              <strong className="pr-2">New: </strong>
-              {posts[0].title}
-            </div>
-          </Link>
-        </div>
-        <Footer color="white" />
-      </div>
-    </>
+      <Footer color="white" />
+    </div>
   )
 }
 

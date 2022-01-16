@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { AppProps, NextWebVitalsMetric } from 'next/app'
 
 import { LoadAnalytics, TrackPageView } from '@/lib/analytics'
+import Gradient from '@/components/gradient-background'
 
 export function reportWebVitals({
   id,
@@ -101,6 +102,7 @@ function App({ Component, pageProps, router }: AppProps) {
         />
       </Head>
       <LoadAnalytics />
+      <Gradient />
       <Component {...pageProps} />
       <TrackPageView />
     </>

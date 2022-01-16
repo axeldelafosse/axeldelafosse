@@ -9,7 +9,7 @@ function Substack() {
 
   return (
     <div className="pt-10">
-      <div className="text-black dark:text-white text-center p-5 text-base">
+      <div className="text-white text-center p-5 text-base">
         Pssst... Hey you! You can subscribe to my blog.
         <br />
         Don&apos;t worry, I don&apos;t post often.

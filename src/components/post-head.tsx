@@ -68,7 +68,7 @@ function PostHead({
         />
       </Head>
 
-      <div className="flex items-center pt-2">
+      <div className="flex items-center pt-5">
         <img
           src="/images/axel.png"
           alt={process.env.NEXT_PUBLIC_FULL_NAME}

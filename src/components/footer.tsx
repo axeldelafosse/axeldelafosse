@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 const Substack = dynamic(() => import('./substack'))
 
 function Footer({
-  color = 'black',
+  color = 'white',
   shouldShowSubscribeEmbed = false
 }: {
   color?: string

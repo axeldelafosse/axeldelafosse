@@ -8,14 +8,6 @@ function Header() {
       </Link>
       <a
         className="text-white no-underline mr-6"
-        href="https://poolmessenger.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        pool
-      </a>
-      <a
-        className="text-white no-underline mr-6"
         href="https://cal.com/axel"
         target="_blank"
         rel="noopener noreferrer"
