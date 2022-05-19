@@ -1,4 +1,4 @@
-import React, { useRef, useState, Suspense } from 'react'
+import React, { useRef, Suspense } from 'react'
 import * as THREE from 'three'
 
 import { Canvas, useLoader, useFrame, useThree } from '@react-three/fiber'
@@ -31,9 +31,16 @@ const useEquirectangularHDR = (url: string) => {
 
 type Props = {
   url?: string
+  toneMappingExposure?: number
+  cursor?: boolean
+  meshPhysicalMaterialProps?: any
 }
 
-function Model({ url = '/sphere.glb', ...rest }: Props) {
+function Model({
+  url = '/sphere.glb',
+  meshPhysicalMaterialProps,
+  ...rest
+}: Props) {
   const groupRef = useRef(null)
   const meshRef = useRef(null)
   const { nodes } = useGLTF(url) as any
@@ -76,6 +83,7 @@ function Model({ url = '/sphere.glb', ...rest }: Props) {
             ior={1.4}
             specularIntensity={1}
             side={THREE.DoubleSide}
+            {...meshPhysicalMaterialProps}
           />
         </motion.mesh>
       </Center>
@@ -83,13 +91,18 @@ function Model({ url = '/sphere.glb', ...rest }: Props) {
   )
 }
 
-function CrystalBall({ url }: Props) {
+function CrystalBall({
+  url,
+  toneMappingExposure = 1.69,
+  cursor = true,
+  meshPhysicalMaterialProps
+}: Props) {
   return (
     <Canvas
       gl={{
         outputEncoding: THREE.sRGBEncoding,
         toneMapping: THREE.ACESFilmicToneMapping,
-        toneMappingExposure: 1.69
+        toneMappingExposure: toneMappingExposure
       }}
     >
       <Suspense fallback={null}>
@@ -101,16 +114,19 @@ function CrystalBall({ url }: Props) {
         >
           <PresentationControls
             global={true}
-            cursor={false} // true
+            cursor={cursor}
             snap={false}
             speed={1}
             zoom={1}
             rotation={[0, 0, 0]}
             polar={[0, 0]}
-            azimuth={[0, 0]} // -Infinity, Infinity
+            azimuth={[-Infinity, Infinity]}
             config={{ mass: 1, tension: 170, friction: 26 }}
           >
-            <Model url={url} />
+            <Model
+              url={url}
+              meshPhysicalMaterialProps={meshPhysicalMaterialProps}
+            />
           </PresentationControls>
         </Stage>
       </Suspense>

@@ -19,7 +19,7 @@ function Home({ posts }: { posts: Post[] }) {
       <div className="h-auto z-10 flex flex-col justify-center items-center">
         <Link href="/blog" passHref={true}>
           <div className="h-[50vh] w-[55vw] cursor-zoom-in">
-            <CrystalBall />
+            <CrystalBall cursor={false} />
           </div>
         </Link>
         <Link href={`/blog/${posts[0].slug}`} passHref={true}>

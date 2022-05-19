@@ -35,15 +35,6 @@ function Footer({
         </a>
         <span className="mx-2">•</span>
         <a
-          href={`https://www.linkedin.com/in/${process.env.NEXT_PUBLIC_ID}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`text-${color} dark:text-white no-underline`}
-        >
-          linkedin
-        </a>
-        <span className="mx-2">•</span>
-        <a
           href={`https://twitter.com/${process.env.NEXT_PUBLIC_ID}`}
           target="_blank"
           rel="noopener noreferrer"
