@@ -2,23 +2,24 @@ const withPlugins = require('next-compose-plugins')
 const withPWA = require('next-pwa')
 const runtimeCaching = require('next-pwa/cache')
 const { withContentlayer } = require('next-contentlayer')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true'
+})
 
 const nextConfig = {
   swcMinify: true,
   reactStrictMode: true,
+  experimental: {
+    optimizeCss: true,
+    browsersListForSwc: true,
+    legacyBrowsers: false
+  },
   typescript: {
     ignoreDevErrors: true,
     ignoreBuildErrors: true
   },
-  publicRuntimeConfig: false,
   images: {
     loader: 'custom'
-  },
-  experimental: {
-    optimizeCss: true
-  },
-  future: {
-    strictPostcssConfiguration: true
   },
   async headers() {
     const cacheHeaders = [
@@ -39,6 +40,7 @@ module.exports = withPlugins([
       }
     }
   ],
+  withBundleAnalyzer,
   withContentlayer(),
   nextConfig
 ])

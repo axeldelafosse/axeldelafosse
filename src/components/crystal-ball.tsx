@@ -10,7 +10,7 @@ import {
   PerspectiveCamera
 } from '@react-three/drei'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
-import { motion } from 'framer-motion/three'
+import { motion } from 'framer-motion-3d'
 
 const useEquirectangularHDR = (url: string) => {
   const { gl } = useThree()

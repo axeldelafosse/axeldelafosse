@@ -1,8 +1,8 @@
 import { GetStaticProps } from 'next'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 
-import { allPosts } from '.contentlayer/data'
-import type { Post } from '.contentlayer/types'
+import { allPosts } from 'contentlayer/generated'
+import type { Post } from 'contentlayer/generated'
 
 import BlogLayout, { components } from '@/components/blog-layout'
 

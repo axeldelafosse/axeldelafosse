@@ -2,14 +2,14 @@ import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 
-import { allPosts } from '.contentlayer/data'
-import type { Post } from '.contentlayer/types'
+import { allPosts } from 'contentlayer/generated'
+import type { Post } from 'contentlayer/generated'
 
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 const CrystalBall = dynamic(() => import('@/components/crystal-ball'), {
-  ssr: false
+  ssr: true
 })
 
 function Home({ posts }: { posts: Post[] }) {
@@ -19,7 +19,7 @@ function Home({ posts }: { posts: Post[] }) {
       <div className="h-auto z-10 flex flex-col justify-center items-center">
         <Link href="/blog" passHref={true}>
           <div className="h-[50vh] w-[55vw] cursor-zoom-in">
-            <CrystalBall cursor={false} />
+            {/* <CrystalBall cursor={false} /> */}
           </div>
         </Link>
         <Link href={`/blog/${posts[0].slug}`} passHref={true}>

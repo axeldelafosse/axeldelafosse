@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 
-import { allPosts } from '.contentlayer/data'
-import type { Post } from '.contentlayer/types'
+import { allPosts } from 'contentlayer/generated'
+import type { Post } from 'contentlayer/generated'
 
 import BlogLayout from '@/components/blog-layout'
 import Switch from '@/components/switch'

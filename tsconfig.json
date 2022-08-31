@@ -26,10 +26,11 @@
       "@/modules/*": ["src/modules/*"],
       "@/pages/*": ["src/pages/*"],
       "@/utils/*": ["src/utils/*"],
-      "@/lib/*": ["src/lib/*"]
+      "@/lib/*": ["src/lib/*"],
+      "contentlayer/generated": ["./.contentlayer/generated"]
     },
     "incremental": true
   },
   "exclude": ["node_modules", "static"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".contentlayer/generated"]
 }

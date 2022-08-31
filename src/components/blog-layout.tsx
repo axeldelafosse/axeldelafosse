@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import type { Post } from '.contentlayer/types'
+import type { Post } from 'contentlayer/generated'
 
 import { Tweet } from '@/components/static-tweet'
 import PostHead from '@/components/post-head'
