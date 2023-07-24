@@ -12,7 +12,8 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     browsersListForSwc: true,
-    legacyBrowsers: false
+    legacyBrowsers: false,
+    scrollRestoration: true
   },
   typescript: {
     ignoreDevErrors: true,

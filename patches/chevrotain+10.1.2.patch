@@ -1,0 +1,13 @@
+diff --git a/node_modules/chevrotain/package.json b/node_modules/chevrotain/package.json
+index fe4db84..cc816dc 100644
+--- a/node_modules/chevrotain/package.json
++++ b/node_modules/chevrotain/package.json
+@@ -41,7 +41,7 @@
+   "main": "./lib/src/api.js",
+   "exports": {
+     "require": "./lib/src/api.js",
+-    "import": "./lib_esm/api_esm.mjs"
++    "import": "./lib/src/api.js"
+   },
+   "repository": {
+     "type": "git",

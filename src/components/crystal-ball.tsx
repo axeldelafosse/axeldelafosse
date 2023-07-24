@@ -1,4 +1,4 @@
-import React, { useRef, Suspense } from 'react'
+import React, { useRef } from 'react'
 import * as THREE from 'three'
 
 import { Canvas, useLoader, useFrame, useThree } from '@react-three/fiber'
@@ -105,31 +105,29 @@ function CrystalBall({
         toneMappingExposure: toneMappingExposure
       }}
     >
-      <Suspense fallback={null}>
-        <Stage
-          contactShadow={false}
-          shadows={false}
-          environment="night"
-          preset="soft"
+      <Stage
+        contactShadow={false}
+        shadows={false}
+        environment="night"
+        preset="soft"
+      >
+        <PresentationControls
+          global={true}
+          cursor={cursor}
+          snap={false}
+          speed={1}
+          zoom={1}
+          rotation={[0, 0, 0]}
+          polar={[0, 0]}
+          azimuth={[-Infinity, Infinity]}
+          config={{ mass: 1, tension: 170, friction: 26 }}
         >
-          <PresentationControls
-            global={true}
-            cursor={cursor}
-            snap={false}
-            speed={1}
-            zoom={1}
-            rotation={[0, 0, 0]}
-            polar={[0, 0]}
-            azimuth={[-Infinity, Infinity]}
-            config={{ mass: 1, tension: 170, friction: 26 }}
-          >
-            <Model
-              url={url}
-              meshPhysicalMaterialProps={meshPhysicalMaterialProps}
-            />
-          </PresentationControls>
-        </Stage>
-      </Suspense>
+          <Model
+            url={url}
+            meshPhysicalMaterialProps={meshPhysicalMaterialProps}
+          />
+        </PresentationControls>
+      </Stage>
     </Canvas>
   )
 }

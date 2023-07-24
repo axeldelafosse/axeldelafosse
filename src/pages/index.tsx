@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { ErrorBoundary } from 'react-error-boundary'
 
 import { allPosts } from 'contentlayer/generated'
 import type { Post } from 'contentlayer/generated'
@@ -19,7 +20,9 @@ function Home({ posts }: { posts: Post[] }) {
       <div className="h-auto z-10 flex flex-col justify-center items-center">
         <Link href="/blog" passHref={true}>
           <div className="h-[50vh] w-[55vw] cursor-zoom-in">
-            {/* <CrystalBall cursor={false} /> */}
+          <ErrorBoundary fallback={<div>Crystal Ball</div>}>
+            <CrystalBall cursor={false} />
+          </ErrorBoundary>
           </div>
         </Link>
         <Link href={`/blog/${posts[0].slug}`} passHref={true}>
