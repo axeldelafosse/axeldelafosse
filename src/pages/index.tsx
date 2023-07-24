@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { allPosts } from 'contentlayer/generated'
@@ -9,9 +9,9 @@ import type { Post } from 'contentlayer/generated'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 
-const CrystalBall = dynamic(() => import('@/components/crystal-ball'), {
-  ssr: true
-})
+// const CrystalBall = dynamic(() => import('@/components/crystal-ball'), {
+//   ssr: true
+// })
 
 function Home({ posts }: { posts: Post[] }) {
   return (
@@ -21,7 +21,7 @@ function Home({ posts }: { posts: Post[] }) {
         <Link href="/blog" passHref={true}>
           <div className="h-[50vh] w-[55vw] cursor-zoom-in">
           <ErrorBoundary fallback={<div>Crystal Ball</div>}>
-            <CrystalBall cursor={false} />
+            {/* <CrystalBall cursor={false} /> */}
           </ErrorBoundary>
           </div>
         </Link>

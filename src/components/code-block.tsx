@@ -1,7 +1,7 @@
 // From https://mdxjs.com/guides/syntax-highlighting
 
 import React, { ReactNode } from 'react'
-import Highlight, { defaultProps, Language } from 'prism-react-renderer'
+import { Highlight, Language } from 'prism-react-renderer'
 import type { PrismTheme } from 'prism-react-renderer'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 
@@ -83,7 +83,6 @@ function CodeBlock({ className, children }: CodeBlockProps) {
 
   return (
     <Highlight
-      {...defaultProps}
       code={children as string}
       language={language}
       theme={theme}
