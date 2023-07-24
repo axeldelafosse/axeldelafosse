@@ -1,6 +1,6 @@
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 
-const Substack = dynamic(() => import('./substack'))
+// const Substack = dynamic(() => import('./substack'))
 
 function Footer({
   color = 'white',
@@ -11,7 +11,7 @@ function Footer({
 }) {
   return (
     <div className="z-10">
-      {shouldShowSubscribeEmbed && <Substack />}
+      {/* {shouldShowSubscribeEmbed && <Substack />} */}
 
       <footer
         className={`text-${color} dark:text-white h-16 flex justify-center items-center`}
@@ -23,15 +23,6 @@ function Footer({
           className={`text-${color} dark:text-white no-underline`}
         >
           github
-        </a>
-        <span className="mx-2">•</span>
-        <a
-          href={`https://soundcloud.com/${process.env.NEXT_PUBLIC_ID}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`text-${color} dark:text-white no-underline`}
-        >
-          soundcloud
         </a>
         <span className="mx-2">•</span>
         <a
