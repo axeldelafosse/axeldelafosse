@@ -1,17 +1,12 @@
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
-// import dynamic from 'next/dynamic'
-import { ErrorBoundary } from 'react-error-boundary'
 
 import { allPosts } from 'contentlayer/generated'
 import type { Post } from 'contentlayer/generated'
 
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-
-// const CrystalBall = dynamic(() => import('@/components/crystal-ball'), {
-//   ssr: true
-// })
+import Logo from '@/components/logo'
 
 function Home({ posts }: { posts: Post[] }) {
   return (
@@ -19,10 +14,8 @@ function Home({ posts }: { posts: Post[] }) {
       <Header />
       <div className="h-auto z-10 flex flex-col justify-center items-center">
         <Link href="/blog" passHref={true}>
-          <div className="h-[50vh] w-[55vw] cursor-zoom-in">
-          <ErrorBoundary fallback={<div>Crystal Ball</div>}>
-            {/* <CrystalBall cursor={false} /> */}
-          </ErrorBoundary>
+          <div className="h-48 w-48 sm:h-96 sm:w-96 cursor-zoom-in">
+            <Logo color="#fff" />
           </div>
         </Link>
         <Link href={`/blog/${posts[0].slug}`} passHref={true}>
