@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 
@@ -6,28 +6,28 @@ import { allPosts } from 'contentlayer/generated'
 import type { Post } from 'contentlayer/generated'
 
 import BlogLayout from '@/components/blog-layout'
-import Switch from '@/components/switch'
+// import Switch from '@/components/switch'
 
 function Blog({ posts }: { posts: Post[] }) {
-  const [hideTechPosts, setHideTechPosts] = useState(false)
+  // const [hideTechPosts, setHideTechPosts] = useState(false)
 
   return (
     <BlogLayout>
       <div className="flex items-center justify-between">
         <h1>Blog</h1>
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <h4 className="mr-2 font-bold">Hide tech posts</h4>
           <Switch
             enabled={hideTechPosts}
             setEnabled={setHideTechPosts}
             accessibility="Hide tech posts"
           />
-        </div>
+        </div> */}
       </div>
       {posts
-        .filter((post) =>
-          hideTechPosts ? post.tags.includes('tech') === false : true
-        )
+        // .filter((post) =>
+        //   hideTechPosts ? post.tags.includes('tech') === false : true
+        // )
         .map((post) => (
           <Link key={post.uid} href={`/blog/${post.slug}`} passHref={true}>
             <h3 className="cursor-pointer">
