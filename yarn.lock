@@ -6790,6 +6790,11 @@ object.values@^1.1.5:
     define-properties "^1.1.3"
     es-abstract "^1.19.1"
 
+ogl@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/ogl/-/ogl-1.0.5.tgz#22b70c7caecf111b8a50ec0c414688ab81f35c61"
+  integrity sha512-3hJKUgrFG3GtEZA4iL25Qe9jTodmXv1K0xXZ3XOpqEeXSi/DlzkJsb+um7ayafZ/BYCfKHl37qXiYKmcBqfYHQ==
+
 once@^1.3.0, once@^1.3.1, once@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/once/-/once-1.4.0.tgz#583b1aa775961d4b113ac17d9c50baef9dd76bd1"
@@ -9033,6 +9038,14 @@ uuid@^8.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
+uvcanvas@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/uvcanvas/-/uvcanvas-0.2.0.tgz#9fc6a5613366b895d9a5a307bc16548c57785966"
+  integrity sha512-u/k7V/i931KOmSRfOwtdRJZ2XpJZj8wABXeXS4cUF8I4ZlL3M2x2AR1WTY4f8+cKUUOdCjm6knBsKfo3RUKNbQ==
+  dependencies:
+    ogl "^1.0.5"
+    zustand "^4.5.2"
+
 uvu@^0.5.0:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/uvu/-/uvu-0.5.2.tgz#c145e7f4b5becf80099cf22fd8a4a05f0112b2c0"
@@ -9419,6 +9432,13 @@ zustand@^3.5.13, zustand@^3.7.1:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.7.2.tgz#7b44c4f4a5bfd7a8296a3957b13e1c346f42514d"
   integrity sha512-PIJDIZKtokhof+9+60cpockVOq05sJzHCriyvaLBmEJixseQ1a5Kdov6fWZfWOu5SK9c+FhH1jU0tntLxRJYMA==
+
+zustand@^4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.5.2.tgz#fddbe7cac1e71d45413b3682cdb47b48034c3848"
+  integrity sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==
+  dependencies:
+    use-sync-external-store "1.2.0"
 
 zwitch@^2.0.0:
   version "2.0.2"

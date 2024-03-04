@@ -49,7 +49,8 @@
     "swr": "^2.2.0",
     "tailwindcss": "^3.3.3",
     "three": "^0.154.0",
-    "three-stdlib": "^2.23.13"
+    "three-stdlib": "^2.23.13",
+    "uvcanvas": "^0.2.0"
   },
   "devDependencies": {
     "@types/google.analytics": "^0.0.42",
