@@ -58,7 +58,7 @@
     "@types/node": "^20.4.4",
     "@types/react": "^18.2.15",
     "@types/three": "^0.154.0",
-    "critters": "^0.0.19",
+    "critters": "^0.0.20",
     "encoding": "^0.1.13",
     "eslint": "<8.0.0",
     "eslint-config-next": "12.2.5",
