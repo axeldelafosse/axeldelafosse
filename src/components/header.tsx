@@ -7,6 +7,10 @@ function Header() {
         <a className="text-white no-underline">blog</a>
       </Link>
       <span className="mx-2">•</span>
+      <Link href="/talks" passHref={true}>
+        <a className="text-white no-underline">talks</a>
+      </Link>
+      <span className="mx-2">•</span>
       <a
         className="text-white no-underline"
         href="https://cal.com/axel"
