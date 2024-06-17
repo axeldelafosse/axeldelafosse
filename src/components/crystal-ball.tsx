@@ -51,7 +51,7 @@ function Model({
   const gradientColors = ['#7038ff', '#0000c3']
 
   return (
-    <group ref={groupRef} {...rest} dispose={null} name="Crystal Ball">
+    <group ref={groupRef} {...rest} name="Crystal Ball">
       <PerspectiveCamera makeDefault={true} far={1000} near={1} fov={45} />
 
       <Center alignTop>
