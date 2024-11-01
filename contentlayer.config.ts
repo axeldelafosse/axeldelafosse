@@ -34,7 +34,7 @@ const computedFields: ComputedFields = {
 
 const Post = defineDocumentType(() => ({
   name: 'Post',
-  filePathPattern: '**/*.mdx',
+  filePathPattern: '*.mdx',
   contentType: 'mdx',
   fields: {
     uid: { type: 'string', required: true },

@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-4xl font-extrabold;
+  }
+
+  h2 {
+    @apply text-3xl font-bold;
+  }
+
+  h3 {
+    @apply text-2xl font-bold;
+  }
+
+  p {
+    @apply text-lg;
+  }
+
+  a {
+    @apply text-purple-400 underline;
+  }
+
+  ol,
+  ul {
+    @apply list-disc list-inside text-lg;
+    padding-inline-start: 20px;
+  }
+
+  code {
+    color: rgb(40, 42, 46);
+    background-color: rgb(246, 246, 246);
+    border-radius: 2px;
+    padding: 0 2px;
+    font-size: 99%;
+  }
+
+  blockquote,
+  dl,
+  dd,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  hr,
+  figure,
+  p,
+  pre {
+    margin: revert;
+  }
+}
+
+html {
+  overscroll-behavior: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+}
+
+#gradient-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+:root {
+  --gradient-color-1: #ff47ff;
+  --gradient-color-2: #00ffff;
+  --gradient-color-3: #7038ff;
+  --gradient-color-4: #0000c3;
+}

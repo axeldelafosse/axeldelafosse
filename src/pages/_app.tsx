@@ -1,5 +1,5 @@
-import '../styles/globals.scss'
-import '../styles/tweet.scss'
+import '../styles/globals.css'
+import '../styles/tweet.css'
 
 import Head from 'next/head'
 import { AppProps, NextWebVitalsMetric } from 'next/app'
@@ -7,12 +7,9 @@ import { AppProps, NextWebVitalsMetric } from 'next/app'
 import { LoadAnalytics, TrackPageView } from '@/lib/analytics'
 import Gradient from '@/components/gradient-background'
 
-export function reportWebVitals({
-  id,
-  name,
-  label,
-  value
-}: NextWebVitalsMetric) {
+export function reportWebVitals(
+  { id, name, label, value }: NextWebVitalsMetric
+) {
   window?.gtag?.('event', name, {
     event_category:
       label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',

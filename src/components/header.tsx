@@ -3,12 +3,12 @@ import Link from 'next/link'
 function Header() {
   return (
     <div className="h-16 w-screen flex items-center justify-center z-10 text-white">
-      <Link href="/blog" passHref={true}>
-        <a className="text-white no-underline">blog</a>
+      <Link href="/blog" className="text-white no-underline">
+        blog
       </Link>
       <span className="mx-2">•</span>
-      <Link href="/talks" passHref={true}>
-        <a className="text-white no-underline">talks</a>
+      <Link href="/talks" passHref={true} className="text-white no-underline">
+        talks
       </Link>
       <span className="mx-2">•</span>
       <a

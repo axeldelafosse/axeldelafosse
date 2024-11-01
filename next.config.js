@@ -7,16 +7,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 const nextConfig = {
-  swcMinify: true,
   reactStrictMode: true,
   experimental: {
     optimizeCss: true,
-    browsersListForSwc: true,
-    legacyBrowsers: false,
     scrollRestoration: true
   },
   typescript: {
-    ignoreDevErrors: true,
     ignoreBuildErrors: true
   },
   images: {
@@ -42,6 +38,6 @@ module.exports = withPlugins([
     }
   ],
   withBundleAnalyzer,
-  withContentlayer(),
+  withContentlayer(nextConfig),
   nextConfig
 ])

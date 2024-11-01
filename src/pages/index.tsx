@@ -10,19 +10,20 @@ import Logo from '@/components/logo'
 
 function Home({ posts }: { posts: Post[] }) {
   return (
-    <div className="h-screen w-screen flex flex-col justify-between items-center">
+    <div className="h-svh w-screen flex flex-col justify-between items-center">
       <Header />
-      <div className="h-auto z-10 flex flex-col justify-center items-center">
+      <div className="z-10 flex flex-col justify-center items-center">
         <Link href="/blog" passHref={true}>
           <div className="h-48 w-48 sm:h-96 sm:w-96 cursor-zoom-in">
             <Logo color="#fff" />
           </div>
         </Link>
-        <Link href={`/blog/${posts[0].slug}`} passHref={true}>
-          <div className="text-white text-lg pt-12 px-5 flex justify-center cursor-pointer break-words text-center">
-            <strong className="pr-2">New: </strong>
-            {posts[0].title}
-          </div>
+        <Link
+          href={`/blog/${posts[0].slug}`}
+          className="text-white text-lg pt-12 px-5 flex justify-center cursor-pointer break-words text-center no-underline"
+        >
+          <strong className="pr-2">New: </strong>
+          {posts[0].title}
         </Link>
       </div>
       <Footer color="white" />

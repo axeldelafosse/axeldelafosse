@@ -74,13 +74,14 @@ function BlogLayout({ post, children }: BlogLayoutProps) {
   )
 
   return (
-    <div className="flex flex-col justify-between h-full min-h-screen overflow-x-hidden">
+    <div className="flex flex-col justify-between min-h-dvh overscroll-none">
       <div className="z-10 flex flex-col text-black dark:text-white">
         <div className="px-5 h-16 w-100 flex justify-between items-center">
-          <Link href={linkUrl} passHref={true}>
-            <div className="text-white w-17 flex items-center cursor-w-resize">
-              <span className="text-2xl pr-2">☜</span> {linkText}
-            </div>
+          <Link
+            href={linkUrl}
+            className="text-white w-17 flex items-center cursor-w-resize no-underline"
+          >
+            <span className="text-2xl pr-2">☜</span> {linkText}
           </Link>
 
           <Link href="/" passHref={true}>
@@ -109,8 +110,8 @@ function BlogLayout({ post, children }: BlogLayoutProps) {
           )}
         </div>
 
-        <div className="z-10 px-5 flex flex-col min-h-[86vh] bg-white dark:bg-black border-gray-200 dark:border-white border-t border-b">
-          <div className="h-full w-full lg:m-auto lg:w-5xl lg:max-w-5xl xl:w-6xl xl:max-w-6xl">
+        <div className="z-10 px-5 flex flex-col min-h-[calc(100svh-8rem)] bg-white dark:bg-black border-gray-200 dark:border-white border-t border-b">
+          <div className="lg:mx-auto lg:w-5xl lg:max-w-5xl xl:w-6xl xl:max-w-6xl">
             {post && <PostHead {...post} />}
             {children}
           </div>

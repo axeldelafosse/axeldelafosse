@@ -29,8 +29,13 @@ function Blog({ posts }: { posts: Post[] }) {
         //   hideTechPosts ? post.tags.includes('tech') === false : true
         // )
         .map((post) => (
-          <Link key={post.uid} href={`/blog/${post.slug}`} passHref={true}>
-            <h3 className="cursor-pointer">
+          <Link
+            key={post.uid}
+            href={`/blog/${post.slug}`}
+            passHref={true}
+            className="no-underline cursor-pointer text-white"
+          >
+            <h3>
               {post.title}{' '}
               <span className="text-lg text-gray-400 font-normal">
                 {new Date(post.dateLastModified).toDateString()}

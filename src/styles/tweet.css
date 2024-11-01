@@ -1,5 +1,5 @@
-// From https://github.com/transitive-bullshit/react-static-tweets
-// Changed the `next/image` loader and switched to dark mode
+/* From https://github.com/transitive-bullshit/react-static-tweets */
+/* Changed the `next/image` loader and switched to dark mode */
 
 .static-tweet {
   --colors-blue: #0c00ff;
@@ -91,18 +91,18 @@
   grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
   margin: var(--container-margin);
 }
-.static-tweet .image-count-3 > :global(:first-child) {
+/* .static-tweet .image-count-3 > :global(:first-child) {
   grid-row-end: span 2;
-}
+} */
 .static-tweet .gif-container,
 .static-tweet .video-container {
   margin: var(--container-margin);
 }
-.static-tweet .gif-container > :global(video),
+/* .static-tweet .gif-container > :global(video),
 .static-tweet .video-container > :global(video) {
   width: 100%;
   max-height: 500px;
-}
+} */
 
 .static-tweet-permalink span[id] {
   display: block;
