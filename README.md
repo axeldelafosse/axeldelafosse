@@ -2,7 +2,7 @@
 
 🤖 [yupp.ai](https://yupp.ai)
 
-🔊 [sweetspot.paris](https://sweetspot.paris)
+🔊 [sweetspotsoundsystem.com](https://sweetspotsoundsystem.com)
 
 🌀 [sweetspot.stream](https://sweetspot.stream)
 
