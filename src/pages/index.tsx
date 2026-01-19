@@ -1,8 +1,8 @@
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 
-import { allPosts } from 'contentlayer/generated'
-import type { Post } from 'contentlayer/generated'
+import { allPosts } from 'contentlayer2/generated'
+import type { Post } from 'contentlayer2/generated'
 
 import Header from '@/components/header'
 import Footer from '@/components/footer'

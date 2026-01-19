@@ -1,11 +1,11 @@
-const withPlugins = require('next-compose-plugins')
 const withPWA = require('next-pwa')
 const runtimeCaching = require('next-pwa/cache')
-const { withContentlayer } = require('next-contentlayer')
+const { withContentlayer } = require('next-contentlayer2')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true'
 })
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
@@ -18,6 +18,7 @@ const nextConfig = {
   images: {
     loader: 'custom'
   },
+  turbopack: {},
   async headers() {
     const cacheHeaders = [
       { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
@@ -26,18 +27,12 @@ const nextConfig = {
   }
 }
 
-module.exports = withPlugins([
-  [
-    withPWA,
-    {
-      pwa: {
-        disable: process.env.NODE_ENV === 'development',
-        dest: 'public',
-        runtimeCaching
-      }
-    }
-  ],
-  withBundleAnalyzer,
-  withContentlayer(nextConfig),
-  nextConfig
-])
+const withPWAConfig = withPWA({
+  pwa: {
+    disable: process.env.NODE_ENV === 'development',
+    dest: 'public',
+    runtimeCaching
+  }
+})
+
+module.exports = withBundleAnalyzer(withContentlayer(withPWAConfig(nextConfig)))

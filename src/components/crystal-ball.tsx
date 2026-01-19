@@ -100,7 +100,7 @@ function CrystalBall({
   return (
     <Canvas
       gl={{
-        outputEncoding: THREE.sRGBEncoding,
+        outputColorSpace: THREE.SRGBColorSpace,
         toneMapping: THREE.ACESFilmicToneMapping,
         toneMappingExposure: toneMappingExposure
       }}

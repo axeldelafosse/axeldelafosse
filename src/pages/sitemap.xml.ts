@@ -1,8 +1,8 @@
 import React from 'react'
 import { NextPageContext } from 'next'
 
-import { allPosts } from 'contentlayer/generated'
-import type { Post } from 'contentlayer/generated'
+import { allPosts } from 'contentlayer2/generated'
+import type { Post } from 'contentlayer2/generated'
 
 const formatDate = (date: number) => {
   return new Date(date).toISOString().substring(0, 10)
