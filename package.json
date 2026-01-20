@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next --turbo",
-    "build": "next build",
+    "build": "contentlayer2 build && next build",
     "build:static": "rimraf src/pages/sitemap.xml.ts && next build",
     "build:analyze": "ANALYZE=true yarn build",
     "start": "next start",
