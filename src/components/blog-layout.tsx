@@ -76,7 +76,7 @@ function BlogLayout({ post, children }: BlogLayoutProps) {
   return (
     <div className="flex flex-col justify-between min-h-dvh overscroll-none">
       <div className="z-10 flex flex-col text-black dark:text-white">
-        <div className="px-5 h-16 w-100 flex justify-between items-center">
+        <div className="px-5 h-16 flex justify-between items-center">
           <Link
             href={linkUrl}
             className="text-white w-17 flex items-center cursor-w-resize no-underline"
