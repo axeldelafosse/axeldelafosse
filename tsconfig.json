@@ -2,8 +2,11 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "jsx": "preserve",
-    "lib": ["dom", "es2017"],
+    "jsx": "react-jsx",
+    "lib": [
+      "dom",
+      "es2017"
+    ],
     "moduleResolution": "node",
     "allowJs": true,
     "noEmit": true,
@@ -21,16 +24,38 @@
     "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["src/components/*"],
-      "@/images/*": ["src/images/*"],
-      "@/modules/*": ["src/modules/*"],
-      "@/pages/*": ["src/pages/*"],
-      "@/utils/*": ["src/utils/*"],
-      "@/lib/*": ["src/lib/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
+      "@/components/*": [
+        "src/components/*"
+      ],
+      "@/images/*": [
+        "src/images/*"
+      ],
+      "@/modules/*": [
+        "src/modules/*"
+      ],
+      "@/pages/*": [
+        "src/pages/*"
+      ],
+      "@/utils/*": [
+        "src/utils/*"
+      ],
+      "@/lib/*": [
+        "src/lib/*"
+      ],
+      "contentlayer2/generated": [
+        "./.contentlayer/generated"
+      ]
     },
     "incremental": true
   },
-  "exclude": ["node_modules", "static"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".contentlayer/generated"]
+  "exclude": [
+    "node_modules",
+    "static"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".contentlayer/generated"
+  ]
 }

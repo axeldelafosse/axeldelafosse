@@ -2,8 +2,8 @@ import React from 'react'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 
-import { allPosts } from 'contentlayer/generated'
-import type { Post } from 'contentlayer/generated'
+import { allPosts } from 'contentlayer2/generated'
+import type { Post } from 'contentlayer2/generated'
 
 import BlogLayout from '@/components/blog-layout'
 // import Switch from '@/components/switch'
