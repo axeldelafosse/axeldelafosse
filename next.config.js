@@ -19,6 +19,16 @@ const nextConfig = {
     loader: 'custom'
   },
   turbopack: {},
+  async redirects() {
+    return [
+      {
+        source: '/resume',
+        destination:
+          'https://drive.google.com/file/d/188pSCtJbQ8XVtAObNjuDBzRoyh-4szi2/view',
+        permanent: false
+      }
+    ]
+  },
   async headers() {
     const cacheHeaders = [
       { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
