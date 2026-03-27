@@ -70,7 +70,7 @@ function PostHead({
 
       <div className="flex items-center pt-5">
         <img
-          src="/images/axel.png"
+          src="/images/axel.jpg"
           alt={process.env.NEXT_PUBLIC_FULL_NAME}
           width={25}
           height={25}
