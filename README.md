@@ -1,7 +1,5 @@
 📝 [axeldelafosse.com](https://axeldelafosse.com)
 
-🤖 [yupp.ai](https://yupp.ai)
-
 🔊 [sweetspotsoundsystem.com](https://sweetspotsoundsystem.com)
 
 🧑‍🚀 [pro.sweetspotsoundsystem.com](https://pro.sweetspotsoundsystem.com)
