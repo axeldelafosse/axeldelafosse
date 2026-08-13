@@ -1,3 +1,5 @@
+
+
 📝 [axeldelafosse.com](https://axeldelafosse.com)
 
 🔊 [sweetspotsoundsystem.com](https://sweetspotsoundsystem.com)
@@ -7,3 +9,5 @@
 🌀 [sweetspot.stream](https://sweetspot.stream)
 
 🎛️ [stemgen.dev](https://stemgen.dev)
+
+📄 [Resume](https://axeldelafosse.com/resume)
