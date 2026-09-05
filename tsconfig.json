@@ -7,7 +7,7 @@
       "dom",
       "es2017"
     ],
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowJs": true,
     "noEmit": true,
     "strict": true,

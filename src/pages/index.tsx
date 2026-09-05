@@ -13,18 +13,28 @@ function Home({ posts }: { posts: Post[] }) {
     <div className="h-svh w-screen flex flex-col justify-between items-center">
       <Header />
       <div className="z-10 flex flex-col justify-center items-center">
-        <Link href="/blog" passHref={true}>
-          <div className="h-48 w-48 sm:h-96 sm:w-96 cursor-zoom-in">
+        <Link
+          href="/blog"
+          aria-label="View all blog posts"
+          data-aurora-gravity="logo"
+          className="aurora-gravity-target block rounded-full"
+        >
+          <div className="aurora-gravity-visual h-48 w-48 sm:h-96 sm:w-96 cursor-zoom-in">
             <Logo color="#fff" />
           </div>
         </Link>
-        <Link
-          href={`/blog/${posts[0].slug}`}
-          className="text-white text-lg pt-12 px-5 flex justify-center cursor-pointer break-words text-center no-underline"
-        >
-          <strong className="pr-2">New: </strong>
-          {posts[0].title}
-        </Link>
+        <div className="pt-12 px-5">
+          <Link
+            href={`/blog/${posts[0].slug}`}
+            data-aurora-gravity="post"
+            className="aurora-gravity-target text-white text-lg min-h-11 flex items-center justify-center cursor-pointer break-words text-center no-underline"
+          >
+            <span className="aurora-gravity-visual flex items-baseline justify-center">
+              <strong className="pr-2">New: </strong>
+              {posts[0].title}
+            </span>
+          </Link>
+        </div>
       </div>
       <Footer color="white" />
     </div>

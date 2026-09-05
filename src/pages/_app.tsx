@@ -2,14 +2,21 @@ import '../styles/globals.css'
 import '../styles/tweet.css'
 
 import Head from 'next/head'
+import dynamic from 'next/dynamic'
 import { AppProps, NextWebVitalsMetric } from 'next/app'
 
 import { LoadAnalytics, TrackPageView } from '@/lib/analytics'
-import Gradient from '@/components/gradient-background'
 
-export function reportWebVitals(
-  { id, name, label, value }: NextWebVitalsMetric
-) {
+const AuroraCanvas = dynamic(() => import('@/components/home-background'), {
+  ssr: false
+})
+
+export function reportWebVitals({
+  id,
+  name,
+  label,
+  value
+}: NextWebVitalsMetric) {
   window?.gtag?.('event', name, {
     event_category:
       label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
@@ -99,8 +106,12 @@ function App({ Component, pageProps, router }: AppProps) {
         />
       </Head>
       <LoadAnalytics />
-      <Gradient />
-      <Component {...pageProps} />
+      <div className="site-background" aria-hidden="true">
+        <AuroraCanvas />
+      </div>
+      <div className="relative z-10">
+        <Component {...pageProps} />
+      </div>
       <TrackPageView />
     </>
   )

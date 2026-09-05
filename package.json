@@ -10,6 +10,9 @@
     "now-build": "contentlayer2 build && next build",
     "deploy": "vercel --prod",
     "prettier": "prettier --write .",
+    "test:aurora": "bun test tests/aurora-input.test.ts",
+    "check:aurora": "tsc --project tsconfig.aurora.json && bun run test:aurora",
+    "check:aurora:gpu": "bun --preload ./scripts/register-wgsl.mjs ./scripts/check-aurora.mjs",
     "export": "next export",
     "postinstall": "patch-package",
     "upgrade-interactive": "bunx npm-check-updates -i"
@@ -51,7 +54,7 @@
     "tailwindcss": "^4.1.18",
     "three": "^0.182.0",
     "three-stdlib": "^2.36.1",
-    "uvcanvas": "^0.3.0"
+    "vgpu": "^0.3.1"
   },
   "devDependencies": {
     "@types/google.analytics": "^0.0.46",

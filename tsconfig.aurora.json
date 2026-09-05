@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false
+  },
+  "include": [
+    "src/components/home-background.tsx",
+    "src/components/home-fluid*.ts",
+    "src/wgsl-env.d.ts",
+    "tests/aurora-input.test.ts"
+  ]
+}

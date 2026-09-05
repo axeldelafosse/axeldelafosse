@@ -18,7 +18,28 @@ const nextConfig = {
   images: {
     loader: 'custom'
   },
-  turbopack: {},
+  turbopack: {
+    rules: {
+      '*.wgsl': {
+        loaders: [
+          {
+            loader: '@vgpu/wgsl/loader-webpack',
+            options: { minify: process.env.NODE_ENV === 'production' }
+          }
+        ],
+        as: '*.js'
+      }
+    }
+  },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.wgsl$/,
+      loader: '@vgpu/wgsl/loader-webpack',
+      options: { minify: process.env.NODE_ENV === 'production' }
+    })
+
+    return config
+  },
   async redirects() {
     return [
       {
@@ -30,6 +51,8 @@ const nextConfig = {
     ]
   },
   async headers() {
+    if (process.env.NODE_ENV !== 'production') return []
+
     const cacheHeaders = [
       { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
     ]
