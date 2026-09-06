@@ -10,10 +10,12 @@ import { weservLoader } from '@/lib/weserv-loader'
 
 export const LinkPreview = ({
   children,
-  url
+  url,
+  asChild = false
 }: {
   children: React.ReactNode
   url: string
+  asChild?: boolean
 }) => {
   const width = 200
   const height = 125
@@ -59,6 +61,7 @@ export const LinkPreview = ({
           <div className="hidden">
             <Image
               src={src}
+              alt=""
               width={width}
               height={height}
               layout={layout}
@@ -75,12 +78,13 @@ export const LinkPreview = ({
           setIsOpen(open)
         }}
       >
-        <HoverCardPrimitive.Trigger href={url}>
+        <HoverCardPrimitive.Trigger href={url} asChild={asChild}>
           {children}
         </HoverCardPrimitive.Trigger>
 
         <HoverCardPrimitive.Content side="top" align="center" sideOffset={10}>
           <Transition
+            as="div"
             show={isOpen}
             appear={true}
             enter="transform transition duration-300 origin-bottom ease-out"
@@ -97,6 +101,7 @@ export const LinkPreview = ({
             >
               <Image
                 src={src}
+                alt=""
                 width={width}
                 height={height}
                 layout={layout}

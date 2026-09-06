@@ -11,8 +11,10 @@
     "deploy": "vercel --prod",
     "prettier": "prettier --write .",
     "test:aurora": "bun test tests/aurora-input.test.ts",
+    "test:markdown": "bun test tests/markdown-rendering.test.jsx",
     "check:aurora": "tsc --project tsconfig.aurora.json && bun run test:aurora",
     "check:aurora:gpu": "bun --preload ./scripts/register-wgsl.mjs ./scripts/check-aurora.mjs",
+    "check:layout": "node scripts/check-layout.mjs",
     "export": "next export",
     "postinstall": "patch-package",
     "upgrade-interactive": "bunx npm-check-updates -i"

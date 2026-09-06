@@ -1,0 +1,193 @@
+.prose {
+  padding-bottom: 1.5rem;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+  --rule: #d1d5db;
+  --link: #7e22ce;
+  --code-bg: #f3f4f6;
+}
+
+.prose :where(p, ul, ol) {
+  font-size: inherit;
+  line-height: inherit;
+  margin-block: 1.25em;
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  line-height: 1.35;
+  scroll-margin-top: 1.5rem;
+  margin-block: 1.75em 0.65em;
+}
+
+.prose > h1:first-child {
+  margin-top: 0.85em;
+}
+
+.prose h2 {
+  font-size: 1.65rem;
+}
+.prose h3 {
+  font-size: 1.375rem;
+}
+.prose :where(h4, h5, h6) {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.prose :where(ul, ol) {
+  list-style-position: outside;
+  padding-inline-start: 1.75em;
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+.prose ol {
+  list-style-type: decimal;
+}
+.prose ul ul {
+  list-style-type: circle;
+}
+.prose ul ul ul {
+  list-style-type: square;
+}
+.prose li + li {
+  margin-top: 0.65em;
+}
+.prose li > :where(ul, ol) {
+  margin-block: 0.5em;
+}
+.prose li > p {
+  margin-block: 0.65em;
+}
+.prose li > :first-child {
+  margin-top: 0;
+}
+.prose li > :last-child {
+  margin-bottom: 0;
+}
+.prose li::marker {
+  font-variant-numeric: tabular-nums;
+}
+
+.prose :global(.contains-task-list) {
+  list-style: none;
+}
+.prose input[type='checkbox'] {
+  margin-inline: -1.25em 0.6em;
+  accent-color: var(--link);
+}
+
+.prose blockquote {
+  margin: 1.5em 0;
+  padding-inline-start: 1.25rem;
+  border-inline-start: 2px solid var(--rule);
+}
+
+.prose blockquote > :first-child {
+  margin-top: 0;
+}
+.prose blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.prose a {
+  color: var(--link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.prose a:hover {
+  text-decoration-thickness: 2px;
+}
+.prose a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.prose a:global(.anchor) {
+  color: inherit;
+  text-decoration: none;
+}
+.prose a:global(.anchor):is(:hover, :focus-visible) {
+  text-decoration: underline;
+}
+
+.prose :not(pre) > code {
+  padding: 0.12em 0.3em;
+  border-radius: 3px;
+  background: var(--code-bg);
+  color: inherit;
+  font-size: 0.9em;
+  box-decoration-break: clone;
+}
+
+.prose pre {
+  max-width: 100%;
+  margin-block: 1.5em;
+  padding: 1rem;
+  overflow-x: auto;
+  background: #282a36;
+  color: #f8f8f2;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  tab-size: 2;
+  white-space: pre;
+  overflow-wrap: normal;
+}
+
+.prose pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+}
+.prose pre:focus-visible,
+.tableScroll:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 3px;
+}
+
+.prose :global(.rehype-code-title) {
+  margin-top: 1.5em;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--rule);
+  border-bottom: 0;
+  font-size: 0.875rem;
+}
+.prose :global(.rehype-code-title) + pre {
+  margin-top: 0;
+}
+
+.prose hr {
+  margin-block: 2em;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.tableScroll {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-block: 1.5em;
+}
+.tableScroll table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+.tableScroll :where(th, td) {
+  padding: 0.6em 0.8em;
+  border: 1px solid var(--rule);
+}
+.tableScroll th {
+  text-align: start;
+  font-weight: 700;
+}
+
+@media (prefers-color-scheme: dark) {
+  .prose {
+    --rule: #4b5563;
+    --link: #c084fc;
+    --code-bg: #25252b;
+  }
+}

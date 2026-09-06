@@ -1,11 +1,11 @@
 // From https://mdxjs.com/guides/syntax-highlighting
 
-import React, { ReactNode } from 'react'
+import { Fragment, isValidElement } from 'react'
+import type { ComponentPropsWithoutRef } from 'react'
 import { Highlight, Language } from 'prism-react-renderer'
 import type { PrismTheme } from 'prism-react-renderer'
-import * as ScrollArea from '@radix-ui/react-scroll-area'
 
-var theme: PrismTheme = {
+const theme: PrismTheme = {
   plain: {
     color: '#F8F8F2',
     backgroundColor: '#282A36'
@@ -57,7 +57,7 @@ var theme: PrismTheme = {
     {
       types: ['comment'],
       style: {
-        color: 'rgb(98, 114, 164)'
+        color: 'rgb(154, 166, 202)'
       }
     },
     {
@@ -69,50 +69,52 @@ var theme: PrismTheme = {
   ]
 }
 
-interface CodeBlockProps {
-  className: string
-  children: ReactNode
-}
+type CodeBlockProps = ComponentPropsWithoutRef<'pre'>
 
-function CodeBlock({ className, children }: CodeBlockProps) {
-  const language = className?.replace(/language-/, '') as Language
+function CodeBlock({ children, ...props }: CodeBlockProps) {
+  const codeElement =
+    isValidElement<ComponentPropsWithoutRef<'code'>>(children) &&
+    children.type === 'code'
+      ? children
+      : null
 
-  if (!language) {
-    return <code>{children}</code>
+  if (!codeElement || typeof codeElement.props.children !== 'string') {
+    return <pre {...props}>{children}</pre>
   }
+
+  const language = (codeElement.props.className?.match(
+    /\blanguage-([\w-]+)/
+  )?.[1] ?? 'text') as Language
 
   return (
     <Highlight
-      code={children as string}
+      code={codeElement.props.children}
       language={language}
       theme={theme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <ScrollArea.Root>
-          <ScrollArea.Viewport />
-          <ScrollArea.Scrollbar orientation="horizontal">
-            <ScrollArea.Thumb />
-          </ScrollArea.Scrollbar>
-          <pre
-            className={className}
-            style={{
-              ...style,
-              paddingTop: '20px',
-              paddingLeft: '15px',
-              paddingRight: '15px',
-              overflow: 'scroll'
-            }}
-          >
+        <pre
+          {...props}
+          className={[className, props.className].filter(Boolean).join(' ')}
+          style={{ ...style, ...props.style }}
+          tabIndex={props.tabIndex ?? 0}
+          aria-label={props['aria-label'] ?? 'Code example'}
+        >
+          <code {...codeElement.props}>
             {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line, key: i })}>
-                {line.map((token, key) => (
-                  <span key={key} {...getTokenProps({ token, key })} />
-                ))}
-              </div>
+              <Fragment key={i}>
+                {i > 0 && '\n'}
+                <span {...getLineProps({ line })}>
+                  {line.map((token, key) => (
+                    <span key={key} {...getTokenProps({ token })}>
+                      {token.empty ? '' : token.content}
+                    </span>
+                  ))}
+                </span>
+              </Fragment>
             ))}
-          </pre>
-          <ScrollArea.Corner />
-        </ScrollArea.Root>
+          </code>
+        </pre>
       )}
     </Highlight>
   )

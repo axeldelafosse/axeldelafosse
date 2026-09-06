@@ -9,7 +9,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    optimizeCss: true,
+    // Load the complete layout styles before paint, rather than deferring them
+    // behind Critters' partial critical-CSS pass.
+    optimizeCss: false,
     scrollRestoration: true
   },
   typescript: {

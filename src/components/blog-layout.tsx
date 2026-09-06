@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -9,6 +9,7 @@ import { Tweet } from '@/components/static-tweet'
 import PostHead from '@/components/post-head'
 import CustomLink from '@/components/custom-link'
 import CodeBlock from '@/components/code-block'
+import MarkdownTable from '@/components/markdown-table'
 import Footer from '@/components/footer'
 import { LinkPreview } from '@/components/link-preview'
 import { weservLoader } from '@/lib/weserv-loader'
@@ -39,10 +40,21 @@ function getBackButtonProps(
 
 export const components = {
   a: CustomLink,
-  code: CodeBlock,
-  img: ({ src }: { src: string }) => (
+  pre: CodeBlock,
+  table: MarkdownTable,
+  img: ({
+    src,
+    alt = '',
+    title
+  }: {
+    src: string
+    alt?: string
+    title?: string
+  }) => (
     <Image
       src={src}
+      alt={alt}
+      title={title}
       width={500}
       height={500}
       layout="responsive"

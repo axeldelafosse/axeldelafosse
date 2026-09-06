@@ -1,18 +1,46 @@
-import React, { ReactNode } from 'react'
+import type { ComponentPropsWithoutRef } from 'react'
 import Link from 'next/link'
 
 import { LinkPreview } from './link-preview'
 
-interface LinkProps {
-  href: string
-  children: ReactNode
-}
+type LinkProps = ComponentPropsWithoutRef<'a'>
 
-function CustomLink({ href, children }: LinkProps) {
-  if (href.includes('axeldelafosse.com') || href[0] === '/') {
+function CustomLink({ href, children, ...props }: LinkProps) {
+  // Heading and footnote links should jump within the page, not open a preview.
+  if (!href || href.startsWith('#')) {
     return (
-      <LinkPreview url={href}>
-        <Link href={href} passHref={true}>
+      <a {...props} href={href}>
+        {children}
+      </a>
+    )
+  }
+
+  let url: URL
+  try {
+    url = new URL(href, 'https://axeldelafosse.com')
+  } catch {
+    return (
+      <a {...props} href={href}>
+        {children}
+      </a>
+    )
+  }
+
+  if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+    return (
+      <a {...props} href={href}>
+        {children}
+      </a>
+    )
+  }
+
+  if (
+    url.hostname === 'axeldelafosse.com' ||
+    url.hostname === 'www.axeldelafosse.com'
+  ) {
+    return (
+      <LinkPreview url={href} asChild>
+        <Link {...props} href={href}>
           {children}
         </Link>
       </LinkPreview>
@@ -20,8 +48,13 @@ function CustomLink({ href, children }: LinkProps) {
   }
 
   return (
-    <LinkPreview url={href}>
-      <a href={href} target="_blank" rel="noopener noreferrer">
+    <LinkPreview url={href} asChild>
+      <a
+        {...props}
+        href={href}
+        target={props.target ?? '_blank'}
+        rel={[props.rel, 'noopener noreferrer'].filter(Boolean).join(' ')}
+      >
         {children}
       </a>
     </LinkPreview>

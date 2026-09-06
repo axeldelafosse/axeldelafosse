@@ -10,7 +10,7 @@ import Logo from '@/components/logo'
 
 function Home({ posts }: { posts: Post[] }) {
   return (
-    <div className="h-svh w-screen flex flex-col justify-between items-center">
+    <div className="home-page w-screen flex flex-col justify-between items-center">
       <Header />
       <div className="z-10 flex flex-col justify-center items-center">
         <Link

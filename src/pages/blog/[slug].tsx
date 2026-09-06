@@ -5,13 +5,14 @@ import { allPosts } from 'contentlayer2/generated'
 import type { Post } from 'contentlayer2/generated'
 
 import BlogLayout, { components } from '@/components/blog-layout'
+import styles from '../../styles/markdown.module.css'
 
 export default function Post({ post }: { post: Post }) {
   const Component = useMDXComponent(post.body.code)
 
   return (
     <BlogLayout post={post}>
-      <article>
+      <article className={styles.prose}>
         <Component components={components} />
       </article>
     </BlogLayout>

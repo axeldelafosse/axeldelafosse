@@ -63,6 +63,15 @@ body {
   font-family: monospace;
 }
 
+.home-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.home-page > * {
+  flex-shrink: 0;
+}
+
 .site-background {
   position: fixed;
   inset: 0;
