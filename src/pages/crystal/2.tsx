@@ -10,7 +10,7 @@ function Crystal() {
   }
 
   return (
-    <div className="h-[80vh]">
+    <div className="mx-auto h-[80vh] w-full max-w-[580px]">
       <CrystalBall
         toneMappingExposure={0.69}
         meshPhysicalMaterialProps={meshPhysicalMaterialProps}

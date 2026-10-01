@@ -1,3 +1,5 @@
-import React from 'react'
+import type { ComponentProps } from 'react'
 
-export const Div = (p) => <div className={p.className}>{p.children}</div>
+export const Div = (p: ComponentProps<'div'>) => (
+  <div className={p.className}>{p.children}</div>
+)

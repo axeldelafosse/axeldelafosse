@@ -1,6 +1,6 @@
-import React from 'react'
+import { isPollData, isTweetData, type TweetHandler } from '../types'
 
-function getContainerClassName(dataType) {
+function getContainerClassName(dataType?: string) {
   if (!dataType) return
 
   const [type, count] = dataType.split(' ')
@@ -14,12 +14,12 @@ function getContainerClassName(dataType) {
   }
 }
 
-export default {
+const handlers: Record<string, TweetHandler> = {
   div(props, components, i) {
     const { data } = props
     const type = props.dataType || (data && data.type)
 
-    if (type === 'tweet') {
+    if (type === 'tweet' && isTweetData(data)) {
       return (
         <components.Tweet key={i} data={data}>
           {props.children}
@@ -27,14 +27,14 @@ export default {
       )
     }
 
-    if (type === 'poll-container') {
+    if (type === 'poll-container' && isPollData(data)) {
       return <components.Poll key={i} data={data} />
     }
 
     const className = getContainerClassName(type)
 
     return (
-      <components.div key={i} className={className} data={data}>
+      <components.div key={i} className={className}>
         {props.children}
       </components.div>
     )
@@ -45,8 +45,8 @@ export default {
       return <components.Emoji key={i} src={props.src} alt={props.alt} />
     }
 
-    if (dataType === 'media-image') {
-      return <components.img key={i} {...props} />
+    if (dataType === 'media-image' && props.src) {
+      return <components.img key={i} {...props} src={props.src} />
     }
 
     return null
@@ -95,7 +95,13 @@ export default {
       const isEmbeddedTweet = props.className?.includes('twitter-tweet')
 
       if (isEmbeddedTweet) {
-        return <components.EmbeddedTweet {...props} />
+        return (
+          <components.EmbeddedTweet
+            key={i}
+            ast={props.data?.ast?.[0]}
+            href={props.href}
+          />
+        )
       }
     } else {
       const ast = props.data?.ast
@@ -106,7 +112,9 @@ export default {
     }
 
     return (
-      <components.Blockquote key={i}>{props.children}</components.Blockquote>
+      <components.blockquote key={i}>{props.children}</components.blockquote>
     )
   }
 }
+
+export default handlers

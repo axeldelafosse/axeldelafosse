@@ -19,7 +19,7 @@
   }
 
   a {
-    @apply text-purple-400 underline;
+    @apply text-purple-700 dark:text-purple-400 underline;
   }
 
   ol,
@@ -55,6 +55,13 @@
 
 html {
   overscroll-behavior: none;
+  color-scheme: dark;
+  background: #000;
+}
+
+html:not(.dark) {
+  color-scheme: light;
+  background: #fff;
 }
 
 body {

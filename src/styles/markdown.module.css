@@ -184,10 +184,8 @@
   font-weight: 700;
 }
 
-@media (prefers-color-scheme: dark) {
-  .prose {
-    --rule: #4b5563;
-    --link: #c084fc;
-    --code-bg: #25252b;
-  }
+:global(.dark) .prose {
+  --rule: #4b5563;
+  --link: #c084fc;
+  --code-bg: #25252b;
 }

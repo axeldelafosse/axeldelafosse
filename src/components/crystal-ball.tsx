@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import * as THREE from 'three'
 
 import { Canvas, useLoader, useFrame, useThree } from '@react-three/fiber'
@@ -54,7 +54,7 @@ function Model({
     <group ref={groupRef} {...rest} name="Crystal Ball">
       <PerspectiveCamera makeDefault={true} far={1000} near={1} fov={45} />
 
-      <Center alignTop>
+      <Center top>
         <motion.mesh
           ref={meshRef}
           name="Sphere"
@@ -105,12 +105,7 @@ function CrystalBall({
         toneMappingExposure: toneMappingExposure
       }}
     >
-      <Stage
-        contactShadow={false}
-        shadows={false}
-        environment="night"
-        preset="soft"
-      >
+      <Stage shadows={false} environment="night" preset="soft">
         <PresentationControls
           global={true}
           cursor={cursor}
@@ -120,7 +115,6 @@ function CrystalBall({
           rotation={[0, 0, 0]}
           polar={[0, 0]}
           azimuth={[-Infinity, Infinity]}
-          config={{ mass: 1, tension: 170, friction: 26 }}
         >
           <Model
             url={url}

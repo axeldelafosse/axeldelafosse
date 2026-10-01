@@ -1,12 +1,19 @@
 import React from 'react'
 import TweetHeader from './tweet-header'
 import TweetInfo from './tweet-info'
+import type { TweetData } from '../../../types'
 
-const TweetContext = React.createContext<any>({})
+const TweetContext = React.createContext<TweetData | null>(null)
 
 export const useTweet = () => React.useContext(TweetContext)
 
-export default function Tweet({ children, data }) {
+export default function Tweet({
+  children,
+  data
+}: {
+  children?: React.ReactNode
+  data: TweetData
+}) {
   return (
     <div className="static-tweet-body">
       <blockquote className="static-tweet-body-blockquote">

@@ -1,0 +1,22 @@
+.card {
+  transform-origin: bottom;
+  animation: preview-enter 300ms ease-out;
+}
+
+@keyframes preview-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+}

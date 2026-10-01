@@ -6,6 +6,14 @@ import { effect, frame, init, surface } from 'vgpu'
 
 import backgroundShader from './home-background.wgsl'
 import {
+  AuroraLayoutCache,
+  auroraViewportSize,
+  coversAuroraViewport,
+  type AuroraLayout,
+  type AuroraRect,
+  type GravityKind
+} from './home-background-layout'
+import {
   createHomeFluid,
   destroyHomeFluid,
   prepareHomeFluid,
@@ -30,9 +38,9 @@ const IDLE_STEP = 1 / 30
 const MAX_SIMULATION_STEPS = 2
 const REDUCED_MOTION_PHASE = 0.72
 const GRAVITY_SELECTOR = '[data-aurora-gravity]'
+const OCCLUDER_SELECTOR = '[data-aurora-occluder="true"]'
 const rendererOwners = new WeakMap<HTMLCanvasElement, symbol>()
 
-type GravityKind = 'logo' | 'post'
 type ScreenPoint = readonly [number, number]
 
 interface GravityWellState {
@@ -43,6 +51,7 @@ interface GravityWellState {
   focusTarget: HTMLElement | null
   proximityGoal: number
   radius: number
+  rect: AuroraRect | null
 }
 
 function smoothstep01(value: number) {
@@ -50,7 +59,7 @@ function smoothstep01(value: number) {
   return t * t * (3 - 2 * t)
 }
 
-function distanceToRect(x: number, y: number, rect: DOMRect) {
+function distanceToRect(x: number, y: number, rect: AuroraRect) {
   const dx = Math.max(rect.left - x, 0, x - rect.right)
   const dy = Math.max(rect.top - y, 0, y - rect.bottom)
   return Math.hypot(dx, dy)
@@ -112,14 +121,24 @@ function AuroraCanvas() {
     let removeGpuErrorListener: (() => void) | undefined
     let unsubscribeResize: (() => void) | undefined
     let removeListeners: (() => void) | undefined
+    let resizeObserver: ResizeObserver | undefined
+    let mutationObserver: MutationObserver | undefined
     const clock = new AuroraClock()
     const pointerTrail = new PointerTrail()
     let accumulator = 0
     let needsRender = true
     let hasRendered = false
+    let occluded = false
     let pointerScreen: ScreenPoint | null = null
     let proximityDirty = true
     let proximityKind: GravityKind | null = null
+    const layoutCache = new AuroraLayoutCache<HTMLElement>(
+      (kind) =>
+        document.querySelector<HTMLElement>(`[data-aurora-gravity="${kind}"]`),
+      () =>
+        Array.from(document.querySelectorAll<HTMLElement>(OCCLUDER_SELECTOR))
+    )
+    let lastLayout: AuroraLayout<HTMLElement> | undefined
     const gravityWells: Record<GravityKind, GravityWellState> = {
       logo: {
         activation: 0,
@@ -128,7 +147,8 @@ function AuroraCanvas() {
         element: null,
         focusTarget: null,
         proximityGoal: 0,
-        radius: 0.2
+        radius: 0.2,
+        rect: null
       },
       post: {
         activation: 0,
@@ -137,26 +157,35 @@ function AuroraCanvas() {
         element: null,
         focusTarget: null,
         proximityGoal: 0,
-        radius: 0.12
+        radius: 0.12,
+        rect: null
       }
     }
 
-    const measureGravityTarget = (kind: GravityKind, rect: DOMRect) => {
+    const measureGravityTarget = (kind: GravityKind, rect: AuroraRect) => {
       if (rect.width <= 0 || rect.height <= 0) return
 
       const viewportWidth = Math.max(window.innerWidth, 1)
       const viewportHeight = Math.max(window.innerHeight, 1)
       const scale = Math.sqrt(rect.width * rect.height) / viewportHeight
       const well = gravityWells[kind]
-      well.center = [
+      const center: HomeFluidPoint = [
         clamp((rect.left + rect.width * 0.5) / viewportWidth, 0, 1),
         clamp((rect.top + rect.height * 0.5) / viewportHeight, 0, 1)
       ]
-      well.radius =
+      const radius =
         kind === 'logo'
           ? clamp(0.7 * scale, 0.14, 0.22)
           : clamp(0.65 * scale + 0.02, 0.1, 0.18)
-      needsRender = true
+      if (
+        center[0] !== well.center[0] ||
+        center[1] !== well.center[1] ||
+        radius !== well.radius
+      ) {
+        well.center = center
+        well.radius = radius
+        needsRender = true
+      }
     }
 
     const clearGravityDomState = (well: GravityWellState) => {
@@ -223,12 +252,9 @@ function AuroraCanvas() {
       needsRender = true
     }
 
-    const gravityElement = (kind: GravityKind) =>
-      document.querySelector<HTMLElement>(`[data-aurora-gravity="${kind}"]`)
-
     const gravityProximity = (
       kind: GravityKind,
-      rect: DOMRect,
+      rect: AuroraRect,
       x: number,
       y: number
     ) => {
@@ -248,16 +274,8 @@ function AuroraCanvas() {
 
       for (const kind of ['logo', 'post'] as const) {
         const well = gravityWells[kind]
-        const target = gravityElement(kind)
-
-        if (well.element && well.element !== target) {
-          clearGravityDomState(well)
-        }
-        well.element = target
-
-        if (!target) continue
-        const rect = target.getBoundingClientRect()
-        measureGravityTarget(kind, rect)
+        const rect = well.rect
+        if (!rect) continue
         if (!reducedMotion && pointerScreen) {
           scores[kind] = gravityProximity(
             kind,
@@ -319,6 +337,8 @@ function AuroraCanvas() {
       removeGpuErrorListener?.()
       unsubscribeResize?.()
       removeListeners?.()
+      resizeObserver?.disconnect()
+      mutationObserver?.disconnect()
       pointerTrail.reset()
       // An earlier Strict Mode setup must not clear a newer renderer's UI.
       if (rendererOwners.get(canvas) === rendererOwner) {
@@ -414,6 +434,8 @@ function AuroraCanvas() {
         animationFrame = 0
         if (disposed || document.hidden) return
         try {
+          updateLayout()
+          if (occluded) return
           if (reducedMotion) {
             if (needsRender) renderBackground()
             return
@@ -464,10 +486,87 @@ function AuroraCanvas() {
       }
 
       const invalidateLayout = () => {
+        layoutCache.invalidate()
         proximityDirty = true
         needsRender = true
+        // A covered canvas still needs one layout check when content moves.
         requestFrame()
       }
+
+      const observedElements = new Set<Element>()
+      const updateLayout = () => {
+        const layout = layoutCache.read()
+        if (layout === lastLayout) return
+        lastLayout = layout
+        const viewport = auroraViewportSize(document.documentElement, window)
+
+        // Read every rectangle before changing the targets' decorative styles.
+        const elements = new Set<Element>([
+          document.documentElement,
+          document.body,
+          ...layout.occluders.map(({ element }) => element)
+        ])
+        for (const kind of ['logo', 'post'] as const) {
+          const well = gravityWells[kind]
+          const measured = layout.gravity[kind]
+          const target = measured?.element ?? null
+          if (well.element && well.element !== target) {
+            clearGravityDomState(well)
+          }
+          well.element = target
+          well.rect = measured?.rect ?? null
+          if (measured) {
+            elements.add(measured.element)
+            measureGravityTarget(kind, measured.rect)
+          }
+        }
+
+        for (const element of observedElements) {
+          if (!elements.has(element)) {
+            resizeObserver?.unobserve(element)
+            observedElements.delete(element)
+          }
+        }
+        for (const element of elements) {
+          if (!observedElements.has(element)) {
+            resizeObserver?.observe(element)
+            observedElements.add(element)
+          }
+        }
+
+        const covered = layout.occluders.some(({ rect }) =>
+          coversAuroraViewport(rect, viewport.width, viewport.height)
+        )
+        if (covered !== occluded) {
+          occluded = covered
+          // Keep the fluid and phase, but never catch up or replay hidden input.
+          resetInteraction()
+          if (!covered) {
+            // Keyboard focus may have scrolled the target into view before this
+            // frame; its focus event was correctly ignored while covered.
+            const target = closestGravityTarget(document.activeElement)
+            setFocusTarget(target?.matches(':focus-visible') ? target : null)
+          }
+        }
+      }
+
+      if (typeof ResizeObserver !== 'undefined') {
+        resizeObserver = new ResizeObserver(invalidateLayout)
+      }
+      mutationObserver = new MutationObserver(invalidateLayout)
+      mutationObserver.observe(document.body, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true,
+        // Exclude the per-frame aurora strength/active style updates.
+        attributeFilter: [
+          'class',
+          'hidden',
+          'data-aurora-gravity',
+          'data-aurora-occluder'
+        ]
+      })
 
       unsubscribeResize = canvasSurface.onResize(({ width, height }) => {
         if (!fluid) return
@@ -478,7 +577,8 @@ function AuroraCanvas() {
       })
 
       const handlePointerMove = (event: PointerEvent) => {
-        if (reducedMotion || !event.isPrimary) return
+        if (reducedMotion || occluded || document.hidden || !event.isPrimary)
+          return
         pointerScreen =
           event.pointerType === 'touch' ? null : [event.clientX, event.clientY]
         proximityDirty = true
@@ -490,7 +590,14 @@ function AuroraCanvas() {
       }
 
       const handlePointerDown = (event: PointerEvent) => {
-        if (reducedMotion || !event.isPrimary || event.button !== 0) return
+        if (
+          reducedMotion ||
+          occluded ||
+          document.hidden ||
+          !event.isPrimary ||
+          event.button !== 0
+        )
+          return
         if (event.pointerType !== 'touch') {
           pointerScreen = [event.clientX, event.clientY]
           proximityDirty = true
@@ -507,6 +614,7 @@ function AuroraCanvas() {
       }
 
       const handleGravityFocusIn = (event: FocusEvent) => {
+        if (occluded || document.hidden) return
         const target = closestGravityTarget(event.target)
         setFocusTarget(target?.matches(':focus-visible') ? target : null)
       }
@@ -525,6 +633,10 @@ function AuroraCanvas() {
         } else {
           invalidateLayout()
         }
+      }
+      const handleRouteChangeStart = () => {
+        resetInteraction()
+        invalidateLayout()
       }
 
       // Scroll can move the targets while the pointer remains stationary.
@@ -552,7 +664,7 @@ function AuroraCanvas() {
       )
       document.addEventListener('visibilitychange', handleVisibilityChange)
       motionPreference.addEventListener('change', handleMotionPreferenceChange)
-      router.events.on('routeChangeStart', resetInteraction)
+      router.events.on('routeChangeStart', handleRouteChangeStart)
       router.events.on('routeChangeComplete', invalidateLayout)
       router.events.on('routeChangeError', invalidateLayout)
 
@@ -575,7 +687,7 @@ function AuroraCanvas() {
           'change',
           handleMotionPreferenceChange
         )
-        router.events.off('routeChangeStart', resetInteraction)
+        router.events.off('routeChangeStart', handleRouteChangeStart)
         router.events.off('routeChangeComplete', invalidateLayout)
         router.events.off('routeChangeError', invalidateLayout)
       }

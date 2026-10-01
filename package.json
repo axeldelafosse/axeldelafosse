@@ -3,18 +3,27 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "contentlayer2 dev & next --turbo",
-    "build": "contentlayer2 build && next build",
+    "build": "contentlayer2 build && bun run check:content && next build && bun run check:site",
     "build:static": "contentlayer2 build && rimraf src/pages/sitemap.xml.ts && next build",
     "build:analyze": "ANALYZE=true yarn build",
     "start": "next start",
-    "now-build": "contentlayer2 build && next build",
+    "now-build": "bun run build",
     "deploy": "vercel --prod",
     "prettier": "prettier --write .",
     "test:aurora": "bun test tests/aurora-input.test.ts",
     "test:markdown": "bun test tests/markdown-rendering.test.jsx",
+    "test:dates": "bun test tests/post-dates.test.ts",
+    "test:theme": "bun test tests/theme.test.jsx",
+    "test:blog": "bun test tests/blog-navigation.test.jsx tests/site-metadata.test.ts tests/post-head.test.jsx tests/static-tweet.test.jsx",
+    "typecheck": "tsc --noEmit",
+    "check:content": "bun scripts/check-content.ts",
+    "check:site": "bun scripts/check-site.ts",
+    "test:performance": "bun test tests/post-data.test.ts tests/link-preview.test.jsx tests/mdx-components.test.jsx tests/analytics.test.jsx",
+    "test:editor": "bun test tests/local-post-editor.test.ts tests/inline-markdown.test.ts tests/inline-editable-dom.test.ts tests/blog-layout.test.jsx",
     "check:aurora": "tsc --project tsconfig.aurora.json && bun run test:aurora",
     "check:aurora:gpu": "bun --preload ./scripts/register-wgsl.mjs ./scripts/check-aurora.mjs",
     "check:layout": "node scripts/check-layout.mjs",
+    "check:performance": "bun run test:performance && node scripts/check-performance.mjs",
     "export": "next export",
     "postinstall": "patch-package",
     "upgrade-interactive": "bunx npm-check-updates -i"
@@ -59,10 +68,12 @@
     "vgpu": "^0.3.1"
   },
   "devDependencies": {
+    "@mdx-js/mdx": "3.1.0",
     "@types/google.analytics": "^0.0.46",
     "@types/gtag.js": "^0.0.20",
     "@types/node": "^25.0.9",
     "@types/react": "^19.2.8",
+    "@types/react-dom": "19.2.3",
     "@types/three": "^0.182.0",
     "critters": "^0.0.25",
     "encoding": "^0.1.13",
@@ -73,7 +84,8 @@
     "imagemin-svgo": "^11.0.1",
     "prettier": "3.8.0",
     "rimraf": "^6.1.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "yaml": "2.4.5"
   },
   "license": "ISC"
 }

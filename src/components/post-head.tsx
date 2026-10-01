@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import PostDates from './post-dates'
+import { canonicalUrl, SITE_NAME } from '@/lib/site'
 
 interface PostHeadProps {
   uid: string
+  slug: string
   title: string
   description: string
   date: string
@@ -9,15 +12,15 @@ interface PostHeadProps {
 }
 
 function PostHead({
-  uid,
+  slug,
   title,
   description,
   date,
   dateLastModified
 }: PostHeadProps) {
-  const url = `https://${process.env.NEXT_PUBLIC_ID}.com/blog/${uid}`
+  const url = canonicalUrl(`/blog/${slug}`)
   const json = {
-    '@context': 'http://www.schema.org',
+    '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -29,7 +32,7 @@ function PostHead({
     dateModified: dateLastModified,
     author: {
       '@type': 'Person',
-      name: process.env.NEXT_PUBLIC_FULL_NAME
+      name: SITE_NAME
     },
     description
   }
@@ -37,9 +40,8 @@ function PostHead({
   return (
     <>
       <Head>
-        <title>
-          {title} - {process.env.NEXT_PUBLIC_FULL_NAME}
-        </title>
+        <title>{`${title} - ${SITE_NAME}`}</title>
+        <link key="canonical" rel="canonical" href={url} />
         <meta key="description" name="description" content={description} />
         <meta key="twitter:title" name="twitter:title" content={title} />
         <meta
@@ -64,21 +66,22 @@ function PostHead({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(json).replace(/</g, '\\u003c')
+          }}
         />
       </Head>
 
-      <div className="flex items-center pt-5">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pt-5">
         <img
           src="/images/axel.jpg"
-          alt={process.env.NEXT_PUBLIC_FULL_NAME}
+          alt={SITE_NAME}
           width={25}
           height={25}
           className="rounded-full"
         />
-        <div className="pl-3">{process.env.NEXT_PUBLIC_FULL_NAME}</div>
-        <div className="pl-3">⟫</div>
-        <div className="pl-3">{new Date(dateLastModified).toDateString()}</div>
+        <span>{SITE_NAME}</span>
+        <PostDates dateLastModified={dateLastModified} />
       </div>
     </>
   )

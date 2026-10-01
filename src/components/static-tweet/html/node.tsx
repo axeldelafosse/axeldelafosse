@@ -1,19 +1,34 @@
-import React from 'react'
+import {
+  createElement,
+  type ComponentType,
+  type Key,
+  type ReactNode
+} from 'react'
 import handlers from './handlers'
+import type {
+  TweetNode,
+  TweetComponents,
+  TweetHandler,
+  TweetRenderProps
+} from '../types'
 
 const defaultHandler =
-  (name: string | number) =>
-  // eslint-disable-next-line react/display-name
-  (props: JSX.IntrinsicAttributes, components: { [x: string]: any }) => {
-    const Comp = components[name]
-    return Comp ? <Comp {...props} /> : React.createElement(name, props)
+  (name: string): TweetHandler =>
+  (props, components, key) => {
+    // The AST dispatches heterogeneous HTML renderers by tag name.
+    const Comp = components[name as keyof TweetComponents] as
+      | ComponentType<TweetRenderProps>
+      | undefined
+    if (Comp) return <Comp key={key} {...props} />
+    const { data: _data, dataType: _dataType, ...attributes } = props
+    return createElement(name, { ...attributes, key })
   }
 
 function handleNode(
-  node: { tag?: any; props?: any; data?: any; nodes?: any },
-  components: any,
-  i = undefined
-) {
+  node: TweetNode | undefined,
+  components: TweetComponents,
+  i?: Key
+): ReactNode {
   if (!node) {
     return null
   }
@@ -30,11 +45,11 @@ function handleNode(
   }
 
   const { nodes } = node
-  const props = { ...node.props, key: i }
-
-  // Always send className as a string
-  if (props.className && Array.isArray(props.className)) {
-    props.className = props.className.join(' ')
+  const props: TweetRenderProps = {
+    ...node.props,
+    className: Array.isArray(node.props?.className)
+      ? node.props.className.join(' ')
+      : node.props?.className
   }
 
   if (node.data) {
@@ -45,7 +60,7 @@ function handleNode(
     props.children = nodes.map((node, i) => handleNode(node, components, i))
   }
 
-  const element = handler(props, components, i, node)
+  const element = handler(props, components, i)
 
   if (!element) {
     console.error('A handler returned null for:', node)
@@ -54,6 +69,12 @@ function handleNode(
   return element
 }
 
-export default function Node({ components, node }) {
+export default function Node({
+  components,
+  node
+}: {
+  components: TweetComponents
+  node?: TweetNode
+}): ReactNode {
   return handleNode(node, components)
 }

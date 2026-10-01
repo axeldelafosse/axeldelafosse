@@ -1,9 +1,9 @@
-import React from 'react'
+import type { TweetData } from '../../../types'
 import Image from 'next/image'
 
 import { weservLoader } from '@/lib/weserv-loader'
 
-export default function TweetHeader({ tweet }) {
+export default function TweetHeader({ tweet }: { tweet: TweetData }) {
   const authorUrl = `https://twitter.com/${tweet.username}`
   const tweetUrl = `https://twitter.com/${tweet.username}/status/${tweet.id}`
   const avatar = tweet.avatar.normal

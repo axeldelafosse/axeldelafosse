@@ -1,9 +1,9 @@
-import React from 'react'
+import { Children, type ComponentProps } from 'react'
 import cs from 'classnames'
 
 const PROTOCOL = /^(https?:|)\/\//
 
-const beautifyHref = (href) => {
+const beautifyHref = (href: string) => {
   const text = href.replace(PROTOCOL, '')
   const i = text.indexOf('/')
 
@@ -22,7 +22,7 @@ const beautifyHref = (href) => {
     : text
 }
 
-export const A = (p) => (
+export const A = (p: ComponentProps<'a'>) => (
   <a
     href={p.href}
     target="_blank"
@@ -30,6 +30,8 @@ export const A = (p) => (
     title={p.title || p.href}
     className={cs('static-tweet-anchor', p.className)}
   >
-    {p.children[0] === p.href ? beautifyHref(p.href) : p.children}
+    {p.href && Children.toArray(p.children)[0] === p.href
+      ? beautifyHref(p.href)
+      : p.children}
   </a>
 )

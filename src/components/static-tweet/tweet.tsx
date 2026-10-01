@@ -1,14 +1,15 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import cs from 'classnames'
 import useSWR from 'swr'
 
 import { useTwitterContext } from './twitter'
 import Node from './html/node'
 import components from './twitter-layout/components'
+import type { TweetAst } from './types'
 
 type TweetProps = {
   id: string
-  ast?: any
+  ast?: TweetAst
   caption?: string
   className?: string
   // TODO: understand what br is used for
@@ -18,10 +19,15 @@ type TweetProps = {
 const Tweet = forwardRef<HTMLElement, TweetProps>(
   ({ id, ast, caption, className }: TweetProps, ref) => {
     const twitter = useTwitterContext()
-    const { data: tweetAst } = useSWR(
+    const { data: tweetAst } = useSWR<TweetAst>(
       id,
-      (id) => ast || twitter.tweetAstMap[id] || twitter.swrOptions.fetcher(id),
-      twitter.swrOptions
+      (id: string) =>
+        ast || twitter.tweetAstMap[id] || twitter.swrOptions.fetcher?.(id),
+      {
+        ...twitter.swrOptions,
+        fallbackData:
+          ast || twitter.tweetAstMap[id] || twitter.swrOptions.fallbackData
+      }
     )
 
     return (

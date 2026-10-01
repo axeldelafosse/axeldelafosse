@@ -1,62 +1,49 @@
-import React from 'react'
-import { GetStaticProps } from 'next'
+import type { GetStaticProps } from 'next'
 import Link from 'next/link'
 
 import { allPosts } from 'contentlayer2/generated'
-import type { Post } from 'contentlayer2/generated'
+import { getPostSummaries, type PostSummary } from '@/lib/post-data'
+import { formatShortPostDate } from '@/lib/post-date'
 
 import BlogLayout from '@/components/blog-layout'
-// import Switch from '@/components/switch'
 
-function Blog({ posts }: { posts: Post[] }) {
-  // const [hideTechPosts, setHideTechPosts] = useState(false)
-
+function Blog({ posts }: { posts: PostSummary[] }) {
   return (
     <BlogLayout>
-      <div className="flex items-center justify-between">
-        <h1>Blog</h1>
-        {/* <div className="flex items-center">
-          <h4 className="mr-2 font-bold">Hide tech posts</h4>
-          <Switch
-            enabled={hideTechPosts}
-            setEnabled={setHideTechPosts}
-            accessibility="Hide tech posts"
-          />
-        </div> */}
-      </div>
-      {posts
-        // .filter((post) =>
-        //   hideTechPosts ? post.tags.includes('tech') === false : true
-        // )
-        .map((post) => (
-          <Link
-            key={post.uid}
-            href={`/blog/${post.slug}`}
-            passHref={true}
-            className="no-underline cursor-pointer text-white"
-          >
-            <h3>
-              {post.title}{' '}
-              <span className="text-lg text-gray-400 font-normal">
-                {new Date(post.dateLastModified).toDateString()}
-              </span>
-            </h3>
-          </Link>
+      <h1>Blog</h1>
+      <div className="mb-8 space-y-6">
+        {posts.map((post) => (
+          <div key={post.uid}>
+            <h2 className="m-0 text-2xl">
+              <Link
+                href={`/blog/${post.slug}`}
+                className="no-underline cursor-pointer text-gray-900 hover:underline dark:text-white"
+              >
+                {post.title}
+              </Link>
+            </h2>
+            <div className="mt-1">
+              <time
+                dateTime={post.dateLastModified}
+                title="Last updated"
+                className="text-sm text-gray-600 dark:text-gray-400"
+              >
+                {formatShortPostDate(post.dateLastModified)}
+              </time>
+            </div>
+          </div>
         ))}
+      </div>
     </BlogLayout>
   )
 }
 
 export default Blog
 
-export const getStaticProps: GetStaticProps = async () => {
-  const posts = allPosts
-    .filter((post: Post) => post._raw.sourceFileDir === '.')
-    .sort(
-      (a: Post, b: Post) =>
-        Number(new Date(b.dateLastModified)) -
-        Number(new Date(a.dateLastModified))
-    )
+export const getStaticProps: GetStaticProps<{
+  posts: PostSummary[]
+}> = async () => {
+  const posts = getPostSummaries(allPosts)
 
   return { props: { posts } }
 }

@@ -5,7 +5,8 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { AppProps, NextWebVitalsMetric } from 'next/app'
 
-import { LoadAnalytics, TrackPageView } from '@/lib/analytics'
+import { GA_TRACKING_ID, LoadAnalytics, TrackPageView } from '@/lib/analytics'
+import { canonicalUrl, SITE_ID, SITE_NAME } from '@/lib/site'
 
 const AuroraCanvas = dynamic(() => import('@/components/home-background'), {
   ssr: false
@@ -17,6 +18,8 @@ export function reportWebVitals({
   label,
   value
 }: NextWebVitalsMetric) {
+  if (!GA_TRACKING_ID) return
+
   window?.gtag?.('event', name, {
     event_category:
       label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
@@ -34,34 +37,49 @@ export function reportWebVitals({
   })
 }
 
-const id = process.env.NEXT_PUBLIC_ID
-const title = process.env.NEXT_PUBLIC_FULL_NAME
+const id = SITE_ID
+const title = SITE_NAME
 const description = `Startups, Growth, Code, Electronic music...`
 
 function App({ Component, pageProps, router }: AppProps) {
   const { pathname } = router
+  const pageTitle =
+    pathname === '/blog'
+      ? `Blog - ${title}`
+      : pathname === '/talks'
+        ? `Talks - ${title}`
+        : title
 
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{pageTitle}</title>
+        <meta
+          key="twitter:card"
+          name="twitter:card"
+          content="summary_large_image"
+        />
+        <meta key="twitter:site" name="twitter:site" content={`@${id}`} />
         {!pathname.includes('blog/') && (
           <>
-            <meta key="title" name="title" content={title} />
+            <link
+              key="canonical"
+              rel="canonical"
+              href={canonicalUrl(pathname)}
+            />
+            <meta key="title" name="title" content={pageTitle} />
             <meta key="description" name="description" content={description} />
             <meta
-              key="twitter:card"
-              name="twitter:card"
-              content="summary_large_image"
+              key="twitter:title"
+              name="twitter:title"
+              content={pageTitle}
             />
-            <meta key="twitter:title" name="twitter:title" content={title} />
             <meta
               key="twitter:description"
               name="twitter:description"
               content={description}
             />
-            <meta key="twitter:site" name="twitter:site" content={`@${id}`} />
-            <meta key="og:title" property="og:title" content={title} />
+            <meta key="og:title" property="og:title" content={pageTitle} />
             <meta
               key="og:description"
               property="og:description"
@@ -70,7 +88,7 @@ function App({ Component, pageProps, router }: AppProps) {
             <meta
               key="og:url"
               property="og:url"
-              content={`https://${id}.com`}
+              content={canonicalUrl(pathname)}
             />
             <meta key="og:site_name" property="og:site_name" content={title} />
             <meta key="og:type" property="og:type" content="website" />
@@ -93,26 +111,28 @@ function App({ Component, pageProps, router }: AppProps) {
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
 
-        <script
-          type="text/javascript"
-          dangerouslySetInnerHTML={{
-            __html: `
+        {GA_TRACKING_ID && (
+          <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: `
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GA}', { 'transport_type': 'beacon' });
+                gtag('config', '${GA_TRACKING_ID}', { 'transport_type': 'beacon' });
               `
-          }}
-        />
+            }}
+          />
+        )}
       </Head>
-      <LoadAnalytics />
+      {GA_TRACKING_ID && <LoadAnalytics />}
       <div className="site-background" aria-hidden="true">
         <AuroraCanvas />
       </div>
       <div className="relative z-10">
         <Component {...pageProps} />
       </div>
-      <TrackPageView />
+      {GA_TRACKING_ID && <TrackPageView />}
     </>
   )
 }

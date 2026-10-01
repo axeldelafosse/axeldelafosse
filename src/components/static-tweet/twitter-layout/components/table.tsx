@@ -1,11 +1,11 @@
-import React from 'react'
+import type { ComponentProps } from 'react'
 
-export const Table = (p) => (
+export const Table = (p: ComponentProps<'table'>) => (
   <div className="table-container">
     <table {...p} />
   </div>
 )
 
-export const Th = (p) => <th {...p} />
+export const Th = (p: ComponentProps<'th'>) => <th {...p} />
 
-export const Td = (p) => <td {...p} />
+export const Td = (p: ComponentProps<'td'>) => <td {...p} />

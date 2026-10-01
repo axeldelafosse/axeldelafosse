@@ -1,7 +1,7 @@
-import React from 'react'
+import type { ComponentProps } from 'react'
 
-export const Ul = (p) => <ul {...p} />
+export const Ul = (p: ComponentProps<'ul'>) => <ul {...p} />
 
-export const Ol = (p) => <ol {...p} />
+export const Ol = (p: ComponentProps<'ol'>) => <ol {...p} />
 
-export const Li = (p) => <li {...p} />
+export const Li = (p: ComponentProps<'li'>) => <li {...p} />

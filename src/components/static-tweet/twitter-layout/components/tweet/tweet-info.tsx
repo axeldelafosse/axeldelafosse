@@ -1,11 +1,17 @@
-import React from 'react'
+import type { TweetData } from '../../../types'
 import cs from 'classnames'
-import format from 'date-fns/format'
+import { format } from 'date-fns/format'
 
 import formatNumber from '../../../format-number'
 import useMounted from '../../../use-mounted'
 
-export default function TweetInfo({ tweet, className = undefined }) {
+export default function TweetInfo({
+  tweet,
+  className
+}: {
+  tweet: TweetData
+  className?: string
+}) {
   const mounted = useMounted()
   const likeUrl = `https://twitter.com/intent/like?tweet_id=${tweet.id}`
   const tweetUrl = `https://twitter.com/${tweet.username}/status/${tweet.id}`
@@ -28,9 +34,9 @@ export default function TweetInfo({ tweet, className = undefined }) {
           />
         </div>
 
-        {(tweet.heartCount || tweet.likes > 0) && (
+        {(tweet.heartCount || (tweet.likes ?? 0) > 0) && (
           <span className="static-tweet-likes">
-            {tweet.heartCount || formatNumber(tweet.likes)}
+            {tweet.heartCount || formatNumber(tweet.likes ?? 0)}
           </span>
         )}
       </a>

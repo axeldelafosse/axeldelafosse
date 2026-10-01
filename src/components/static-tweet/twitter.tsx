@@ -1,15 +1,14 @@
-import React, { createContext, ReactNode, useContext } from 'react'
-import { ConfigInterface } from 'swr'
-
-// TODO: make this more specific
-export type TweetAst = Array<any>
+import { createContext, type ReactNode, useContext } from 'react'
+import type { SWRConfiguration } from 'swr'
+import type { TweetAst } from './types'
+export type { TweetAst } from './types'
 
 export type TwitterContextValue = {
   // static tweet ast info
   tweetAstMap: TweetAstMap
 
   // SWR config for dynamically fetching tweet ast info
-  swrOptions: ConfigInterface
+  swrOptions: SWRConfiguration<TweetAst>
 }
 
 export type TweetAstMap = {
@@ -25,10 +24,16 @@ export interface TwitterContextProviderProps {
 const TwitterContext = createContext<TwitterContextValue>({
   tweetAstMap: {},
   swrOptions: {
-    fetcher: (id) =>
-      fetch(`https://twitter-search.vercel.app/api/get-tweet-ast/${id}`).then(
-        (r) => r.json()
+    fetcher: async (id: string) => {
+      const response = await fetch(
+        `https://twitter-search.vercel.app/api/get-tweet-ast/${encodeURIComponent(id)}`
       )
+      if (!response.ok)
+        throw new Error(`Tweet request failed: ${response.status}`)
+      const ast: unknown = await response.json()
+      if (!Array.isArray(ast)) throw new Error('Invalid tweet response')
+      return ast as TweetAst
+    }
   }
 })
 

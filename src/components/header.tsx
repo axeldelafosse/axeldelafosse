@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { SITE_ID } from '@/lib/site'
 
 function Header() {
   return (
@@ -22,7 +23,7 @@ function Header() {
       <span className="mx-2">•</span>
       <a
         className="text-white no-underline"
-        href={`https://github.com/${process.env.NEXT_PUBLIC_ID}/${process.env.NEXT_PUBLIC_ID}`}
+        href={`https://github.com/${SITE_ID}/${SITE_ID}`}
         target="_blank"
         rel="noopener noreferrer"
       >

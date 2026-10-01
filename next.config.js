@@ -14,11 +14,9 @@ const nextConfig = {
     optimizeCss: false,
     scrollRestoration: true
   },
-  typescript: {
-    ignoreBuildErrors: true
-  },
   images: {
-    loader: 'custom'
+    loader: 'custom',
+    qualities: [75, 80, 100]
   },
   turbopack: {
     rules: {

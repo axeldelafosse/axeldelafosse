@@ -1,13 +1,19 @@
-import React from 'react'
-// import dynamic from 'next/dynamic' // TODO
+import type { TweetNodeProps } from '../../types'
 import Image from 'next/image'
 import { useTweet } from './tweet/tweet'
 
 import { weservLoader } from '@/lib/weserv-loader'
 
-export const Img = ({ width, height, src, ...p }) => {
+export const Img = ({
+  width = 1,
+  height = 1,
+  src,
+  alt = ''
+}: TweetNodeProps & { src: string }) => {
   const tweet = useTweet()
-  const tweetUrl = `https://twitter.com/${tweet.username}/status/${tweet.id}`
+  const tweetUrl = tweet
+    ? `https://twitter.com/${tweet.username}/status/${tweet.id}`
+    : src
 
   return (
     <details className="static-tweet-details">
@@ -24,10 +30,11 @@ export const Img = ({ width, height, src, ...p }) => {
           rel="noopener noreferrer"
         >
           <Image
-            {...p}
-            src={`${src}&name=small`}
-            layout="fill"
-            objectFit="cover"
+            src={`${src}${src.includes('?') ? '&' : '?'}name=small`}
+            alt={alt}
+            fill
+            sizes="(max-width: 600px) 100vw, 550px"
+            style={{ objectFit: 'cover' }}
             quality={80}
             loader={weservLoader}
           />
